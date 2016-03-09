@@ -1,0 +1,14 @@
+Package: hunspell
+Type: Package
+Title: Hunspell Spell Checker
+Version: 0.1
+Author: Jeroen Ooms
+Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
+Description: A spell checker and morphological analyzer library and program
+    designed for languages with rich morphology and complex word compounding or
+    character encoding.
+License: MIT + file LICENSE
+URL: https://github.com/jeroenooms/hunspell
+BugReports: https://github.com/jeroenooms/hunspell/issues
+SystemRequirements: Hunspell library and headers
+RoxygenNote: 5.0.1
