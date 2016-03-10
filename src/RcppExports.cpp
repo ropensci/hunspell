@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // R_hunspell_check
-CharacterVector R_hunspell_check(std::string affix, CharacterVector dict, CharacterVector words, CharacterVector ignore);
+LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, CharacterVector words, CharacterVector ignore);
 RcppExport SEXP hunspell_R_hunspell_check(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP, SEXP ignoreSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;

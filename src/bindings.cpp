@@ -4,7 +4,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-CharacterVector R_hunspell_check(std::string affix, CharacterVector dict, CharacterVector words, CharacterVector ignore){
+LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, CharacterVector words, CharacterVector ignore){
 
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
@@ -20,11 +20,9 @@ CharacterVector R_hunspell_check(std::string affix, CharacterVector dict, Charac
   }
 
   //check all words
-  CharacterVector out;
+  LogicalVector out;
   for(int i = 0; i < words.length(); i++){
-    if(!pMS->spell(words[i])){
-      out.push_back(words[i]);
-    }
+    out.push_back(pMS->spell(words[i]));
   }
   delete pMS;
   return out;
@@ -45,14 +43,10 @@ List R_hunspell_suggest(std::string affix, CharacterVector dict, CharacterVector
   char ** wlst;
   for(int i = 0; i < words.length(); i++){
     CharacterVector suggestions;
-    if(pMS->spell(words[i])){
-      suggestions.push_back(words[i]);
-    } else {
-      int ns = pMS->suggest(&wlst, words[i]);
-      for (int i = 0; i < ns; i++)
-        suggestions.push_back(wlst[i]);
-      pMS->free_list(&wlst, ns);
-    }
+    int ns = pMS->suggest(&wlst, words[i]);
+    for (int i = 0; i < ns; i++)
+      suggestions.push_back(wlst[i]);
+    pMS->free_list(&wlst, ns);
     out.push_back(suggestions);
   }
   delete pMS;
