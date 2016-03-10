@@ -5,8 +5,8 @@ R_hunspell_check <- function(affix, dict, words, ignore) {
     .Call('hunspell_R_hunspell_check', PACKAGE = 'hunspell', affix, dict, words, ignore)
 }
 
-R_hunspell_find <- function(affix, dict, text, ignore) {
-    .Call('hunspell_R_hunspell_find', PACKAGE = 'hunspell', affix, dict, text, ignore)
+R_hunspell_find <- function(affix, dict, text, ignore, delim) {
+    .Call('hunspell_R_hunspell_find', PACKAGE = 'hunspell', affix, dict, text, ignore, delim)
 }
 
 R_hunspell_suggest <- function(affix, dict, words) {

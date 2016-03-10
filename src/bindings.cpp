@@ -30,7 +30,7 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, Characte
 }
 
 // [[Rcpp::export]]
-CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text, CharacterVector ignore){
+CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text, CharacterVector ignore, std::string delim){
 
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
@@ -47,11 +47,11 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
 
   CharacterVector out;
   for(int i = 0; i < text.length(); i++){
-    char *token = std::strtok(text[i], ",;!. ");
+    char *token = std::strtok(text[i], delim.c_str());
     while (token != NULL) {
       if(!pMS->spell(token))
         out.push_back(token);
-      token = std::strtok(NULL, ",;!. ");
+      token = std::strtok(NULL, delim.c_str());
     }
   }
   return out;
