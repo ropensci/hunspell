@@ -13,12 +13,12 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, Characte
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
 
   //add additional dictionaries if more than one
-  for(size_t i = 1; i < dict.length(); i++){
+  for(int i = 1; i < dict.length(); i++){
     pMS->add_dic(dict[i]);
   }
 
   //add ignore words
-  for(size_t i = 0; i < ignore.length(); i++){
+  for(int i = 0; i < ignore.length(); i++){
     pMS->add(ignore[i]);
   }
 
@@ -38,12 +38,12 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
 
   //add additional dictionaries if more than one
-  for(size_t i = 1; i < dict.length(); i++){
+  for(int i = 1; i < dict.length(); i++){
     pMS->add_dic(dict[i]);
   }
 
   //add ignore words
-  for(size_t i = 0; i < ignore.length(); i++){
+  for(int i = 0; i < ignore.length(); i++){
     pMS->add(ignore[i]);
   }
 
@@ -68,7 +68,7 @@ List R_hunspell_suggest(std::string affix, CharacterVector dict, CharacterVector
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
 
   //add additional dictionaries if more than one
-  for(size_t i = 1; i < dict.length(); i++){
+  for(int i = 1; i < dict.length(); i++){
     pMS->add_dic(dict[i]);
   }
 
