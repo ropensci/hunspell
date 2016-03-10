@@ -2,10 +2,13 @@
 % Please edit documentation in R/hunspell.R
 \name{hunspell_check_en}
 \alias{hunspell_check_en}
+\alias{hunspell_find_en}
 \alias{hunspell_suggest_en}
 \title{Hunspell}
 \usage{
 hunspell_check_en(words, ignore = character())
+
+hunspell_find_en(text, ignore = character())
 
 hunspell_suggest_en(words)
 }

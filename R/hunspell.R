@@ -30,6 +30,14 @@ hunspell_check_en <- function(words, ignore = character()){
 
 #' @rdname hunspell
 #' @export
+hunspell_find_en <- function(text, ignore = character()){
+  affix <- system.file("dict/en_US/en_US.aff", package = "hunspell")
+  dict <- system.file("dict/en_US/en_US.dic", package = "hunspell")
+  hunspell_find(affix, dict, text, ignore)
+}
+
+#' @rdname hunspell
+#' @export
 hunspell_suggest_en <- function(words){
   affix <- system.file("dict/en_US/en_US.aff", package = "hunspell")
   dict <- system.file("dict/en_US/en_US.dic", package = "hunspell")
@@ -42,6 +50,14 @@ hunspell_check <- function(affix, dict, words, ignore) {
   stopifnot(is.character(words))
   stopifnot(is.character(ignore))
   R_hunspell_check(affix, dict, words, ignore)
+}
+
+hunspell_find <- function(affix, dict, text, ignore) {
+  affix <- normalizePath(affix, mustWork = TRUE)
+  dict <- normalizePath(dict, mustWork = TRUE)
+  stopifnot(is.character(text))
+  stopifnot(is.character(ignore))
+  R_hunspell_find(affix, dict, text, ignore)
 }
 
 hunspell_suggest <- function(affix, dict, words) {

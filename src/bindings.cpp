@@ -1,5 +1,8 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
+#include <iostream>
+#include <string>
+#include <sstream>
 
 using namespace Rcpp;
 
@@ -25,6 +28,36 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, Characte
     out.push_back(pMS->spell(words[i]));
   }
   delete pMS;
+  return out;
+}
+
+// [[Rcpp::export]]
+CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text, CharacterVector ignore){
+
+  //init with affix and at least one dict
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+
+  //add additional dictionaries if more than one
+  for(size_t i = 1; i < dict.length(); i++){
+    pMS->add_dic(dict[i]);
+  }
+
+  //add ignore words
+  for(size_t i = 0; i < ignore.length(); i++){
+    pMS->add(ignore[i]);
+  }
+
+  CharacterVector out;
+  for(int i = 0; i < text.length(); i++){
+    String line = text[i];
+    std::string myText(line.get_cstring());
+    std::istringstream iss(myText);
+    std::string token;
+    while (std::getline(iss, token, ' ')) {
+      if(!pMS->spell(token.c_str()))
+        out.push_back(token);
+    }
+  }
   return out;
 }
 

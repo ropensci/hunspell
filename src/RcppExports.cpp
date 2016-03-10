@@ -19,6 +19,20 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// R_hunspell_find
+CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text, CharacterVector ignore);
+RcppExport SEXP hunspell_R_hunspell_find(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP ignoreSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type text(textSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type ignore(ignoreSEXP);
+    __result = Rcpp::wrap(R_hunspell_find(affix, dict, text, ignore));
+    return __result;
+END_RCPP
+}
 // R_hunspell_suggest
 List R_hunspell_suggest(std::string affix, CharacterVector dict, CharacterVector words);
 RcppExport SEXP hunspell_R_hunspell_suggest(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP) {
