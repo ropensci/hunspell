@@ -15,7 +15,22 @@ hunspell_suggest_en(words)
 \item{ignore}{additional approved words in dictionary}
 }
 \description{
-Run hunspell spell checker. Additional dictrionaries can be downloaded from
-any OpenOffice \href{mirror}{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}.
+Run hunspell spell checker. The \code{hunspell_check} functions return
+a logical vector of equal length to the input indicating whether each
+word was correct. The \code{hunspell_suggest} functions return a list
+with character vectors of similar words as the input.
+}
+\details{
+Currently only US english dictionary is included with the package.
+Additional dictrionaries can be downloaded from e.g. OpenOffice
+\href{mirrors}{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}.
+}
+\examples{
+words <- c("beer", "wiskey", "wine")
+correct <- hunspell_check_en(words)
+print(correct)
+
+# find suggestions for incorrect words
+hunspell_suggest_en(words[!correct])
 }
 
