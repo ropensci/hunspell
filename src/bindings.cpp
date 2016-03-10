@@ -1,9 +1,6 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <cstring>
+#include <cstring> //std::strtok
 
 using namespace Rcpp;
 
