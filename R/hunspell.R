@@ -1,68 +1,82 @@
-#' Hunspell
+#' Hunspell Spell Checking
 #'
-#' Run hunspell spell checker. The \code{hunspell_check} functions return
-#' a logical vector of equal length to the input indicating whether each
-#' word was correct. The \code{hunspell_suggest} functions return a list
-#' with character vectors of similar words as the input.
+#' Various tools for spell checking. The \code{\link{hunspell_check}} function
+#' takes a vector of words and tests each individual word for correctness. The
+#' \code{\link{hunspell_find}} function takes a character vector with text
+#' (sentences) and returns only incorrect words. Finally \code{\link{hunspell_suggest}}
+#' is used to suggest correct words for each (incorrect) input word.
 #'
-#' Currently only US english dictionary is included with the package.
-#' Additional dictrionaries can be downloaded from e.g. OpenOffice
-#' \href{mirrors}{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}.
+#' The functions \code{\link{hunspell_analyze}} and \code{\link{hunspell_stem}}
+#' try to break down a word and return it's structure or stem word(s).
+#'
+#' Currently only US english dictionary is included with the package. Additional
+#' dictrionaries can be downloaded from an OpenOffice
+#' \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
+#' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
 #'
 #' @rdname hunspell
-#' @param words character vector of words to spellcheck
-#' @param ignore additional approved words in dictionary
+#' @aliases hunspell
+#' @param words character vector with individual words to spellcheck
+#' @param text character vector with arbitrary length text
+#' @param ignore character vector with additional approved words dictionary
+#' @param lang which dictionary to use. Currently only \code{en_US} is supported.
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hunspell
 #' @export
-#' @examples words <- c("beer", "wiskey", "wine")
-#' correct <- hunspell_check_en(words)
+#' @examples #check individual words
+#' words <- c("beer", "wiskey", "wine")
+#' correct <- hunspell_check(words)
 #' print(correct)
 #'
 #' # find suggestions for incorrect words
-#' hunspell_suggest_en(words[!correct])
-hunspell_check_en <- function(words, ignore = character()){
-  affix <- system.file("dict/en_US/en_US.aff", package = "hunspell")
-  dict <- system.file("dict/en_US/en_US.dic", package = "hunspell")
-  hunspell_check(affix, dict, words, ignore)
-}
-
-#' @rdname hunspell
-#' @export
-hunspell_find_en <- function(text, ignore = character()){
-  affix <- system.file("dict/en_US/en_US.aff", package = "hunspell")
-  dict <- system.file("dict/en_US/en_US.dic", package = "hunspell")
-  hunspell_find(affix, dict, text, ignore)
-}
-
-#' @rdname hunspell
-#' @export
-hunspell_suggest_en <- function(words){
-  affix <- system.file("dict/en_US/en_US.aff", package = "hunspell")
-  dict <- system.file("dict/en_US/en_US.dic", package = "hunspell")
-  hunspell_suggest(affix, dict, words)
-}
-
-hunspell_check <- function(affix, dict, words, ignore) {
-  affix <- normalizePath(affix, mustWork = TRUE)
-  dict <- normalizePath(dict, mustWork = TRUE)
+#' hunspell_suggest(words[!correct])
+#'
+#' # find incorrect words in piece of text
+#' bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
+#' print(bad)
+#' hunspell_suggest(bad)
+hunspell_check <- function(words, ignore = character(), lang = "en_US"){
   stopifnot(is.character(words))
   stopifnot(is.character(ignore))
-  R_hunspell_check(affix, dict, words, ignore)
+  R_hunspell_check(get_affix(lang), get_dict(lang), words, ignore)
 }
 
-hunspell_find <- function(affix, dict, text, ignore) {
-  affix <- normalizePath(affix, mustWork = TRUE)
-  dict <- normalizePath(dict, mustWork = TRUE)
+#' @rdname hunspell
+#' @export
+hunspell_find <- function(text, ignore = character(), lang = "en_US"){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
-  R_hunspell_find(affix, dict, text, ignore)
+  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore)
 }
 
-hunspell_suggest <- function(affix, dict, words) {
-  affix <- normalizePath(affix, mustWork = TRUE)
-  dict <- normalizePath(dict, mustWork = TRUE)
+#' @rdname hunspell
+#' @export
+hunspell_suggest <- function(words, lang = "en_US"){
   stopifnot(is.character(words))
-  R_hunspell_suggest(affix, dict, words)
+  R_hunspell_suggest(get_affix(lang), get_dict(lang), words)
+}
+
+#' @rdname hunspell
+#' @export
+hunspell_analyze <- function(words, lang = "en_US"){
+  stopifnot(is.character(words))
+  R_hunspell_analyze(get_affix(lang), get_dict(lang), words)
+}
+
+#' @rdname hunspell
+#' @export
+hunspell_stem <- function(words, lang = "en_US"){
+  stopifnot(is.character(words))
+  R_hunspell_stem(get_affix(lang), get_dict(lang), words)
+}
+
+get_affix <- function(lang){
+  path <- system.file(paste0("dict/", lang, "/", lang, ".aff"), package = "hunspell")
+  normalizePath(path, mustWork = TRUE)
+}
+
+get_dict <- function(lang){
+  path <- system.file(paste0("dict/", lang, "/", lang, ".dic"), package = "hunspell")
+  normalizePath(path, mustWork = TRUE)
 }

@@ -13,3 +13,11 @@ R_hunspell_suggest <- function(affix, dict, words) {
     .Call('hunspell_R_hunspell_suggest', PACKAGE = 'hunspell', affix, dict, words)
 }
 
+R_hunspell_analyze <- function(affix, dict, words) {
+    .Call('hunspell_R_hunspell_analyze', PACKAGE = 'hunspell', affix, dict, words)
+}
+
+R_hunspell_stem <- function(affix, dict, words) {
+    .Call('hunspell_R_hunspell_stem', PACKAGE = 'hunspell', affix, dict, words)
+}
+
