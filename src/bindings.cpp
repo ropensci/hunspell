@@ -49,13 +49,11 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
 
   CharacterVector out;
   for(int i = 0; i < text.length(); i++){
-    String line = text[i];
-    std::string myText(line.get_cstring());
-    std::istringstream iss(myText);
-    std::string token;
-    while (std::getline(iss, token, ' ')) {
-      if(!pMS->spell(token.c_str()))
+    char *token = std::strtok(text[i], ",;!. ");
+    while (token != NULL) {
+      if(!pMS->spell(token))
         out.push_back(token);
+      token = std::strtok(NULL, ",;!. ");
     }
   }
   return out;
