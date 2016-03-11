@@ -20,7 +20,6 @@
 #' @param text character vector with arbitrary length text
 #' @param ignore character vector with additional approved words dictionary
 #' @param lang which dictionary to use. Currently only \code{en_US} is supported
-#' @param delim string with characters used to deliminate words
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hunspell
@@ -45,10 +44,10 @@ hunspell_check <- function(words, ignore = character(), lang = "en_US"){
 
 #' @rdname hunspell
 #' @export
-hunspell_find <- function(text, ignore = character(), delim = " .!?:;,.",  lang = "en_US"){
+hunspell_find <- function(text, ignore = character(),  lang = "en_US"){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
-  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore, delim)
+  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore)
 }
 
 #' @rdname hunspell

@@ -1,7 +1,7 @@
 Package: hunspell
 Type: Package
 Title: Hunspell Spell Checker
-Version: 1.0
+Version: 1.0.9000
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
 Description: A spell checker and morphological analyzer library
@@ -11,6 +11,6 @@ License: MIT + file LICENSE
 URL: https://github.com/jeroenooms/hunspell
 BugReports: https://github.com/jeroenooms/hunspell/issues
 SystemRequirements: Hunspell library and headers
-Imports: Rcpp (>= 0.12.0)
+Imports: Rcpp
 LinkingTo: Rcpp
 RoxygenNote: 5.0.1

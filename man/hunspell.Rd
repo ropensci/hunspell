@@ -11,8 +11,7 @@
 \usage{
 hunspell_check(words, ignore = character(), lang = "en_US")
 
-hunspell_find(text, ignore = character(), delim = " .!?:;,.",
-  lang = "en_US")
+hunspell_find(text, ignore = character(), lang = "en_US")
 
 hunspell_suggest(words, lang = "en_US")
 
@@ -28,8 +27,6 @@ hunspell_stem(words, lang = "en_US")
 \item{lang}{which dictionary to use. Currently only \code{en_US} is supported}
 
 \item{text}{character vector with arbitrary length text}
-
-\item{delim}{string with characters used to deliminate words}
 }
 \description{
 Various tools for spell checking. The \code{\link{hunspell_check}} function
