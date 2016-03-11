@@ -53,5 +53,6 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
     }
   }
   delete p;
+  delete pMS;
   return out;
 }
