@@ -1,6 +1,5 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
-#include <cstring> //std::strtok
 #include "textparser.hxx"
 
 using namespace Rcpp;
@@ -10,6 +9,14 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
 
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+
+  //find valid characters in this language
+  const char * wordchars = pMS->get_wordchars(); //latin1
+  TextParser * p = new TextParser(wordchars);
+
+  //int wordchars_utf16_len;
+  //unsigned short * wordchars_utf16 = pMS->get_wordchars_utf16(&wordchars_utf16_len); //utf8
+  //TextParser *p = new TextParser(wordchars_utf16, wordchars_utf16_len);
 
   //add additional dictionaries if more than one
   for(int i = 1; i < dict.length(); i++){
@@ -21,7 +28,6 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
     pMS->add(ignore[i]);
   }
 
-  TextParser * p = new TextParser("qwertzuiopasdfghjklyxcvbnméáúõûóüöíQWERTZUIOPASDFGHJKLYXCVBNMÍÉÁÕÚÖÜÓÛ");
   CharacterVector out;
   char * token;
   for(int i = 0; i < text.length(); i++){
