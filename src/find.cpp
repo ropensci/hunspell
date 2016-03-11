@@ -20,7 +20,7 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
 
   //find valid characters in this language
   const char * wordchars = pMS->get_wordchars(); //latin1
-  TextParser * p = new TextParser(wordchars);
+  TextParser * p = NULL;
   if(!format.compare("text")){
     p = new TextParser(wordchars);
   } else if(!format.compare("latex")){
