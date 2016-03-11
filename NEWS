@@ -1,5 +1,5 @@
 1.1
-  - Switch to hunspell parsers (deprecates delim parameter)
+  - Switch to hunspell parsers (replaced 'delim' with 'format' parameter)
 
 1.0
   - Initial CRAN release
