@@ -19,6 +19,7 @@
 #' @param words character vector with individual words to spellcheck
 #' @param text character vector with arbitrary length text
 #' @param ignore character vector with additional approved words dictionary
+#' @param format how to parse input text. Supported are plain text, latex or man
 #' @param lang which dictionary to use. Currently only \code{en_US} is supported
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp

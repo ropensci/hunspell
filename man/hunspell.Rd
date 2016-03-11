@@ -28,6 +28,8 @@ hunspell_stem(words, lang = "en_US")
 \item{lang}{which dictionary to use. Currently only \code{en_US} is supported}
 
 \item{text}{character vector with arbitrary length text}
+
+\item{format}{how to parse input text. Supported are plain text, latex or man}
 }
 \description{
 Various tools for spell checking. The \code{\link{hunspell_check}} function
