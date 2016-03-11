@@ -1,5 +1,4 @@
 PKG_CPPFLAGS=-Iparsers @cflags@
-PKG_CXXFLAGS=-Wall -pedantic
 PKG_LIBS=-L. -lparsers @libs@
 
 # Bundled hunspell parsers

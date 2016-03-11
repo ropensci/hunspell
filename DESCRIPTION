@@ -9,7 +9,7 @@ Description: A spell checker and morphological analyzer library designed for
     encoding. The package can check and analyze indivual words as well as
     search for incorrect words within a text, latex or manual document.
 License: MIT + file LICENSE
-URL: https://github.com/jeroenooms/hunspell
+URL: https://hunspell.github.io https://github.com/jeroenooms/hunspell
 BugReports: https://github.com/jeroenooms/hunspell/issues
 SystemRequirements: Hunspell library and headers
 Imports: Rcpp
