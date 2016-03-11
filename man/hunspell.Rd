@@ -11,7 +11,8 @@
 \usage{
 hunspell_check(words, ignore = character(), lang = "en_US")
 
-hunspell_find(text, ignore = character(), lang = "en_US")
+hunspell_find(text, ignore = character(), format = c("text", "man",
+  "latex"), lang = "en_US")
 
 hunspell_suggest(words, lang = "en_US")
 

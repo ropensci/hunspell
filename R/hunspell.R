@@ -44,10 +44,11 @@ hunspell_check <- function(words, ignore = character(), lang = "en_US"){
 
 #' @rdname hunspell
 #' @export
-hunspell_find <- function(text, ignore = character(),  lang = "en_US"){
+hunspell_find <- function(text, ignore = character(), format = c("text", "man", "latex"),  lang = "en_US"){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
-  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore)
+  format <- match.arg(format)
+  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore, format)
 }
 
 #' @rdname hunspell

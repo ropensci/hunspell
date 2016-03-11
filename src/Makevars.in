@@ -1,8 +1,9 @@
-PKG_CPPFLAGS=@cflags@
+PKG_CPPFLAGS=-Iparsers @cflags@
+PKG_CXXFLAGS=-Wall -pedantic
 PKG_LIBS=-L. -lparsers @libs@
 
 # Bundled hunspell parsers
-PARSERS=parsers/htmlparser.o parsers/textparser.o
+PARSERS=parsers/textparser.o parsers/latexparser.o parsers/manparser.o
 
 all: clean libparsers.a
 
