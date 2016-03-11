@@ -18,10 +18,10 @@
 #' @rdname hunspell
 #' @aliases hunspell
 #' @param words character vector with individual words to spellcheck
-#' @param text character vector with arbitrary length text
-#' @param ignore character vector with additional approved words dictionary
-#' @param format how to parse input text. Supported are plain text, latex or man
-#' @param lang which dictionary to use. Currently only \code{en_US} is supported
+#' @param text character vector with arbitrary input text
+#' @param ignore character vector with additional approved words for the dictionary
+#' @param format input format; supported parsers are \code{text}, \code{latex} or \code{man}
+#' @param lang dictionary language; currently only \code{en_US} is supported
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hunspell

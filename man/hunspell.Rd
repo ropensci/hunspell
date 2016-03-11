@@ -23,13 +23,13 @@ hunspell_stem(words, lang = "en_US")
 \arguments{
 \item{words}{character vector with individual words to spellcheck}
 
-\item{ignore}{character vector with additional approved words dictionary}
+\item{ignore}{character vector with additional approved words for the dictionary}
 
-\item{lang}{which dictionary to use. Currently only \code{en_US} is supported}
+\item{lang}{dictionary language; currently only \code{en_US} is supported}
 
-\item{text}{character vector with arbitrary length text}
+\item{text}{character vector with arbitrary input text}
 
-\item{format}{how to parse input text. Supported are plain text, latex or man}
+\item{format}{input format; supported parsers are \code{text}, \code{latex} or \code{man}}
 }
 \description{
 The \code{\link{hunspell_check}} function takes a vector of words and checks
