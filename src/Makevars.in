@@ -6,10 +6,10 @@ PARSERS=parsers/htmlparser.o parsers/textparser.o
 
 all: clean libparsers.a
 
-clean:
-	rm -f hunspell.so libparsers.a $(PARSERS) $(OBJECTS)
-
 libparsers.a: $(PARSERS)
 	$(AR) rcs libparsers.a $(PARSERS)
+
+clean:
+	rm -f hunspell.so libparsers.a $(PARSERS) $(OBJECTS)
 
 .PHONY: all clean

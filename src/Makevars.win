@@ -5,15 +5,15 @@ PKG_LIBS=-L. -lparsers -L../windows/hunspell-1.3.3/lib${subst gcc ,-,${R_COMPILE
 # Bundled hunspell parsers
 PARSERS=parsers/htmlparser.o parsers/textparser.o
 
-all: clean winlibs libparsers.a
+all: winlibs libparsers.a
 
 winlibs:
 	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R"
 
-clean:
-	rm -f hunspell.dll libparsers.a $(PARSERS) $(OBJECTS)
-
 libparsers.a: $(PARSERS)
 	$(AR) rcs libparsers.a $(PARSERS)
+
+clean:
+	rm -f hunspell.dll libparsers.a $(PARSERS) $(OBJECTS)
 
 .PHONY: all clean winlibs
