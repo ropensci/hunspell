@@ -37,6 +37,14 @@
 #' bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
 #' print(bad)
 #' hunspell_suggest(bad)
+#'
+#' \dontrun{
+#' # check a latex document
+#' download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
+#' untar("1406.4806v1.tar.gz")
+#' text <- readLines("content.tex", warn = FALSE)
+#' hunspell_find(text, format = "latex")
+#' }
 hunspell_check <- function(words, ignore = character(), lang = "en_US"){
   stopifnot(is.character(words))
   stopifnot(is.character(ignore))
@@ -49,7 +57,8 @@ hunspell_find <- function(text, ignore = character(), format = c("text", "man", 
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore, format)
+  words <- R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore, format)
+  unique(words)
 }
 
 #' @rdname hunspell

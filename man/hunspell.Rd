@@ -60,5 +60,13 @@ hunspell_suggest(words[!correct])
 bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
 print(bad)
 hunspell_suggest(bad)
+
+\dontrun{
+# check a latex document
+download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
+untar("1406.4806v1.tar.gz")
+text <- readLines("content.tex", warn = FALSE)
+hunspell_find(text, format = "latex")
+}
 }
 
