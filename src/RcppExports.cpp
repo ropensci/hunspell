@@ -59,7 +59,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // R_hunspell_find
-CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text, CharacterVector ignore, std::string format);
+List R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text, CharacterVector ignore, std::string format);
 RcppExport SEXP hunspell_R_hunspell_find(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP ignoreSEXP, SEXP formatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;

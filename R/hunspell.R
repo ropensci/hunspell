@@ -1,10 +1,11 @@
 #' Hunspell Spell Checking
 #'
 #' Various tools for spell checking. The \code{\link{hunspell_check}} function
-#' takes a vector of words and tests each individual word for correctness. The
-#' \code{\link{hunspell_find}} function takes a character vector with text
-#' (sentences) and returns only incorrect words. Finally \code{\link{hunspell_suggest}}
-#' is used to suggest correct words for each (incorrect) input word.
+#' takes a vector of words and checks each individual word for correctness. The
+#' \code{\link{hunspell_find}} function takes a character vector with text and
+#' returns a list of equal length with the incorrect words for each line.
+#' Finally \code{\link{hunspell_suggest}} is used to suggest correct alternatives
+#' for each (incorrect) input word.
 #'
 #' The functions \code{\link{hunspell_analyze}} and \code{\link{hunspell_stem}}
 #' try to break down a word and return it's structure or stem word(s).
@@ -35,15 +36,16 @@
 #'
 #' # find incorrect words in piece of text
 #' bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
-#' print(bad)
-#' hunspell_suggest(bad)
+#' print(bad[[1]])
+#' hunspell_suggest(bad[[1]])
 #'
 #' \dontrun{
 #' # check a latex document
 #' download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 #' untar("1406.4806v1.tar.gz")
 #' text <- readLines("content.tex", warn = FALSE)
-#' hunspell_find(text, format = "latex")
+#' words <- hunspell_find(text, format = "latex")
+#' sort(unique(unlist(words)))
 #' }
 hunspell_check <- function(words, ignore = character(), lang = "en_US"){
   stopifnot(is.character(words))
@@ -57,8 +59,7 @@ hunspell_find <- function(text, ignore = character(), format = c("text", "man", 
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  words <- R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore, format)
-  unique(words)
+  R_hunspell_find(get_affix(lang), get_dict(lang), text, ignore, format)
 }
 
 #' @rdname hunspell

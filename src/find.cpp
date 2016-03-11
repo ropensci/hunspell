@@ -8,7 +8,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text,
+List R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text,
                                 CharacterVector ignore, std::string format){
 
   //init with affix and at least one dict
@@ -41,16 +41,18 @@ CharacterVector R_hunspell_find(std::string affix, CharacterVector dict, Charact
     pMS->add(ignore[i]);
   }
 
-  CharacterVector out;
+  List out;
   char * token;
   for(int i = 0; i < text.length(); i++){
+    CharacterVector words;
     p->put_line(text[i]);
     p->set_url_checking(1);
     while ((token=p->next_token())) {
       if(!pMS->spell(token))
-        out.push_back(token);
+        words.push_back(token);
       free(token);
     }
+    out.push_back(words);
   }
   delete p;
   delete pMS;
