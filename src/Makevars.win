@@ -1,8 +1,8 @@
-PKG_CXXFLAGS=
 PKG_CPPFLAGS=-I../windows/hunspell-1.3.3/include/hunspell
+PARSERS=parsers/htmlparser.cxx parsers/textparser.cxx
 
 R_COMPILED_BY ?=-4.6.3
-PKG_LIBS=-L../windows/hunspell-1.3.3/lib${subst gcc ,-,${R_COMPILED_BY}}${R_ARCH} -lhunspell-1.3
+PKG_LIBS=-L. -lparsers -L../windows/hunspell-1.3.3/lib${subst gcc ,-,${R_COMPILED_BY}}${R_ARCH} -lhunspell-1.3
 
 all: clean winlibs
 
@@ -11,3 +11,8 @@ winlibs:
 
 clean:
 	rm -f *.o *.so *.dll
+
+libparsers.a: $(PARSERS)
+	$(AR) rcs libparsers.a $(PARSERS)
+
+.PHONY: all clean winlibs

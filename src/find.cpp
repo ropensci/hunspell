@@ -1,6 +1,8 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
-#include "textparser.hxx"
+#include "parsers/textparser.hxx"
+
+enum { FMT_TEXT, FMT_LATEX, FMT_HTML, FMT_MAN, FMT_FIRST, FMT_XML, FMT_ODF };
 
 using namespace Rcpp;
 
