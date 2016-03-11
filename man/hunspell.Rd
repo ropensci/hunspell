@@ -32,12 +32,12 @@ hunspell_stem(words, lang = "en_US")
 \item{format}{how to parse input text. Supported are plain text, latex or man}
 }
 \description{
-Various tools for spell checking. The \code{\link{hunspell_check}} function
-takes a vector of words and checks each individual word for correctness. The
-\code{\link{hunspell_find}} function takes a character vector with text and
-returns a list of equal length with the incorrect words for each line.
-Finally \code{\link{hunspell_suggest}} is used to suggest correct alternatives
-for each (incorrect) input word.
+The \code{\link{hunspell_check}} function takes a vector of words and checks
+each individual word for correctness. The \code{\link{hunspell_find}} function
+takes a character vector with text (in plain, latex or man format) and returns
+a list of equal length with incorrect words for each line. Finally
+\code{\link{hunspell_suggest}} is used to suggest correct alternatives for
+each (incorrect) input word.
 }
 \details{
 The functions \code{\link{hunspell_analyze}} and \code{\link{hunspell_stem}}
