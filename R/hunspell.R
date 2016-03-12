@@ -3,9 +3,8 @@
 #' The \code{\link{hunspell_check}} function takes a vector of words and checks
 #' each individual word for correctness. The \code{\link{hunspell_find}} function
 #' takes a character vector with text (in plain, latex or man format) and returns
-#' a list of equal length with incorrect words for each line. Finally
-#' \code{\link{hunspell_suggest}} is used to suggest correct alternatives for
-#' each (incorrect) input word.
+#' a list with incorrect words for each line. Finally \code{\link{hunspell_suggest}}
+#' is used to suggest correct alternatives for each (incorrect) input word.
 #'
 #' The functions \code{\link{hunspell_analyze}} and \code{\link{hunspell_stem}}
 #' try to break down a word and return it's structure or stem word(s).
