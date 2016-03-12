@@ -15,7 +15,8 @@
 #' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
 #'
 #' @rdname hunspell
-#' @aliases hunspell
+#' @aliases hunspell en_stats
+#' @export en_stats
 #' @param words character vector with individual words to spellcheck
 #' @param text character vector with arbitrary input text
 #' @param ignore character vector with additional approved words for the dictionary
@@ -46,7 +47,7 @@
 #' words <- hunspell_find(text, format = "latex")
 #' sort(unique(unlist(words)))
 #' }
-hunspell_check <- function(words, ignore = character(), lang = "en_US"){
+hunspell_check <- function(words, ignore = en_stats, lang = "en_US"){
   stopifnot(is.character(words))
   stopifnot(is.character(ignore))
   R_hunspell_check(get_affix(lang), get_dict(lang), words, ignore)
@@ -54,7 +55,7 @@ hunspell_check <- function(words, ignore = character(), lang = "en_US"){
 
 #' @rdname hunspell
 #' @export
-hunspell_find <- function(text, ignore = character(), format = c("text", "man", "latex"),  lang = "en_US"){
+hunspell_find <- function(text, ignore = en_stats, format = c("text", "man", "latex"),  lang = "en_US"){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
@@ -91,3 +92,12 @@ get_dict <- function(lang){
   path <- system.file(paste0("dict/", lang, "/", lang, ".dic"), package = "hunspell")
   normalizePath(path, mustWork = TRUE)
 }
+
+en_stats <- (function(){
+  path <- file.path(Sys.getenv("R_HOME"), "share/dictionaries/en_stats.rds")
+  if(file.exists(path)){
+    return(readRDS(path))
+  } else {
+    return(character(0))
+  }
+})()
