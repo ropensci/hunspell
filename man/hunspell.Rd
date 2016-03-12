@@ -24,7 +24,8 @@ hunspell_stem(words, lang = "en_US")
 \arguments{
 \item{words}{character vector with individual words to spellcheck}
 
-\item{ignore}{character vector with additional approved words for the dictionary}
+\item{ignore}{character vector with additional approved words for the dictionary.
+The default is \code{en_stats} which is included with base R.}
 
 \item{lang}{dictionary language; currently only \code{en_US} is supported}
 

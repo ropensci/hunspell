@@ -19,7 +19,8 @@
 #' @export en_stats
 #' @param words character vector with individual words to spellcheck
 #' @param text character vector with arbitrary input text
-#' @param ignore character vector with additional approved words for the dictionary
+#' @param ignore character vector with additional approved words for the dictionary.
+#' The default is \code{en_stats} which is included with base R.
 #' @param format input format; supported parsers are \code{text}, \code{latex} or \code{man}
 #' @param lang dictionary language; currently only \code{en_US} is supported
 #' @rdname hunspell
@@ -94,7 +95,7 @@ get_dict <- function(lang){
 }
 
 en_stats <- (function(){
-  path <- file.path(Sys.getenv("R_HOME"), "share/dictionaries/en_stats.rds")
+  path <- file.path(R.home("share"), "dictionaries", "en_stats.rds")
   if(file.exists(path)){
     return(readRDS(path))
   } else {
