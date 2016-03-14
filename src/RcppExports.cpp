@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// R_hunspell_info
+List R_hunspell_info(std::string affix, CharacterVector dict);
+RcppExport SEXP hunspell_R_hunspell_info(SEXP affixSEXP, SEXP dictSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
+    __result = Rcpp::wrap(R_hunspell_info(affix, dict));
+    return __result;
+END_RCPP
+}
 // R_hunspell_check
 LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, CharacterVector words, CharacterVector ignore);
 RcppExport SEXP hunspell_R_hunspell_check(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP, SEXP ignoreSEXP) {
