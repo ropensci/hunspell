@@ -85,19 +85,23 @@ hunspell_stem <- function(words, dict = "en_US"){
 }
 
 get_affix <- function(dict){
-  normalizePath(find_in_dicpath(paste0(dict, ".aff")), mustWork = TRUE)
+  files <- vapply(paste0(dict, ".aff"), find_in_dicpath, character(1))
+  normalizePath(files, mustWork = TRUE)
 }
 
 get_dict <- function(dict){
-  normalizePath(find_in_dicpath(paste0(dict, ".dic")), mustWork = TRUE)
+  files <- vapply(paste0(dict, ".dic"), find_in_dicpath, character(1))
+  normalizePath(files, mustWork = TRUE)
 }
 
 dicpath <- function(){
-   c(Sys.getenv("DICPATH"),
+  c(
+   Sys.getenv("DICPATH", getwd()),
    "~/Library/Spelling",
    "/usr/lib/rstudio/resources/dictionaries", #RS desktop, Linux
    "/usr/lib/rstudio-server/resources/dictionaries", #RS server, Linux
    "/Applications/RStudio.app/Contents/Resources/resources/dictionaries", #OSX
+   "C:/Program Files/RStudio/resources/dictionaries", #Win
    "/usr/share/hunspell",
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
@@ -111,7 +115,7 @@ find_in_dicpath <- function(name){
   if(any(found)){
     return(paths[found][1])
   }
-  stop("File not found: ", name)
+  stop("Dictionary file not found: ", name, call. = FALSE)
 }
 
 en_stats <- (function(){
