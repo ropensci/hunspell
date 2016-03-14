@@ -10,16 +10,16 @@
 \alias{hunspell_suggest}
 \title{Hunspell Spell Checking}
 \usage{
-hunspell_check(words, ignore = en_stats, lang = "en_US")
+hunspell_check(words, ignore = en_stats, dict = "en_US")
 
 hunspell_find(text, ignore = en_stats, format = c("text", "man", "latex"),
-  lang = "en_US")
+  dict = "en_US")
 
-hunspell_suggest(words, lang = "en_US")
+hunspell_suggest(words, dict = "en_US")
 
-hunspell_analyze(words, lang = "en_US")
+hunspell_analyze(words, dict = "en_US")
 
-hunspell_stem(words, lang = "en_US")
+hunspell_stem(words, dict = "en_US")
 }
 \arguments{
 \item{words}{character vector with individual words to spellcheck}
@@ -27,7 +27,7 @@ hunspell_stem(words, lang = "en_US")
 \item{ignore}{character vector with additional approved words for the dictionary.
 The default is \code{en_stats} which is included with base R.}
 
-\item{lang}{dictionary language; currently only \code{en_US} is supported}
+\item{dict}{dictionary language, see details}
 
 \item{text}{character vector with arbitrary input text}
 
