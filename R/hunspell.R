@@ -15,8 +15,8 @@
 #' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
 #'
 #' @rdname hunspell
-#' @aliases hunspell en_stats
-#' @export en_stats
+#' @aliases hunspell en_stats dicpath
+#' @export en_stats dicpath
 #' @param words character vector with individual words to spellcheck
 #' @param text character vector with arbitrary input text
 #' @param ignore character vector with additional approved words for the dictionary.
@@ -85,27 +85,28 @@ hunspell_stem <- function(words, dict = "en_US"){
 }
 
 get_affix <- function(dict){
-  normalizePath(find_in_libdir(paste0(dict, ".aff")), mustWork = TRUE)
+  normalizePath(find_in_dicpath(paste0(dict, ".aff")), mustWork = TRUE)
 }
 
 get_dict <- function(dict){
-  normalizePath(find_in_libdir(paste0(dict, ".dic")), mustWork = TRUE)
+  normalizePath(find_in_dicpath(paste0(dict, ".dic")), mustWork = TRUE)
 }
 
-find_in_libdir <- function(name){
-  libdir <- c("",
-    Sys.getenv("DICPATH"),
-    "~/Library/Spelling",
-    "/usr/lib/rstudio/resources/dictionaries", #RS desktop, Linux
-    "/usr/lib/rstudio-server/resources/dictionaries", #RS server, Linux
-    "/Applications/RStudio.app/Contents/Resources/resources/dictionaries", #OSX
-    "/usr/share/hunspell",
-    "/usr/share/myspell",
-    "/usr/share/myspell/dicts",
-    "/Library/Spelling",
-    system.file("dict", package = "hunspell") # Bundled with the package
-  )
-  paths <- file.path(libdir, name)
+dicpath <- function(){
+   c(Sys.getenv("DICPATH"),
+   "~/Library/Spelling",
+   "/usr/lib/rstudio/resources/dictionaries", #RS desktop, Linux
+   "/usr/lib/rstudio-server/resources/dictionaries", #RS server, Linux
+   "/Applications/RStudio.app/Contents/Resources/resources/dictionaries", #OSX
+   "/usr/share/hunspell",
+   "/usr/share/myspell",
+   "/usr/share/myspell/dicts",
+   "/Library/Spelling",
+   system.file("dict", package = "hunspell") # Bundled with the package
+)}
+
+find_in_dicpath <- function(name){
+  paths <- file.path(dicpath(), name)
   found <- file.exists(paths)
   if(any(found)){
     return(paths[found][1])
