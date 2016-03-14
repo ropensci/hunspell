@@ -7,6 +7,7 @@
 \alias{hunspell_analyze}
 \alias{hunspell_check}
 \alias{hunspell_find}
+\alias{hunspell_info}
 \alias{hunspell_stem}
 \alias{hunspell_suggest}
 \title{Hunspell Spell Checking}
@@ -21,6 +22,8 @@ hunspell_suggest(words, dict = "en_US")
 hunspell_analyze(words, dict = "en_US")
 
 hunspell_stem(words, dict = "en_US")
+
+hunspell_info(dict = "en_US")
 }
 \arguments{
 \item{words}{character vector with individual words to spellcheck}

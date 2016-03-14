@@ -84,6 +84,12 @@ hunspell_stem <- function(words, dict = "en_US"){
   R_hunspell_stem(get_affix(dict), get_dict(dict), words)
 }
 
+#' @rdname hunspell
+#' @export
+hunspell_info <- function(dict = "en_US"){
+  R_hunspell_info(get_affix(dict), get_dict(dict))
+}
+
 get_affix <- function(dict){
   files <- vapply(paste0(dict, ".aff"), find_in_dicpath, character(1))
   normalizePath(files, mustWork = TRUE)

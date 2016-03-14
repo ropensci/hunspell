@@ -4,6 +4,20 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
+List R_hunspell_info(std::string affix, CharacterVector dict){
+
+  //init with affix and at least one dict
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  List out = List::create(
+    _["dict"] = dict,
+    _["encoding"] = CharacterVector(pMS->get_dic_encoding()),
+    _["wordchars"] = pMS->get_wordchars()
+  );
+  delete pMS;
+  return out;
+}
+
+// [[Rcpp::export]]
 LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, CharacterVector words, CharacterVector ignore){
 
   //init with affix and at least one dict
