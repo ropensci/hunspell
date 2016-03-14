@@ -96,12 +96,13 @@ find_in_libdir <- function(name){
   libdir <- c("",
     Sys.getenv("DICPATH"),
     "~/Library/Spelling",
-    "/usr/lib/rstudio/resources/dictionaries",
+    "/usr/lib/rstudio/resources/dictionaries", #Linux
+    "/Applications/RStudio.app/Contents/Resources/resources/dictionaries", #OSX
     "/usr/share/hunspell",
     "/usr/share/myspell",
     "/usr/share/myspell/dicts",
     "/Library/Spelling",
-    system.file("dict", package = "hunspell")
+    system.file("dict", package = "hunspell") # Bundled with the package
   )
   paths <- file.path(libdir, name)
   found <- file.exists(paths)
