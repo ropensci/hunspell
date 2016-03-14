@@ -96,7 +96,8 @@ find_in_libdir <- function(name){
   libdir <- c("",
     Sys.getenv("DICPATH"),
     "~/Library/Spelling",
-    "/usr/lib/rstudio/resources/dictionaries", #Linux
+    "/usr/lib/rstudio/resources/dictionaries", #RS desktop, Linux
+    "/usr/lib/rstudio-server/resources/dictionaries", #RS server, Linux
     "/Applications/RStudio.app/Contents/Resources/resources/dictionaries", #OSX
     "/usr/share/hunspell",
     "/usr/share/myspell",
