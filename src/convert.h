@@ -9,4 +9,4 @@ typedef iconv_t iconv_to_r_t;
 
 iconv_t new_iconv(const char * from, const char * to);
 char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc);
-Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd, const char * enc);
+Rcpp::String string_to_r(const char * inbuf, iconv_to_r_t cd, const char * enc);

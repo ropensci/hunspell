@@ -19,7 +19,7 @@ char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc){
   size_t outlen = inlen * 4;
   char output[outlen];
   char * cur = output;
-  size_t success = iconv(cd, (char**) &inbuf, &inlen, &cur, &outlen);
+  size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
   if(success == (size_t) -1){
     iconv_close(cd);
     switch(errno){
@@ -35,7 +35,7 @@ char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc){
   return res;
 }
 
-Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd, const char * enc){
+Rcpp::String string_to_r(const char * inbuf, iconv_to_r_t cd, const char * enc){
   size_t inlen = strlen(inbuf);
   size_t outlen = inlen * 4;
   char output[outlen];
