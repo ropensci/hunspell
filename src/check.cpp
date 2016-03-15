@@ -1,17 +1,50 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
+#include <iconv.h>
 
 using namespace Rcpp;
+
+String string_to_r(char * inbuf, char * enc){
+  iconv_t cd = iconv_open("UTF-8", enc);
+  if(cd == (iconv_t) -1){
+    iconv_close(cd);
+    switch(errno){
+      case EINVAL: std::runtime_error(std::string("Iconv does not support UTF8 conversion for ") + enc);
+      default: std::runtime_error("General error in iconv_open()");
+    }
+  }
+  size_t inlen = strlen(inbuf);
+  size_t outlen = inlen * 4;
+  char output[outlen];
+  char * outp = output;
+  size_t success = iconv(cd, &inbuf, &inlen, &outp, &outlen);
+  if(success == (size_t) -1){
+    iconv_close(cd);
+    switch(errno){
+      case E2BIG: std::runtime_error("Iconv insufficient memory");
+      case EILSEQ: std::runtime_error("An invalid multibyte sequence has been encountered in the input.");
+      case EINVAL: std::runtime_error("An incomplete multibyte sequence has been encountered in the input.");
+      default: std::runtime_error("General error in iconv()");
+    }
+  }
+  outp[0] = '\0';
+  String res = String(output);
+  res.set_encoding(CE_UTF8);
+  return res;
+}
 
 // [[Rcpp::export]]
 List R_hunspell_info(std::string affix, CharacterVector dict){
 
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  char * wc = (char*) pMS->get_wordchars();
+  char * enc = pMS->get_dic_encoding();
+
   List out = List::create(
     _["dict"] = dict,
-    _["encoding"] = CharacterVector(pMS->get_dic_encoding()),
-    _["wordchars"] = pMS->get_wordchars()
+    _["encoding"] = CharacterVector(enc),
+    _["wordchars"] = CharacterVector(string_to_r(wc, enc))
   );
   delete pMS;
   return out;
