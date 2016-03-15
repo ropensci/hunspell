@@ -1,5 +1,6 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
+#include "convert.h"
 
 #include "parsers/textparser.hxx"
 #include "parsers/latexparser.hxx"
@@ -8,11 +9,12 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector text,
-                                CharacterVector ignore, std::string format){
+List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
+                     StringVector ignore, std::string format){
 
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  char * enc = pMS->get_dic_encoding();
 
   //int wordchars_utf16_len;
   //unsigned short * wordchars_utf16 = pMS->get_wordchars_utf16(&wordchars_utf16_len); //utf8
@@ -38,20 +40,24 @@ List R_hunspell_find(std::string affix, CharacterVector dict, CharacterVector te
 
   //add ignore words
   for(int i = 0; i < ignore.length(); i++){
-    pMS->add(ignore[i]);
+    char * str = r_to_string(ignore[i], enc);
+    pMS->add(str);
+    free(str);
   }
 
   List out;
   char * token;
   for(int i = 0; i < text.length(); i++){
     CharacterVector words;
-    p->put_line(text[i]);
+    char * str = r_to_string(text[i], enc);
+    p->put_line(str);
     p->set_url_checking(1);
     while ((token=p->next_token())) {
       if(!pMS->spell(token))
         words.push_back(token);
       free(token);
     }
+    free(str);
     out.push_back(words);
   }
   delete p;
