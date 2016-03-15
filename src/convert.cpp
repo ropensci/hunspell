@@ -12,7 +12,7 @@ iconv_t new_iconv(const char * from, const char * to){
   return cd;
 }
 
-char * string_from_r(Rcpp::String str, iconv_from_r_t cd){
+char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc){
   str.set_encoding(CE_UTF8);
   const char * inbuf = str.get_cstring();
   size_t inlen = strlen(inbuf);
@@ -24,8 +24,8 @@ char * string_from_r(Rcpp::String str, iconv_from_r_t cd){
     iconv_close(cd);
     switch(errno){
       case E2BIG: throw std::runtime_error("Iconv insufficient memory allocated");
-      case EILSEQ: throw std::runtime_error("An invalid multibyte sequence has been encountered in the input.");
-      case EINVAL: throw std::runtime_error("An incomplete multibyte sequence has been encountered in the input.");
+      case EILSEQ: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": invalid multibyte sequence.");
+      case EINVAL: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": incomplete multibyte sequence.");
       default: throw std::runtime_error("Unknown error in iconv()");
     }
   }
@@ -35,7 +35,7 @@ char * string_from_r(Rcpp::String str, iconv_from_r_t cd){
   return res;
 }
 
-Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd){
+Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd, const char * enc){
   size_t inlen = strlen(inbuf);
   size_t outlen = inlen * 4;
   char output[outlen];
@@ -45,8 +45,8 @@ Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd){
     iconv_close(cd);
     switch(errno){
       case E2BIG: throw std::runtime_error("Iconv insufficient memory allocated");
-      case EILSEQ: throw std::runtime_error("An invalid multibyte sequence has been encountered in the input.");
-      case EINVAL: throw std::runtime_error("An incomplete multibyte sequence has been encountered in the input.");
+      case EILSEQ: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": invalid multibyte sequence.");
+      case EINVAL: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": incomplete multibyte sequence.");
       default: throw std::runtime_error("Unknown error in iconv()");
     }
   }

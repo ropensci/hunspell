@@ -14,7 +14,7 @@ List R_hunspell_info(std::string affix, CharacterVector dict){
   List out = List::create(
     _["dict"] = dict,
     _["encoding"] = CharacterVector(enc),
-    _["wordchars"] = CharacterVector(string_to_r((char *) pMS->get_wordchars(), cd))
+    _["wordchars"] = CharacterVector(string_to_r((char *) pMS->get_wordchars(), cd, enc))
   );
   iconv_close(cd);
   delete pMS;
@@ -36,7 +36,7 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVe
 
   //add ignore words
   for(int i = 0; i < ignore.length(); i++){
-    char * str = string_from_r(ignore[i], cd);
+    char * str = string_from_r(ignore[i], cd, enc);
     pMS->add(str);
     free(str);
   }
@@ -44,7 +44,7 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVe
   //check all words
   LogicalVector out;
   for(int i = 0; i < words.length(); i++){
-    char * str = string_from_r(words[i], cd);
+    char * str = string_from_r(words[i], cd, enc);
     out.push_back(pMS->spell(str));
     free(str);
   }
@@ -71,11 +71,11 @@ List R_hunspell_suggest(std::string affix, CharacterVector dict, StringVector wo
   char ** wlst;
   for(int i = 0; i < words.length(); i++){
     CharacterVector suggestions;
-    char * str = string_from_r(words[i], cd_from);
+    char * str = string_from_r(words[i], cd_from, enc);
     int ns = pMS->suggest(&wlst, str);
     free(str);
     for (int j = 0; j < ns; j++)
-      suggestions.push_back(string_to_r(wlst[j], cd_to));
+      suggestions.push_back(string_to_r(wlst[j], cd_to, enc));
     pMS->free_list(&wlst, ns);
     out.push_back(suggestions);
   }
@@ -103,11 +103,11 @@ List R_hunspell_analyze(std::string affix, CharacterVector dict, StringVector wo
   char ** wlst;
   for(int i = 0; i < words.length(); i++){
     CharacterVector pieces;
-    char * str = string_from_r(words[i], cd_from);
+    char * str = string_from_r(words[i], cd_from, enc);
     int ns = pMS->analyze(&wlst, str);
     free(str);
     for (int j = 0; j < ns; j++)
-      pieces.push_back(string_to_r(wlst[j], cd_to));
+      pieces.push_back(string_to_r(wlst[j], cd_to, enc));
     pMS->free_list(&wlst, ns);
     out.push_back(pieces);
   }
@@ -135,11 +135,11 @@ List R_hunspell_stem(std::string affix, CharacterVector dict, StringVector words
   char ** wlst;
   for(int i = 0; i < words.length(); i++){
     CharacterVector pieces;
-    char * str = string_from_r(words[i], cd_from);
+    char * str = string_from_r(words[i], cd_from, enc);
     int ns = pMS->stem(&wlst, str);
     free(str);
     for (int j = 0; j < ns; j++)
-      pieces.push_back(string_to_r(wlst[j], cd_to));
+      pieces.push_back(string_to_r(wlst[j], cd_to, enc));
     pMS->free_list(&wlst, ns);
     out.push_back(pieces);
   }

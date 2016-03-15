@@ -42,7 +42,7 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
 
   //add ignore words
   for(int i = 0; i < ignore.length(); i++){
-    char * str = string_from_r(ignore[i], cd_from);
+    char * str = string_from_r(ignore[i], cd_from, enc);
     pMS->add(str);
     free(str);
   }
@@ -51,12 +51,12 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   char * token;
   for(int i = 0; i < text.length(); i++){
     CharacterVector words;
-    char * str = string_from_r(text[i], cd_from);
+    char * str = string_from_r(text[i], cd_from, enc);
     p->put_line(str);
     p->set_url_checking(1);
     while ((token=p->next_token())) {
       if(!pMS->spell(token))
-        words.push_back(string_to_r(token, cd_to));
+        words.push_back(string_to_r(token, cd_to, enc));
       free(token);
     }
     free(str);
