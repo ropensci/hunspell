@@ -15,6 +15,8 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
   char * enc = pMS->get_dic_encoding();
+  iconv_from_r_t cd_from = iconv_from_r(enc);
+  iconv_to_r_t cd_to = iconv_to_r(enc);
 
   //int wordchars_utf16_len;
   //unsigned short * wordchars_utf16 = pMS->get_wordchars_utf16(&wordchars_utf16_len); //utf8
@@ -40,7 +42,7 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
 
   //add ignore words
   for(int i = 0; i < ignore.length(); i++){
-    char * str = r_to_string(ignore[i], enc);
+    char * str = string_from_r(ignore[i], cd_from);
     pMS->add(str);
     free(str);
   }
@@ -49,12 +51,12 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   char * token;
   for(int i = 0; i < text.length(); i++){
     CharacterVector words;
-    char * str = r_to_string(text[i], enc);
+    char * str = string_from_r(text[i], cd_from);
     p->put_line(str);
     p->set_url_checking(1);
     while ((token=p->next_token())) {
       if(!pMS->spell(token))
-        words.push_back(token);
+        words.push_back(string_to_r(token, cd_to));
       free(token);
     }
     free(str);
