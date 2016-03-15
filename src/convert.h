@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include <Riconv.h>
+#include <iconv.h>
 
 typedef iconv_t iconv_from_r_t;
 typedef iconv_t iconv_to_r_t;
