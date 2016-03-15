@@ -1,8 +1,13 @@
 #include <hunspell.hxx>
 #include <Rcpp.h>
 #include <iconv.h>
+#include <errno.h>
 
 using namespace Rcpp;
+
+char * r_to_string(String str, char * enc){
+  iconv_t cd = iconv_open(str.get_encoding().c_str(), enc);
+}
 
 String string_to_r(char * inbuf, char * enc){
   iconv_t cd = iconv_open("UTF-8", enc);
