@@ -14,7 +14,7 @@ iconv_t new_iconv(const char * from, const char * to){
 
 char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc){
   str.set_encoding(CE_UTF8);
-  const char * inbuf = str.get_cstring();
+  char * inbuf = (char *) str.get_cstring();
   size_t inlen = strlen(inbuf);
   size_t outlen = inlen * 4;
   char output[outlen];
@@ -35,7 +35,7 @@ char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc){
   return res;
 }
 
-Rcpp::String string_to_r(const char * inbuf, iconv_to_r_t cd, const char * enc){
+Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd, const char * enc){
   size_t inlen = strlen(inbuf);
   size_t outlen = inlen * 4;
   char output[outlen];
