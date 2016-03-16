@@ -23,7 +23,7 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   //TextParser *p = new TextParser(wordchars_utf16, wordchars_utf16_len);
 
   //find valid characters in this language
-  const char * wordchars = pMS->get_wordchars();
+  const char * wordchars = pMS->get_wordchars(); // 8bit encodings, e.g. latin1 or similar
   TextParser * p = NULL;
   if(!format.compare("text")){
     p = new TextParser(wordchars);
@@ -54,14 +54,18 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   for(int i = 0; i < text.length(); i++){
     CharacterVector words;
     char * str = string_from_r(text[i], cd_from);
-    p->put_line(str);
-    p->set_url_checking(1);
-    while ((token=p->next_token())) {
-      if(!pMS->spell(token))
-        words.push_back(string_to_r(token, cd_to));
-      free(token);
+    if(str == NULL){
+      Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary.", i + 1, enc);
+    } else {
+      p->put_line(str);
+      p->set_url_checking(1);
+      while ((token=p->next_token())) {
+        if(!pMS->spell(token))
+          words.push_back(string_to_r(token, cd_to));
+        free(token);
+      }
+      free(str);
     }
-    free(str);
     out.push_back(words);
   }
   delete p;
