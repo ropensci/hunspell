@@ -52,6 +52,7 @@ Currently only US english dictionary is included with the package. Additional
 dictrionaries can be downloaded from an OpenOffice
 \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
 or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
+UTF8 dictionaries are available from \url{https://github.com/titoBouzout/Dictionaries}.
 }
 \examples{
 #check individual words
