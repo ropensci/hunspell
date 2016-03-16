@@ -31,10 +31,8 @@ char * string_from_r(Rcpp::String str, iconv_t cd){
     return NULL;
   }
   *cur = '\0';
-  char * res = (char *) malloc(outlen + 1);
-  strcpy(res, output);
-  free(output);
-  return res;
+  output = (char *) realloc(output, outlen + 1);
+  return output;
 }
 
 Rcpp::String string_to_r(char * inbuf, iconv_t cd){

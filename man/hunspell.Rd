@@ -68,13 +68,12 @@ bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
 print(bad[[1]])
 hunspell_suggest(bad[[1]])
 
-\dontrun{
 # check a latex document
+setwd(tempdir())
 download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 untar("1406.4806v1.tar.gz")
 text <- readLines("content.tex", warn = FALSE)
 words <- hunspell_find(text, format = "latex")
 sort(unique(unlist(words)))
-}
 }
 
