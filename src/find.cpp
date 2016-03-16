@@ -26,15 +26,29 @@ List R_hunspell_find(std::string affix, std::string dict, StringVector text,
 
   //find valid characters in this language
   const char * wordchars = pMS->get_wordchars(); // 8bit encodings, e.g. latin1 or similar
+  int utf16_len;
+  unsigned short * ustf16_wordchars = pMS->get_wordchars_utf16(&utf16_len);
   TextParser * p = NULL;
-  if(!format.compare("text")){
-    p = new TextParser(wordchars);
-  } else if(!format.compare("latex")){
-    p = new LaTeXParser(wordchars);
-  } else if(!format.compare("man")){
-    p = new ManParser(wordchars);
+  if(strcmp(enc, "UTF-8") == 0){
+    if(!format.compare("text")){
+      p = new TextParser(ustf16_wordchars, utf16_len);
+    } else if(!format.compare("latex")){
+      p = new LaTeXParser(ustf16_wordchars, utf16_len);
+    } else if(!format.compare("man")){
+      p = new ManParser(ustf16_wordchars, utf16_len);
+    } else {
+      throw std::runtime_error("Unknown parse format");
+    }
   } else {
-    throw std::runtime_error("Unknown parse format");
+    if(!format.compare("text")){
+      p = new TextParser(wordchars);
+    } else if(!format.compare("latex")){
+      p = new LaTeXParser(wordchars);
+    } else if(!format.compare("man")){
+      p = new ManParser(wordchars);
+    } else {
+      throw std::runtime_error("Unknown parse format");
+    }
   }
 
   //add ignore words
