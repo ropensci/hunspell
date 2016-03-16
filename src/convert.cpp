@@ -36,6 +36,8 @@ char * string_from_r(Rcpp::String str, iconv_t cd){
 }
 
 Rcpp::String string_to_r(char * inbuf, iconv_t cd){
+  if(inbuf == NULL)
+    return NA_STRING;
   size_t inlen = strlen(inbuf);
   size_t outlen = 4 * inlen + 1;
   char * output = (char *) malloc(outlen);
