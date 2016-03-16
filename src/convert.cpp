@@ -1,6 +1,12 @@
 #include <errno.h>
 #include "convert.h"
 
+#ifdef _WIN32
+#define ICONV_CONST_FIX (const char**)
+#else
+#define ICONV_CONST_FIX
+#endif
+
 iconv_t new_iconv(const char * from, const char * to){
   iconv_t cd = iconv_open(to, from);
   if(cd == (iconv_t) -1){
@@ -17,7 +23,7 @@ char * string_convert(char * inbuf, iconv_t cd){
   size_t outlen = 4 * inlen + 1;
   char output[outlen];
   char * cur = output;
-  size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
+  size_t success = iconv(cd, ICONV_CONST_FIX &inbuf, &inlen, &cur, &outlen);
   if(success == (size_t) -1)
     return NULL;
   *cur = '\0';
@@ -47,7 +53,7 @@ unsigned short * string_to_utf16(char * inbuf, char * enc, size_t * size){
   size_t outlen = 4 * inlen + 1;
   char output[outlen];
   char * cur = output;
-  size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
+  size_t success = iconv(cd, ICONV_CONST_FIX &inbuf, &inlen, &cur, &outlen);
   if(success == (size_t) -1)
     return NULL;
   *size = outlen - 1;
