@@ -12,44 +12,30 @@ iconv_t new_iconv(const char * from, const char * to){
   return cd;
 }
 
-char * string_from_r(Rcpp::String str, iconv_from_r_t cd, const char * enc){
+char * string_from_r(Rcpp::String str, iconv_t cd){
   str.set_encoding(CE_UTF8);
   char * inbuf = (char *) str.get_cstring();
   size_t inlen = strlen(inbuf);
-  size_t outlen = inlen * 4;
+  size_t outlen = 4 * inlen + 1;
   char output[outlen];
   char * cur = output;
   size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
-  if(success == (size_t) -1){
-    iconv_close(cd);
-    switch(errno){
-      case E2BIG: throw std::runtime_error("Iconv insufficient memory allocated");
-      case EILSEQ: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": invalid multibyte sequence.");
-      case EINVAL: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": incomplete multibyte sequence.");
-      default: throw std::runtime_error("Unknown error in iconv()");
-    }
-  }
+  if(success == (size_t) -1)
+    return NULL;
   cur[0] = '\0';
   char * res = (char *) malloc(outlen + 1);
   strcpy(res, output);
   return res;
 }
 
-Rcpp::String string_to_r(char * inbuf, iconv_to_r_t cd, const char * enc){
+Rcpp::String string_to_r(char * inbuf, iconv_t cd){
   size_t inlen = strlen(inbuf);
-  size_t outlen = inlen * 4;
+  size_t outlen = 4 * inlen + 1;
   char output[outlen];
   char * cur = output;
   size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
-  if(success == (size_t) -1){
-    iconv_close(cd);
-    switch(errno){
-      case E2BIG: throw std::runtime_error("Iconv insufficient memory allocated");
-      case EILSEQ: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": invalid multibyte sequence.");
-      case EINVAL: throw std::runtime_error(std::string("Cannot convert '") + inbuf + "' to " + enc + ": incomplete multibyte sequence.");
-      default: throw std::runtime_error("Unknown error in iconv()");
-    }
-  }
+  if(success == (size_t) -1)
+    return NA_STRING;
   cur[0] = '\0';
   Rcpp::String res = Rcpp::String(output);
   res.set_encoding(CE_UTF8);
