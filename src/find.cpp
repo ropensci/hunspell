@@ -16,21 +16,23 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
   char * enc = pMS->get_dic_encoding();
   iconv_t cd_from = iconv_from_r(enc);
-  iconv_t cd_to = iconv_to_r(enc);
 
+  //this doesn't work?
   //int wordchars_utf16_len;
   //unsigned short * wordchars_utf16 = pMS->get_wordchars_utf16(&wordchars_utf16_len); //utf8
-  //TextParser *p = new TextParser(wordchars_utf16, wordchars_utf16_len);
 
   //find valid characters in this language
-  const char * wordchars = pMS->get_wordchars(); // 8bit encodings, e.g. latin1 or similar
+  size_t wordchars_utf16_len = 0;
+  const char * wordchars = pMS->get_wordchars(); // dictionary 8bit encoding, e.g. latin1
+  unsigned short * wordchars_utf16 = string_to_utf16((char*) wordchars, enc, &wordchars_utf16_len);
+
   TextParser * p = NULL;
   if(!format.compare("text")){
-    p = new TextParser(wordchars);
+    p = new TextParser(wordchars_utf16, wordchars_utf16_len);
   } else if(!format.compare("latex")){
-    p = new LaTeXParser(wordchars);
+    p = new LaTeXParser(wordchars_utf16, wordchars_utf16_len);
   } else if(!format.compare("man")){
-    p = new ManParser(wordchars);
+    p = new ManParser(wordchars_utf16, wordchars_utf16_len);
   } else {
     throw std::runtime_error("Unknown parse format");
   }
@@ -53,17 +55,20 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
   char * token;
   for(int i = 0; i < text.length(); i++){
     CharacterVector words;
-    char * str = string_from_r(text[i], cd_from);
-    if(str == NULL){
-      Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary.", i + 1, enc);
-    } else {
-      p->put_line(str);
-      p->set_url_checking(1);
-      while ((token=p->next_token())) {
-        if(!pMS->spell(token))
-          words.push_back(string_to_r(token, cd_to));
-        free(token);
+    String line = text[i];
+    line.set_encoding(CE_UTF8);
+    p->put_line((char*)line.get_cstring());
+    p->set_url_checking(1);
+    while ((token=p->next_token())) {
+      //try to convert word from UTF8 to dictionary 8bit encoding
+      char * str = string_convert(token, cd_from);
+      if(!str || !pMS->spell(str)){
+        String x = String(str);
+        x.set_encoding(CE_UTF8);
+        words.push_back(x);
+        //words.push_back(string_to_r(token, cd_to));
       }
+      free(token);
       free(str);
     }
     out.push_back(words);

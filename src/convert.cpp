@@ -12,9 +12,7 @@ iconv_t new_iconv(const char * from, const char * to){
   return cd;
 }
 
-char * string_from_r(Rcpp::String str, iconv_t cd){
-  str.set_encoding(CE_UTF8);
-  char * inbuf = (char *) str.get_cstring();
+char * string_convert(char * inbuf, iconv_t cd){
   size_t inlen = strlen(inbuf);
   size_t outlen = 4 * inlen + 1;
   char output[outlen];
@@ -22,22 +20,38 @@ char * string_from_r(Rcpp::String str, iconv_t cd){
   size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
   if(success == (size_t) -1)
     return NULL;
-  cur[0] = '\0';
+  *cur = '\0';
   char * res = (char *) malloc(outlen + 1);
   strcpy(res, output);
   return res;
 }
 
+char * string_from_r(Rcpp::String str, iconv_t cd){
+  str.set_encoding(CE_UTF8);
+  return string_convert((char *) str.get_cstring(), cd);
+}
+
 Rcpp::String string_to_r(char * inbuf, iconv_t cd){
+  char * output = string_convert(inbuf, cd);
+  if(output == NULL)
+    return NA_STRING;
+  Rcpp::String res = Rcpp::String(output);
+  free(output);
+  res.set_encoding(CE_UTF8);
+  return res;
+}
+
+unsigned short * string_to_utf16(char * inbuf, char * enc, size_t * size){
+  iconv_t cd = new_iconv(enc, "UTF-16LE");
   size_t inlen = strlen(inbuf);
   size_t outlen = 4 * inlen + 1;
   char output[outlen];
   char * cur = output;
   size_t success = iconv(cd, &inbuf, &inlen, &cur, &outlen);
   if(success == (size_t) -1)
-    return NA_STRING;
-  cur[0] = '\0';
-  Rcpp::String res = Rcpp::String(output);
-  res.set_encoding(CE_UTF8);
+    return NULL;
+  *size = outlen - 1;
+  unsigned short * res = (unsigned short *) malloc(outlen - 1);
+  memcpy(res, output, outlen - 1);
   return res;
 }

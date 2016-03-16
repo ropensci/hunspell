@@ -10,11 +10,13 @@ List R_hunspell_info(std::string affix, CharacterVector dict){
   //init with affix and at least one dict
   Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
   char * enc = pMS->get_dic_encoding();
+  char * wc = (char *) pMS->get_wordchars();
+
   iconv_t cd = iconv_to_r(enc);
   List out = List::create(
     _["dict"] = dict,
     _["encoding"] = CharacterVector(enc),
-    _["wordchars"] = CharacterVector(string_to_r((char *) pMS->get_wordchars(), cd))
+    _["wordchars"] = CharacterVector(string_to_r(wc, cd))
   );
   iconv_close(cd);
   delete pMS;
