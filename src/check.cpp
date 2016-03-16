@@ -5,10 +5,12 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List R_hunspell_info(std::string affix, CharacterVector dict){
+List R_hunspell_info(std::string affix, std::string dict){
 
   //init with affix and at least one dict
-  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict.c_str());
+  if(!pMS)
+    throw std::runtime_error(std::string("Failed to load file ") + dict.c_str());
   char * enc = pMS->get_dic_encoding();
   iconv_t cd = iconv_to_r(enc);
   List out = List::create(
@@ -22,17 +24,14 @@ List R_hunspell_info(std::string affix, CharacterVector dict){
 }
 
 // [[Rcpp::export]]
-LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVector words, StringVector ignore){
+LogicalVector R_hunspell_check(std::string affix, std::string dict, StringVector words, StringVector ignore){
 
   //init with affix and at least one dict
-  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict.c_str());
+  if(!pMS)
+    throw std::runtime_error(std::string("Failed to load file ") + dict.c_str());
   char * enc = pMS->get_dic_encoding();
   iconv_t cd = iconv_from_r(enc);
-
-  //add additional dictionaries if more than one
-  for(int i = 1; i < dict.length(); i++){
-    pMS->add_dic(dict[i]);
-  }
 
   //add ignore words
   for(int i = 0; i < ignore.length(); i++){
@@ -61,18 +60,15 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVe
 }
 
 // [[Rcpp::export]]
-List R_hunspell_suggest(std::string affix, CharacterVector dict, StringVector words){
+List R_hunspell_suggest(std::string affix, std::string dict, StringVector words){
 
   //init with affix and at least one dict
-  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict.c_str());
+  if(!pMS)
+    throw std::runtime_error(std::string("Failed to load ") + dict.c_str());
   char * enc = pMS->get_dic_encoding();
   iconv_t cd_from = iconv_from_r(enc);
   iconv_t cd_to = iconv_to_r(enc);
-
-  //add additional dictionaries if more than one
-  for(int i = 1; i < dict.length(); i++){
-    pMS->add_dic(dict[i]);
-  }
 
   List out;
   char ** wlst;
@@ -95,18 +91,15 @@ List R_hunspell_suggest(std::string affix, CharacterVector dict, StringVector wo
 }
 
 // [[Rcpp::export]]
-List R_hunspell_analyze(std::string affix, CharacterVector dict, StringVector words){
+List R_hunspell_analyze(std::string affix, std::string dict, StringVector words){
 
   //init with affix and at least one dict
-  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict.c_str());
+  if(!pMS)
+    throw std::runtime_error(std::string("Failed to load ") + dict.c_str());
   char * enc = pMS->get_dic_encoding();
   iconv_t cd_from = iconv_from_r(enc);
   iconv_t cd_to = iconv_to_r(enc);
-
-  //add additional dictionaries if more than one
-  for(int i = 1; i < dict.length(); i++){
-    pMS->add_dic(dict[i]);
-  }
 
   List out;
   char ** wlst;
@@ -129,18 +122,13 @@ List R_hunspell_analyze(std::string affix, CharacterVector dict, StringVector wo
 }
 
 // [[Rcpp::export]]
-List R_hunspell_stem(std::string affix, CharacterVector dict, StringVector words){
+List R_hunspell_stem(std::string affix, std::string dict, StringVector words){
 
   //init with affix and at least one dict
-  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict.c_str());
   char * enc = pMS->get_dic_encoding();
   iconv_t cd_from = iconv_from_r(enc);
   iconv_t cd_to = iconv_to_r(enc);
-
-  //add additional dictionaries if more than one
-  for(int i = 1; i < dict.length(); i++){
-    pMS->add_dic(dict[i]);
-  }
 
   List out;
   char ** wlst;

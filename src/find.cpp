@@ -9,11 +9,13 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
+List R_hunspell_find(std::string affix, std::string dict, StringVector text,
                      StringVector ignore, std::string format){
 
   //init with affix and at least one dict
-  Hunspell * pMS = new Hunspell(affix.c_str(), dict[0]);
+  Hunspell * pMS = new Hunspell(affix.c_str(), dict.c_str());
+  if(!pMS)
+    throw std::runtime_error(std::string("Failed to load ") + dict.c_str());
   char * enc = pMS->get_dic_encoding();
   iconv_t cd_from = iconv_from_r(enc);
   iconv_t cd_to = iconv_to_r(enc);
@@ -33,11 +35,6 @@ List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
     p = new ManParser(wordchars);
   } else {
     throw std::runtime_error("Unknown parse format");
-  }
-
-  //add additional dictionaries if more than one
-  for(int i = 1; i < dict.length(); i++){
-    pMS->add_dic(dict[i]);
   }
 
   //add ignore words
