@@ -66,7 +66,7 @@ List R_hunspell_find(std::string affix, std::string dict, StringVector text,
     CharacterVector words;
     char * str = string_from_r(text[i], cd_from);
     if(str == NULL){
-      Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary.", i + 1, enc);
+      Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary. Try using a UTF8 dictionary.", i + 1, enc);
     } else {
       p->put_line(str);
       p->set_url_checking(1);

@@ -103,6 +103,7 @@ get_dict <- function(dict){
 dicpath <- function(){
   c(
    Sys.getenv("DICPATH", getwd()),
+   system.file("dict", package = "hunspell"), # Bundled with the package
    "~/Library/Spelling",
    "/usr/lib/rstudio/resources/dictionaries", #RS desktop, Linux
    "/usr/lib/rstudio-server/resources/dictionaries", #RS server, Linux
@@ -111,8 +112,7 @@ dicpath <- function(){
    "/usr/share/hunspell",
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
-   "/Library/Spelling",
-   system.file("dict", package = "hunspell") # Bundled with the package
+   "/Library/Spelling"
 )}
 
 find_in_dicpath <- function(name){
