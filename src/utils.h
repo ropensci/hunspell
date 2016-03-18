@@ -3,8 +3,6 @@
 #include <errno.h>
 #include <Rcpp.h>
 
-using namespace Rcpp;
-
 #ifdef _WIN32
 #define ICONV_CONST_FIX (const char**)
 #else
@@ -80,8 +78,8 @@ public:
     }
   }
 
-  CharacterVector suggest(Rcpp::String word){
-    CharacterVector res;
+  Rcpp::CharacterVector suggest(Rcpp::String word){
+    Rcpp::CharacterVector res;
     char ** wlst;
     char * str = string_from_r(word);
     if(str != NULL){
@@ -94,8 +92,8 @@ public:
     return res;
   }
 
-  CharacterVector analyze(Rcpp::String word){
-    CharacterVector res;
+  Rcpp::CharacterVector analyze(Rcpp::String word){
+    Rcpp::CharacterVector res;
     char ** wlst;
     char * str = string_from_r(word);
     if(str != NULL){
@@ -108,8 +106,8 @@ public:
     return res;
   }
 
-  CharacterVector stem(Rcpp::String word){
-    CharacterVector res;
+  Rcpp::CharacterVector stem(Rcpp::String word){
+    Rcpp::CharacterVector res;
     char ** wlst;
     char * str = string_from_r(word);
     if(str != NULL){

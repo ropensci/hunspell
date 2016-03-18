@@ -1,5 +1,7 @@
 #include "utils.h"
 
+using namespace Rcpp;
+
 // [[Rcpp::export]]
 List R_hunspell_info(std::string affix, std::string dict){
 

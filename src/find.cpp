@@ -4,9 +4,11 @@
 
 #include "utils.h"
 
+using namespace Rcpp;
+
 // [[Rcpp::export]]
 List R_hunspell_find(std::string affix, std::string dict, StringVector text,
-                     StringVector ignore, std::string format){
+                           StringVector ignore, std::string format){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
