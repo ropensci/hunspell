@@ -1,7 +1,7 @@
 Package: hunspell
 Type: Package
 Title: Spell Checker and Text Parser for R
-Version: 1.1.9003
+Version: 1.1.9005
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
 Description: A spell checker and morphological analyzer library designed for
@@ -16,4 +16,3 @@ Imports: Rcpp
 LinkingTo: Rcpp
 Suggests: testthat
 RoxygenNote: 5.0.1
-Encoding: UTF-8
