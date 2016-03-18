@@ -6,20 +6,28 @@
 #' a list with incorrect words for each line. Finally \code{\link{hunspell_suggest}}
 #' is used to suggest correct alternatives for each (incorrect) input word.
 #'
-#' The functions \code{\link{hunspell_analyze}} and \code{\link{hunspell_stem}}
-#' try to break down a word and return it's structure or stem word(s). Stemming is
-#' useful for making summarizing text, e.g. with a wordcloud.
+#' The \code{\link{hunspell_analyze}} function shows how a word breaks down into a
+#' valid stem plus affix. The \code{\link{hunspell_stem}} function only returns valid
+#' stems for a given word. Hunspell uses a special dictionary format that defines
+#' which stems and affixes are valid in a given language. Among other things, stemming
+#' can be used to summarize text (e.g wordcloud).
 #'
-#' The package searches in the standard system locations for dictionaries. To specify
-#' a custom directory, one needs to set the \code{DICPATH} environment variable.
-#' A US english dictionary is included with the package. Other dictionaries need to
-#' be installed by the system. Most distributions ship dictionaries in packages, such
+#' The package searches in the standard system locations for dictionaries. Additional
+#' custom search paths can be added by setting the \code{DICPATH} environment variable.
+#' A US english dictionary is included with the package; other dictionaries need to
+#' be installed by the system. Most distributions include standard dictionaries, such
 #' as \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
 #' \href{https://packages.debian.org/sid/myspell-en-gb}{myspell-en-gb}.
-#' To manually install a dictionary, download the \code{.aff} and \code{.dic} file from
-#' an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
+#' To manually install dictionaries, download the \code{.aff} and \code{.dic} file
+#' from an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
 #' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
-#' Several UTF8 dictionaries are available from \href{https://github.com/titoBouzout/Dictionaries}{Github} too.
+#' and copy them to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
+#'
+#' Note that \code{hunspell_find} uses iconv to convert input text to the encoding
+#' used by the specified dictionary. This will fail if \code{text} contains characters
+#' which are not supported by the encoding. For this reason it is safest to use UTF8
+#' dictionaries which can represent all unicode characters. Several UTF8 dictionaries are
+#' available from \href{https://github.com/titoBouzout/Dictionaries}{Github}.
 #'
 #' @rdname hunspell
 #' @aliases hunspell en_stats dicpath
@@ -109,7 +117,7 @@ get_dict <- function(dict){
 dicpath <- function(){
   c(
    Sys.getenv("DICPATH", getwd()),
-   "~/Library/Spelling",
+   normalizePath("~/Library/Spelling", mustWork = FALSE),
    "/usr/share/hunspell",
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
