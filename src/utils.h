@@ -1,10 +1,26 @@
-using namespace Rcpp;
+#ifdef _WIN32
+#define ICONV_CONST_FIX (const char**)
+#else
+#define ICONV_CONST_FIX
+#endif
 
 class hunspell_dict {
   Hunspell * pMS_;
   char * enc_;
   iconv_t cd_from_;
   iconv_t cd_to_;
+
+private:
+  iconv_t new_iconv(const char * from, const char * to){
+    iconv_t cd = iconv_open(to, from);
+    if(cd == (iconv_t) -1){
+      switch(errno){
+        case EINVAL: throw std::runtime_error(std::string("Unsupported iconv conversion: ") + from + "to" + to);
+        default: throw std::runtime_error("General error in iconv_open()");
+      }
+    }
+    return cd;
+  }
 
 public:
   // Some strings are regular strings
@@ -15,8 +31,8 @@ public:
     enc_ = pMS_->get_dic_encoding();
     if(!enc_)
       throw std::runtime_error("Failed to lookup encoding for dictionary");
-    cd_from_ = iconv_from_r(enc_);
-    cd_to_ = iconv_to_r(enc_);
+    cd_from_ = new_iconv("UTF-8", enc_);
+    cd_to_ = new_iconv(enc_, "UTF-8");
   }
 
   ~hunspell_dict() {
@@ -40,7 +56,7 @@ public:
   }
 
   bool spell(Rcpp::String word){
-    char * str = string_from_r(word, cd_from_);
+    char * str = string_from_r(word);
     // Words that cannot be converted into the required encoding are by definition incorrect
     if(str == NULL)
       return false;
@@ -50,7 +66,7 @@ public:
   }
 
   void add_word(Rcpp::String word){
-    char * str = string_from_r(word, cd_from_);
+    char * str = string_from_r(word);
     if(str != NULL) {
       pMS_->add(str);
       free(str);
@@ -60,12 +76,12 @@ public:
   CharacterVector suggest(Rcpp::String word){
     CharacterVector res;
     char ** wlst;
-    char * str = string_from_r(word, cd_from_);
+    char * str = string_from_r(word);
     if(str != NULL){
       int ns = pMS_->suggest(&wlst, str);
       free(str);
       for (int j = 0; j < ns; j++)
-        res.push_back(string_to_r(wlst[j], cd_to_));
+        res.push_back(string_to_r(wlst[j]));
       pMS_->free_list(&wlst, ns);
     }
     return res;
@@ -74,12 +90,12 @@ public:
   CharacterVector analyze(Rcpp::String word){
     CharacterVector res;
     char ** wlst;
-    char * str = string_from_r(word, cd_from_);
+    char * str = string_from_r(word);
     if(str != NULL){
       int ns = pMS_->analyze(&wlst, str);
       free(str);
       for (int j = 0; j < ns; j++)
-        res.push_back(string_to_r(wlst[j], cd_to_));
+        res.push_back(string_to_r(wlst[j]));
       pMS_->free_list(&wlst, ns);
     }
     return res;
@@ -88,12 +104,12 @@ public:
   CharacterVector stem(Rcpp::String word){
     CharacterVector res;
     char ** wlst;
-    char * str = string_from_r(word, cd_from_);
+    char * str = string_from_r(word);
     if(str != NULL){
       int ns = pMS_->stem(&wlst, str);
       free(str);
       for (int j = 0; j < ns; j++)
-        res.push_back(string_to_r(wlst[j], cd_to_));
+        res.push_back(string_to_r(wlst[j]));
       pMS_->free_list(&wlst, ns);
     }
     return res;
@@ -116,5 +132,41 @@ public:
 
   char * wc(){
     return (char *) pMS_->get_wordchars();
+  }
+
+  char * string_from_r(Rcpp::String str){
+    str.set_encoding(CE_UTF8);
+    char * inbuf = (char *) str.get_cstring();
+    size_t inlen = strlen(inbuf);
+    size_t outlen = 4 * inlen + 1;
+    char * output = (char *) malloc(outlen);
+    char * cur = output;
+    size_t success = iconv(cd_from_, ICONV_CONST_FIX &inbuf, &inlen, &cur, &outlen);
+    if(success == (size_t) -1){
+      free(output);
+      return NULL;
+    }
+    *cur = '\0';
+    output = (char *) realloc(output, outlen + 1);
+    return output;
+  }
+
+  Rcpp::String string_to_r(char * inbuf){
+    if(inbuf == NULL)
+      return NA_STRING;
+    size_t inlen = strlen(inbuf);
+    size_t outlen = 4 * inlen + 1;
+    char * output = (char *) malloc(outlen);
+    char * cur = output;
+    size_t success = iconv(cd_to_, ICONV_CONST_FIX &inbuf, &inlen, &cur, &outlen);
+    if(success == (size_t) -1){
+      free(output);
+      return NA_STRING;
+    }
+    *cur = '\0';
+    Rcpp::String res = Rcpp::String(output);
+    res.set_encoding(CE_UTF8);
+    free(output);
+    return res;
   }
 };

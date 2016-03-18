@@ -1,7 +1,7 @@
 Package: hunspell
 Type: Package
 Title: Spell Checker and Text Parser for R
-Version: 1.1.9006
+Version: 1.1.9007
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
 Description: A spell checker and morphological analyzer library designed for

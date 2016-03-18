@@ -3,8 +3,10 @@
 #include "parsers/latexparser.hxx"
 #include "parsers/manparser.hxx"
 
+#include <iconv.h>
 #include <Rcpp.h>
-#include "convert.h"
+using namespace Rcpp;
+
 #include "utils.h"
 
 // [[Rcpp::export]]
@@ -52,7 +54,7 @@ List R_hunspell_find(std::string affix, std::string dict, StringVector text,
   char * token;
   for(int i = 0; i < text.length(); i++){
     CharacterVector words;
-    char * str = string_from_r(text[i], mydict.cd_from());
+    char * str = mydict.string_from_r(text[i]);
     if(str == NULL){
       Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary. Try using a UTF8 dictionary.", i + 1, mydict.enc());
     } else {
@@ -60,7 +62,7 @@ List R_hunspell_find(std::string affix, std::string dict, StringVector text,
       p->set_url_checking(1);
       while ((token=p->next_token())) {
         if(!mydict.spell_char(token))
-          words.push_back(string_to_r(token, mydict.cd_to()));
+          words.push_back(mydict.string_to_r(token));
         free(token);
       }
       free(str);

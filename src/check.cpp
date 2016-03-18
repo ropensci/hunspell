@@ -1,6 +1,9 @@
 #include <hunspell.hxx>
+
+#include <iconv.h>
 #include <Rcpp.h>
-#include "convert.h"
+using namespace Rcpp;
+
 #include "utils.h"
 
 // [[Rcpp::export]]
@@ -11,7 +14,7 @@ List R_hunspell_info(std::string affix, std::string dict){
   return List::create(
     _["dict"] = dict,
     _["encoding"] = CharacterVector(mydict.enc()),
-    _["wordchars"] = CharacterVector(string_to_r(mydict.wc(), mydict.cd_to()))
+    _["wordchars"] = mydict.string_to_r(mydict.wc())
   );
 }
 
