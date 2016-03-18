@@ -7,7 +7,7 @@ test_that("Dictionaries are by path",{
   expect_equal(hunspell_info("../testdict/russian-aot")$encoding, "KOI8-R")
 })
 
-# DICPATH gets preference, even when a system 'en_US' dict is found
+# DICPATH gets preference, even when a system 'ru_RU' dict is found
 Sys.setenv(DICPATH=normalizePath("../testdict", mustWork = TRUE))
 
 test_that("Dictionaries are found",{

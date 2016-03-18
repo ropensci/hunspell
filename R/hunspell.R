@@ -127,12 +127,12 @@ get_dict <- function(dict){
 dicpath <- function(){
   c(
    Sys.getenv("DICPATH", getwd()),
+   system.file("dict", package = "hunspell"), # Bundled with the R package
    normalizePath("~/Library/Spelling", mustWork = FALSE),
    "/usr/share/hunspell",
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
    "/Library/Spelling",
-   system.file("dict", package = "hunspell"), # Bundled with the R package
    file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
   )
 }
