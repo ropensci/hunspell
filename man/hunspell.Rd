@@ -38,10 +38,10 @@ The default is \code{en_stats} which is included with base R.}
 \item{format}{input format; supported parsers are \code{text}, \code{latex} or \code{man}}
 }
 \description{
-The \code{\link{hunspell_check}} function takes a vector of words and checks
-each individual word for correctness. The \code{\link{hunspell_find}} function
-takes a character vector with text (in plain, latex or man format) and returns
-a list with incorrect words for each line. Finally \code{\link{hunspell_suggest}}
+The \code{\link{hunspell_check}} function takes a vector of individualwords and tests
+each one for correctness. The \code{\link{hunspell_find}} function takes a character
+vector with text (plain, latex or man format), parses out the words and returns a
+list with incorrect words for each line. Finally \code{\link{hunspell_suggest}}
 is used to suggest correct alternatives for each (incorrect) input word.
 }
 \details{
@@ -59,30 +59,30 @@ as \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
 \href{https://packages.debian.org/sid/myspell-en-gb}{myspell-en-gb}.
 To manually install dictionaries, download the \code{.aff} and \code{.dic} file
 from an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
-or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
+or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}
 and copy them to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
 
 Note that \code{hunspell_find} uses iconv to convert input text to the encoding
-used by the specified dictionary. This will fail if \code{text} contains characters
-which are not supported by the encoding. For this reason it is safest to use UTF8
+used by the dictionary. This will fail if \code{text} contains characters which are
+unsupported by that particular encoding. For this reason it is safer to use UTF8
 dictionaries which can represent all unicode characters. Several UTF8 dictionaries are
 available from \href{https://github.com/titoBouzout/Dictionaries}{Github}.
 }
 \examples{
-#check individual words
+# Check individual words
 words <- c("beer", "wiskey", "wine")
 correct <- hunspell_check(words)
 print(correct)
 
-# find suggestions for incorrect words
+# Find suggestions for incorrect words
 hunspell_suggest(words[!correct])
 
-# find incorrect words in piece of text
+# Extract incorrect from a piece of text
 bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
 print(bad[[1]])
 hunspell_suggest(bad[[1]])
 
-# check a latex document
+# Check an entire latex document
 setwd(tempdir())
 download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 untar("1406.4806v1.tar.gz")
