@@ -7,13 +7,19 @@
 #' is used to suggest correct alternatives for each (incorrect) input word.
 #'
 #' The functions \code{\link{hunspell_analyze}} and \code{\link{hunspell_stem}}
-#' try to break down a word and return it's structure or stem word(s).
+#' try to break down a word and return it's structure or stem word(s). Stemming is
+#' useful for making summarizing text, e.g. with a wordcloud.
 #'
-#' Currently only US english dictionary is included with the package. Additional
-#' dictrionaries can be downloaded from an OpenOffice
-#' \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
+#' The package searches in the standard system locations for dictionaries. To specify
+#' a custom directory, one needs to set the \code{DICPATH} environment variable.
+#' A US english dictionary is included with the package. Other dictionaries need to
+#' be installed by the system. Most distributions ship dictionaries in packages, such
+#' as \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
+#' \href{https://packages.debian.org/sid/myspell-en-gb}{myspell-en-gb}.
+#' To manually install a dictionary, download the \code{.aff} and \code{.dic} file from
+#' an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
 #' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}.
-#' UTF8 dictionaries are available from \url{https://github.com/titoBouzout/Dictionaries}.
+#' Several UTF8 dictionaries are available from \href{https://github.com/titoBouzout/Dictionaries}{Github} too.
 #'
 #' @rdname hunspell
 #' @aliases hunspell en_stats dicpath
