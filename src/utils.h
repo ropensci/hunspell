@@ -1,3 +1,4 @@
+#include <hunspell.hxx>
 #include <iconv.h>
 #include <errno.h>
 #include <Rcpp.h>

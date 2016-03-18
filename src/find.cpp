@@ -1,4 +1,3 @@
-#include <hunspell.hxx>
 #include "parsers/textparser.hxx"
 #include "parsers/latexparser.hxx"
 #include "parsers/manparser.hxx"

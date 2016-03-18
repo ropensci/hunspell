@@ -1,4 +1,3 @@
-#include <hunspell.hxx>
 #include "utils.h"
 
 // [[Rcpp::export]]
