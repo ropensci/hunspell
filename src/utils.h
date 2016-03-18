@@ -1,3 +1,9 @@
+#include <iconv.h>
+#include <errno.h>
+#include <Rcpp.h>
+
+using namespace Rcpp;
+
 #ifdef _WIN32
 #define ICONV_CONST_FIX (const char**)
 #else

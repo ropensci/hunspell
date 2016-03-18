@@ -1,11 +1,13 @@
 context("Test UTF8 dict")
 
-# needed because testthat doesn't parse UTF8 source code on windows
-utf8 <- function(x){
-  Encoding(x) <- "UTF-8"
-  x
-}
+# Test that we can find a dictionary by full path
+test_that("Dictionaries are by path",{
+  expect_equal(hunspell_info(paste0(system.file("dict", package = "hunspell"), "/en_US"))$encoding, "UTF-8")
+  expect_equal(hunspell_info("../testdict/ru_RU")$encoding, "UTF-8")
+  expect_equal(hunspell_info("../testdict/russian-aot")$encoding, "KOI8-R")
+})
 
+# DICPATH gets preference, even when a system 'en_US' dict is found
 Sys.setenv(DICPATH=normalizePath("../testdict", mustWork = TRUE))
 
 test_that("Dictionaries are found",{
@@ -15,6 +17,12 @@ test_that("Dictionaries are found",{
   expect_equal(hunspell_info("russian-aot")$encoding, "KOI8-R")
   expect_equal(nchar(hunspell_info("russian-aot")$wordchars), 122)
 })
+
+# needed because testthat doesn't parse UTF8 source code on windows
+utf8 <- function(x){
+  Encoding(x) <- "UTF-8"
+  x
+}
 
 test_that("UTF8 always works", {
   str1 <- utf8("К сожалению, мне (нам) пора идти")

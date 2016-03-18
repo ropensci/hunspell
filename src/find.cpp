@@ -3,10 +3,6 @@
 #include "parsers/latexparser.hxx"
 #include "parsers/manparser.hxx"
 
-#include <iconv.h>
-#include <Rcpp.h>
-using namespace Rcpp;
-
 #include "utils.h"
 
 // [[Rcpp::export]]

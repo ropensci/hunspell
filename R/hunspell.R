@@ -122,16 +122,16 @@ dicpath <- function(){
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
    "/Library/Spelling",
-   system.file("dict", package = "hunspell"), # Bundled with the package
+   system.file("dict", package = "hunspell"), # Bundled with the R package
    file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
-)}
+  )
+}
 
 find_in_dicpath <- function(name){
-  paths <- file.path(dicpath(), name)
+  paths <- c(normalizePath(name, mustWork = FALSE), file.path(dicpath(), name))
   found <- file.exists(paths)
-  if(any(found)){
+  if(any(found))
     return(paths[found][1])
-  }
   stop("Dictionary file not found: ", name, call. = FALSE)
 }
 
