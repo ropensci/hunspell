@@ -115,10 +115,7 @@ dicpath <- function(){
    "/usr/share/myspell/dicts",
    "/Library/Spelling",
    system.file("dict", package = "hunspell"), # Bundled with the package
-   "/usr/lib/rstudio/resources/dictionaries", #RS desktop, Linux
-   "/usr/lib/rstudio-server/resources/dictionaries", #RS server, Linux
-   "/Applications/RStudio.app/Contents/Resources/resources/dictionaries", #OSX
-   "C:/Program Files/RStudio/resources/dictionaries" #Win
+   file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
 )}
 
 find_in_dicpath <- function(name){
