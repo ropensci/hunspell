@@ -12,16 +12,20 @@
 #' which stems and affixes are valid in a given language. Among other things, stemming
 #' can be used to summarize text (e.g wordcloud).
 #'
-#' The package searches in the standard system locations for dictionaries. Additional
-#' custom search paths can be added by setting the \code{DICPATH} environment variable.
-#' A US english dictionary is included with the package; other dictionaries need to
-#' be installed by the system. Most distributions include standard dictionaries, such
-#' as \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
+#' The package searches for dictionaries in the working directory as well as in the
+#' standard system dictionary locations. Additional search paths can be added by setting
+#' the \code{DICPATH} environment variable. A US english dictionary is included with
+#' the package; other dictionaries need to be installed by the system. Most operating
+#' systems already include standard dictionaries with names such as
+#' \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
 #' \href{https://packages.debian.org/sid/myspell-en-gb}{myspell-en-gb}.
+#'
 #' To manually install dictionaries, download the \code{.aff} and \code{.dic} file
 #' from an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
 #' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}
 #' and copy them to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
+#' Alternatively you can pass the entire path to the \code{.aff} and \code{.dic} file
+#' as the \code{dict} paramter.
 #'
 #' Note that \code{hunspell_find} uses iconv to convert input text to the encoding
 #' used by the dictionary. This will fail if \code{text} contains characters which are
@@ -65,7 +69,8 @@
 hunspell_check <- function(words, ignore = en_stats, dict = "en_US"){
   stopifnot(is.character(words))
   stopifnot(is.character(ignore))
-  R_hunspell_check(get_affix(dict), get_dict(dict), words, ignore)
+  dicpath <- get_dict(dict)
+  R_hunspell_check(get_affix(dicpath), dicpath, words, ignore)
 }
 
 #' @rdname hunspell
@@ -74,42 +79,47 @@ hunspell_find <- function(text, ignore = en_stats, format = c("text", "man", "la
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  R_hunspell_find(get_affix(dict), get_dict(dict), text, ignore, format)
+  dicpath <- get_dict(dict)
+  R_hunspell_find(get_affix(dicpath), dicpath, text, ignore, format)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_suggest <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  R_hunspell_suggest(get_affix(dict), get_dict(dict), words)
+  dicpath <- get_dict(dict)
+  R_hunspell_suggest(get_affix(dicpath), dicpath, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_analyze <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  R_hunspell_analyze(get_affix(dict), get_dict(dict), words)
+  dicpath <- get_dict(dict)
+  R_hunspell_analyze(get_affix(dicpath), dicpath, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_stem <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  R_hunspell_stem(get_affix(dict), get_dict(dict), words)
+  dicpath <- get_dict(dict)
+  R_hunspell_stem(get_affix(dicpath), dicpath, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_info <- function(dict = "en_US"){
-  R_hunspell_info(get_affix(dict), get_dict(dict))
+  dicpath <- get_dict(dict)
+  R_hunspell_info(get_affix(dicpath), dicpath)
 }
 
-get_affix <- function(dict){
-  files <- vapply(paste0(dict, ".aff"), find_in_dicpath, character(1))
-  normalizePath(files, mustWork = TRUE)
+get_affix <- function(dicpath){
+  normalizePath(sub("\\.dic$", ".aff", dicpath), mustWork = TRUE)
 }
 
 get_dict <- function(dict){
+  dict <- sub("\\.(dic|aff)$", "", dict)
   files <- vapply(paste0(dict, ".dic"), find_in_dicpath, character(1))
   normalizePath(files, mustWork = TRUE)
 }

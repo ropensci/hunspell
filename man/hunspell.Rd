@@ -51,16 +51,20 @@ stems for a given word. Hunspell uses a special dictionary format that defines
 which stems and affixes are valid in a given language. Among other things, stemming
 can be used to summarize text (e.g wordcloud).
 
-The package searches in the standard system locations for dictionaries. Additional
-custom search paths can be added by setting the \code{DICPATH} environment variable.
-A US english dictionary is included with the package; other dictionaries need to
-be installed by the system. Most distributions include standard dictionaries, such
-as \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
+The package searches for dictionaries in the working directory as well as in the
+standard system dictionary locations. Additional search paths can be added by setting
+the \code{DICPATH} environment variable. A US english dictionary is included with
+the package; other dictionaries need to be installed by the system. Most operating
+systems already include standard dictionaries with names such as
+\href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
 \href{https://packages.debian.org/sid/myspell-en-gb}{myspell-en-gb}.
+
 To manually install dictionaries, download the \code{.aff} and \code{.dic} file
 from an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
 or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}
 and copy them to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
+Alternatively you can pass the entire path to the \code{.aff} and \code{.dic} file
+as the \code{dict} paramter.
 
 Note that \code{hunspell_find} uses iconv to convert input text to the encoding
 used by the dictionary. This will fail if \code{text} contains characters which are
