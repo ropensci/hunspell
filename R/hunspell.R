@@ -120,8 +120,7 @@ get_affix <- function(dicpath){
 
 get_dict <- function(dict){
   dict <- sub("\\.(dic|aff)$", "", dict)
-  files <- vapply(paste0(dict, ".dic"), find_in_dicpath, character(1))
-  normalizePath(files, mustWork = TRUE)
+  normalizePath(find_in_dicpath(paste0(dict, ".dic")), mustWork = TRUE)
 }
 
 dicpath <- function(){
