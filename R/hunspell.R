@@ -1,6 +1,6 @@
 #' Hunspell Spell Checking
 #'
-#' The \code{\link{hunspell_check}} function takes a vector of individualwords and tests
+#' The \code{\link{hunspell_check}} function takes a vector of individual words and tests
 #' each one for correctness. The \code{\link{hunspell_find}} function takes a character
 #' vector with text (plain, latex or man format), parses out the words and returns a
 #' list with incorrect words for each line. Finally \code{\link{hunspell_suggest}}
@@ -14,7 +14,7 @@
 #'
 #' The package searches for dictionaries in the working directory as well as in the
 #' standard system dictionary locations. Additional search paths can be added by setting
-#' the \code{DICPATH} environment variable. A US english dictionary is included with
+#' the \code{DICPATH} environment variable. A US-English dictionary is included with
 #' the package; other dictionaries need to be installed by the system. Most operating
 #' systems already include standard dictionaries with names such as
 #' \href{https://packages.debian.org/sid/hunspell-en-gbl}{hunspell-en-gb} or
@@ -25,7 +25,7 @@
 #' or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}
 #' and copy them to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
 #' Alternatively you can pass the entire path to the \code{.aff} and \code{.dic} file
-#' as the \code{dict} paramter.
+#' as the \code{dict} parameter.
 #'
 #' Note that \code{hunspell_find} uses iconv to convert input text to the encoding
 #' used by the dictionary. This will fail if \code{text} contains characters which are
@@ -36,7 +36,7 @@
 #' @rdname hunspell
 #' @aliases hunspell en_stats dicpath
 #' @export en_stats dicpath
-#' @param words character vector with individual words to spellcheck
+#' @param words character vector with individual words to spell check
 #' @param text character vector with arbitrary input text
 #' @param ignore character vector with additional approved words for the dictionary.
 #' The default is \code{en_stats} which is included with base R.
