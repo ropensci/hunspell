@@ -28,8 +28,7 @@ hunspell_info(dict = "en_US")
 \arguments{
 \item{text}{character vector with arbitrary input text}
 
-\item{ignore}{character vector with additional approved words for the dictionary.
-The default is \code{en_stats} which is included with base R.}
+\item{ignore}{character vector with additional approved words added to the dictionary}
 
 \item{format}{input format; supported parsers are \code{text}, \code{latex} or \code{man}}
 
@@ -38,9 +37,10 @@ The default is \code{en_stats} which is included with base R.}
 \item{words}{character vector with individual words to spell check}
 }
 \description{
-The \code{\link{hunspell_find}} function takes a character vector with text
-(plain, latex or man format), parses out the words and returns a list with
-incorrect words for each line. See details for operations on individual words.
+The \code{\link{hunspell_find}} function takes a character vector
+with text (plain, latex or man format), parses out the words and returns a list
+with incorrect words for each line. See details for low-level operations
+on individual words.
 }
 \details{
 Hunspell uses a special dictionary format that defines which stems and affixes are
