@@ -67,21 +67,20 @@
 #' text <- readLines("content.tex", warn = FALSE)
 #' words <- hunspell_find(text, format = "latex")
 #' sort(unique(unlist(words)))
-hunspell_find <- function(text, ignore = en_stats, format = c("text", "man", "latex"),  dict = "en_US"){
+hunspell_find <- function(text, format = c("text", "man", "latex"), dict = "en_US", ignore = en_stats){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
   dicpath <- get_dict(dict)
-  R_hunspell_find(get_affix(dicpath), dicpath, text, ignore, format)
+  R_hunspell_find(get_affix(dicpath), dicpath, text, format, ignore)
 }
 
 #' @rdname hunspell
 #' @export
-hunspell_check <- function(words, ignore = en_stats, dict = "en_US"){
+hunspell_check <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  stopifnot(is.character(ignore))
   dicpath <- get_dict(dict)
-  R_hunspell_check(get_affix(dicpath), dicpath, words, ignore)
+  R_hunspell_check(get_affix(dicpath), dicpath, words)
 }
 
 #' @rdname hunspell

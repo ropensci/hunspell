@@ -18,16 +18,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // R_hunspell_check
-LogicalVector R_hunspell_check(std::string affix, std::string dict, StringVector words, StringVector ignore);
-RcppExport SEXP hunspell_R_hunspell_check(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP, SEXP ignoreSEXP) {
+LogicalVector R_hunspell_check(std::string affix, std::string dict, StringVector words);
+RcppExport SEXP hunspell_R_hunspell_check(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
     Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type words(wordsSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type ignore(ignoreSEXP);
-    __result = Rcpp::wrap(R_hunspell_check(affix, dict, words, ignore));
+    __result = Rcpp::wrap(R_hunspell_check(affix, dict, words));
     return __result;
 END_RCPP
 }
@@ -71,17 +70,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // R_hunspell_find
-List R_hunspell_find(std::string affix, std::string dict, StringVector text, StringVector ignore, std::string format);
-RcppExport SEXP hunspell_R_hunspell_find(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP ignoreSEXP, SEXP formatSEXP) {
+List R_hunspell_find(std::string affix, std::string dict, StringVector text, std::string format, StringVector ignore);
+RcppExport SEXP hunspell_R_hunspell_find(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP formatSEXP, SEXP ignoreSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
     Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type text(textSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type ignore(ignoreSEXP);
     Rcpp::traits::input_parameter< std::string >::type format(formatSEXP);
-    __result = Rcpp::wrap(R_hunspell_find(affix, dict, text, ignore, format));
+    Rcpp::traits::input_parameter< StringVector >::type ignore(ignoreSEXP);
+    __result = Rcpp::wrap(R_hunspell_find(affix, dict, text, format, ignore));
     return __result;
 END_RCPP
 }

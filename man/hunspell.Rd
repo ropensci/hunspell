@@ -12,10 +12,10 @@
 \alias{hunspell_suggest}
 \title{Hunspell Spell Checking}
 \usage{
-hunspell_find(text, ignore = en_stats, format = c("text", "man", "latex"),
-  dict = "en_US")
+hunspell_find(text, format = c("text", "man", "latex"), dict = "en_US",
+  ignore = en_stats)
 
-hunspell_check(words, ignore = en_stats, dict = "en_US")
+hunspell_check(words, dict = "en_US")
 
 hunspell_suggest(words, dict = "en_US")
 
@@ -28,11 +28,11 @@ hunspell_info(dict = "en_US")
 \arguments{
 \item{text}{character vector with arbitrary input text}
 
-\item{ignore}{character vector with additional approved words added to the dictionary}
-
 \item{format}{input format; supported parsers are \code{text}, \code{latex} or \code{man}}
 
 \item{dict}{dictionary language, see details}
+
+\item{ignore}{character vector with additional approved words added to the dictionary}
 
 \item{words}{character vector with individual words to spell check}
 }

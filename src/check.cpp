@@ -15,13 +15,10 @@ List R_hunspell_info(std::string affix, std::string dict){
 }
 
 // [[Rcpp::export]]
-LogicalVector R_hunspell_check(std::string affix, std::string dict, StringVector words, StringVector ignore){
+LogicalVector R_hunspell_check(std::string affix, std::string dict, StringVector words){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
-
-  //add ignore words
-  mydict.add_words(ignore);
 
   //check all words
   LogicalVector out;
