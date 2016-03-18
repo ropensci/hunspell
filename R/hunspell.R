@@ -32,7 +32,7 @@
 #' Note that \code{hunspell_find} uses \code{\link{iconv}} to convert input text to
 #' the encoding used by the dictionary. This will fail if \code{text} contains characters
 #' which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
-#' are preferrable over legacy 8bit dictionaires. Several UTF8 dictionaries are
+#' are preferable over legacy 8bit dictionaries Several UTF8 dictionaries are
 #' available from \href{https://github.com/titoBouzout/Dictionaries}{Github}.
 #'
 #' @rdname hunspell
