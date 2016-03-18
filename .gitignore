@@ -9,3 +9,4 @@ src/*.a
 src/Makevars
 inst/doc
 windows
+*DS_Store
