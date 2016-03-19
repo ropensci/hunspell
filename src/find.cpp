@@ -61,7 +61,6 @@ public:
     CharacterVector words;
     char * token;
     char * str = mydict->string_from_r(txt);
-    Rprintf("adding text %s\n", str);
     if(str == NULL){
       Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary. Try using a UTF8 dictionary.", i + 1, mydict->enc());
     } else {
