@@ -48,12 +48,12 @@ public:
   CharacterVector parse(String txt){
     char * token;
     CharacterVector output;
-    //txt.set_encoding(CE_UTF8);
+    txt.set_encoding(CE_UTF8);
     parser->put_line((char*) txt.get_cstring());
     parser->set_url_checking(1);
     while ((token=parser->next_token())) {
       String x(token);
-      x.set_encoding(txt.get_encoding());
+      x.set_encoding(CE_UTF8);
       output.push_back(x);
       free(token);
     }
