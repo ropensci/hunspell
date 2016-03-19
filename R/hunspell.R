@@ -1,4 +1,4 @@
-#' Hunspell Spell Checking
+#' Hunspell Spell Checking and Morphological Analysis
 #'
 #' The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
 #' errors within a text document. It takes a character vector with text (\code{plain},

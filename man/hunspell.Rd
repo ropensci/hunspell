@@ -11,7 +11,7 @@
 \alias{hunspell_parse}
 \alias{hunspell_stem}
 \alias{hunspell_suggest}
-\title{Hunspell Spell Checking}
+\title{Hunspell Spell Checking and Morphological Analysis}
 \usage{
 hunspell(text, format = c("text", "man", "latex"), dict = "en_US",
   ignore = en_stats)
