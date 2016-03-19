@@ -45,19 +45,22 @@ public:
     } catch (...) {}
   }
 
-  Rcpp::CharacterVector parse(char * txt){
+  CharacterVector parse(String txt){
     char * token;
-    CharacterVector words;
-    parser->put_line(txt);
+    CharacterVector output;
+    //txt.set_encoding(CE_UTF8);
+    parser->put_line((char*) txt.get_cstring());
     parser->set_url_checking(1);
     while ((token=parser->next_token())) {
-      words.push_back(token);
+      String x(token);
+      x.set_encoding(txt.get_encoding());
+      output.push_back(x);
       free(token);
     }
-    return words;
+    return output;
   }
 
-  Rcpp::CharacterVector check(Rcpp::String txt, int i){
+  CharacterVector check(String txt, int i){
     CharacterVector words;
     char * token;
     char * str = mydict->string_from_r(txt);
