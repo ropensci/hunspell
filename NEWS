@@ -1,4 +1,5 @@
 1.2
+  - (Breaking) Rename 'hunspell_find' to 'hunspell'
   - Add support for other dictionaries
   - Use iconv() to convert encoding before checking
   - Use the 'en_stats' dict as default ignore list
