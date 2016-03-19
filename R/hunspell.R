@@ -1,9 +1,11 @@
 #' Hunspell Spell Checking
 #'
-#' The \code{\link{hunspell_find}} function takes a character vector
-#' with text (plain, latex or man format), parses out the words and returns a list
-#' with incorrect words for each line. See details for low-level operations
-#' on individual words.
+#' The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
+#' errors within a text document. It takes a character vector with text (\code{plain},
+#' \code{latex} or \code{man} format), parses out the words and returns a list with
+#' incorrect words for each line. It effectively combines of \code{\link{hunspell_parse}}
+#' with \code{\link{hunspell_check}} in a single step. Other functions in the package
+#' operate on individual words, see details.
 #'
 #' Hunspell uses a special dictionary format that defines which stems and affixes are
 #' valid in a given language. The \code{\link{hunspell_analyze}} function shows how a
@@ -13,6 +15,13 @@
 #' takes a vector of individual words and tests each one for correctness. Finally
 #' \code{\link{hunspell_suggest}} is used to suggest correct alternatives for each
 #' (incorrect) input word.
+#'
+#' Because spell checking is usually done on a document, the package includes some
+#' parsers to extract words from various common formats. With \code{\link{hunspell_parse}}
+#' we can parse plain-text, latex and man format. R also has a few built-in parsers
+#' such as \code{\link[tools:RdTextFilter]{RdTextFilter}} and
+#' \code{\link[tools:SweaveTeXFilter]{SweaveTeXFilter}}, see also
+#' \code{\link[utils:aspell]{?aspell}}.
 #'
 #' The package searches for dictionaries in the working directory as well as in the
 #' standard system locations. Additional search paths can be specified by setting
@@ -29,14 +38,14 @@
 #' Alternatively you can pass the entire path to the \code{.dic} file as the \code{dict}
 #' parameter.
 #'
-#' Note that \code{hunspell_find} uses \code{\link{iconv}} to convert input text to
+#' Note that \code{hunspell} uses \code{\link{iconv}} to convert input text to
 #' the encoding used by the dictionary. This will fail if \code{text} contains characters
 #' which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
 #' are preferable over legacy 8bit dictionaries Several UTF8 dictionaries are
 #' available from \href{https://github.com/titoBouzout/Dictionaries}{Github}.
 #'
 #' @rdname hunspell
-#' @aliases hunspell en_stats dicpath
+#' @aliases hunspell hunspell_find en_stats dicpath
 #' @export en_stats dicpath
 #' @param words character vector with individual words to spell check
 #' @param text character vector with arbitrary input text
@@ -46,7 +55,7 @@
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hunspell
-#' @export
+#' @export hunspell hunspell_find
 #' @examples # Check individual words
 #' words <- c("beer", "wiskey", "wine")
 #' correct <- hunspell_check(words)
@@ -56,23 +65,45 @@
 #' hunspell_suggest(words[!correct])
 #'
 #' # Extract incorrect from a piece of text
-#' bad <- hunspell_find("spell checkers are not neccessairy for langauge ninja's")
+#' bad <- hunspell("spell checkers are not neccessairy for langauge ninja's")
 #' print(bad[[1]])
 #' hunspell_suggest(bad[[1]])
+#'
+#' # Stemming
+#' words <- c("love", "loving", "lovingly", "loved", "lover", "lovely", "love")
+#' hunspell_stem(words)
+#' hunspell_analyze(words)
 #'
 #' # Check an entire latex document
 #' setwd(tempdir())
 #' download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 #' untar("1406.4806v1.tar.gz")
 #' text <- readLines("content.tex", warn = FALSE)
-#' words <- hunspell_find(text, format = "latex")
-#' sort(unique(unlist(words)))
-hunspell_find <- function(text, format = c("text", "man", "latex"), dict = "en_US", ignore = en_stats){
+#' bad_words <- hunspell(text, format = "latex")
+#' sort(unique(unlist(bad_words)))
+#'
+#' # Summarize text by stems (e.g. for wordcloud)
+#' allwords <- hunspell_parse(text, format = "latex")
+#' stems <- unlist(hunspell_stem(unlist(allwords)))
+#' words <- head(sort(table(stems), decreasing = TRUE), 200)
+hunspell <- function(text, format = c("text", "man", "latex"), dict = "en_US", ignore = en_stats){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
   dicpath <- get_dict(dict)
   R_hunspell_find(get_affix(dicpath), dicpath, text, format, ignore)
+}
+
+#for backward compatiblity
+hunspell_find <- hunspell
+
+#' @rdname hunspell
+#' @export
+hunspell_parse <- function(text, format = c("text", "man", "latex"), dict = "en_US"){
+  stopifnot(is.character(text))
+  format <- match.arg(format)
+  dicpath <- get_dict(dict)
+  R_hunspell_parse(get_affix(dicpath), dicpath, text, format)
 }
 
 #' @rdname hunspell

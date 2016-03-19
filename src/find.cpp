@@ -69,3 +69,52 @@ List R_hunspell_find(std::string affix, std::string dict, StringVector text,
   delete p;
   return out;
 }
+
+// [[Rcpp::export]]
+List R_hunspell_parse(std::string affix, std::string dict, StringVector text,
+                     std::string format){
+
+  //init with affix and at least one dict
+  hunspell_dict mydict(affix, dict);
+
+  int utf16_len;
+  unsigned short * utf16_wc = mydict.get_wordchars_utf16(&utf16_len);
+  TextParser * p = NULL;
+  if(strcmp(mydict.enc(), "UTF-8") == 0){
+    if(!format.compare("text")){
+      p = new TextParser(utf16_wc, utf16_len);
+    } else if(!format.compare("latex")){
+      p = new LaTeXParser(utf16_wc, utf16_len);
+    } else if(!format.compare("man")){
+      p = new ManParser(utf16_wc, utf16_len);
+    } else {
+      throw std::runtime_error("Unknown parse format");
+    }
+  } else {
+    // 8bit encodings, e.g. latin1 or similar
+    if(!format.compare("text")){
+      p = new TextParser(mydict.wc());
+    } else if(!format.compare("latex")){
+      p = new LaTeXParser(mydict.wc());
+    } else if(!format.compare("man")){
+      p = new ManParser(mydict.wc());
+    } else {
+      throw std::runtime_error("Unknown parse format");
+    }
+  }
+
+  List out;
+  char * token;
+  for(int i = 0; i < text.length(); i++){
+    CharacterVector words;
+    p->put_line(text[i]);
+    p->set_url_checking(1);
+    while ((token=p->next_token())) {
+      words.push_back(token);
+      free(token);
+    }
+    out.push_back(words);
+  }
+  delete p;
+  return out;
+}

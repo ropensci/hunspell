@@ -84,3 +84,17 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// R_hunspell_parse
+List R_hunspell_parse(std::string affix, std::string dict, StringVector text, std::string format);
+RcppExport SEXP hunspell_R_hunspell_parse(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP formatSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
+    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type text(textSEXP);
+    Rcpp::traits::input_parameter< std::string >::type format(formatSEXP);
+    __result = Rcpp::wrap(R_hunspell_parse(affix, dict, text, format));
+    return __result;
+END_RCPP
+}

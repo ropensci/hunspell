@@ -25,3 +25,7 @@ R_hunspell_find <- function(affix, dict, text, format, ignore) {
     .Call('hunspell_R_hunspell_find', PACKAGE = 'hunspell', affix, dict, text, format, ignore)
 }
 
+R_hunspell_parse <- function(affix, dict, text, format) {
+    .Call('hunspell_R_hunspell_parse', PACKAGE = 'hunspell', affix, dict, text, format)
+}
+
