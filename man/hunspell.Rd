@@ -72,18 +72,20 @@ Most operating systems already include compatible dictionaries with names such a
 \href{https://packages.debian.org/sid/hunspell-en-gb}{hunspell-en-gb} or
 \href{https://packages.debian.org/sid/myspell-en-gb}{myspell-en-gb}.
 
-To manually install dictionaries, download the \code{.aff} and \code{.dic} file
-from an OpenOffice \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{mirror}
-or \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{bundle}
-and copy them to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
+To manually install dictionaries, copy the corresponding \code{.aff} and \code{.dic}
+file to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
 Alternatively you can pass the entire path to the \code{.dic} file as the \code{dict}
-parameter.
+parameter. Some sources of dictionaries are
+\href{http://wordlist.aspell.net/dicts/}{SCOWL},
+\href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{OpenOffice},
+\href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{debian},
+\href{https://github.com/titoBouzout/Dictionaries}{github/titoBouzout} or
+\href{https://github.com/wooorm/dictionaries}{github/wooorm}.
 
 Note that \code{hunspell} uses \code{\link{iconv}} to convert input text to
 the encoding used by the dictionary. This will fail if \code{text} contains characters
 which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
-are preferable over legacy 8bit dictionaries Several UTF8 dictionaries are
-available from \href{https://github.com/titoBouzout/Dictionaries}{Github}.
+are preferable over legacy 8bit dictionaries.
 }
 \examples{
 # Check individual words
