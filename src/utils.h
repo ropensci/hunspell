@@ -30,16 +30,15 @@ private:
 public:
   // Some strings are regular strings
   hunspell_dict(std::string affix, Rcpp::CharacterVector dicts){
-    const char * dict = std::string(dicts[0]).c_str();
-    pMS_ = new Hunspell(affix.c_str(), dict);
+    std::string dict(dicts[0]);
+    pMS_ = new Hunspell(affix.c_str(), dict.c_str());
     if(!pMS_)
       throw std::runtime_error(std::string("Failed to load file ") + dict);
 
     //add additional dictionaries if more than one
     //assuming the same affix?? This can cause unpredictable behavior
-    for(int i = 1; i < dicts.length(); i++){
-      pMS_->add_dic(dicts[i]);
-    }
+    for(int i = 1; i < dicts.length(); i++)
+      pMS_->add_dic(std::string(dicts[0]).c_str());
 
     enc_ = pMS_->get_dic_encoding();
     if(!enc_)
