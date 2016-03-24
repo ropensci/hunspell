@@ -81,7 +81,7 @@ public:
 };
 
 // [[Rcpp::export]]
-List R_hunspell_find(std::string affix, std::string dict, StringVector text,
+List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
                      std::string format, StringVector ignore){
 
   //init with affix and at least one dict
@@ -99,7 +99,7 @@ List R_hunspell_find(std::string affix, std::string dict, StringVector text,
 }
 
 // [[Rcpp::export]]
-List R_hunspell_parse(std::string affix, std::string dict, StringVector text,
+List R_hunspell_parse(std::string affix, CharacterVector dict, StringVector text,
                      std::string format){
 
   //init with affix and at least one dict
