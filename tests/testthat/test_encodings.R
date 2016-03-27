@@ -41,7 +41,7 @@ test_that("UTF8 always works", {
   expect_equal(hunspell_parse(str4)[[1]][2], str2)
   expect_equal(hunspell_parse(str4)[[1]][7], str3)
 
-  str5 <- "Zürich"
+  str5 <- utf8("Zürich")
   expect_equal(hunspell_parse(enc2native(paste(str5, "test")))[[1]][1], str5)
   expect_equal(hunspell_parse(enc2utf8(paste(str5, "test")))[[1]][1], str5)
 

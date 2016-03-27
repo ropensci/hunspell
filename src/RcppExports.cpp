@@ -6,77 +6,77 @@
 using namespace Rcpp;
 
 // R_hunspell_info
-List R_hunspell_info(std::string affix, std::string dict);
+List R_hunspell_info(std::string affix, CharacterVector dict);
 RcppExport SEXP hunspell_R_hunspell_info(SEXP affixSEXP, SEXP dictSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     __result = Rcpp::wrap(R_hunspell_info(affix, dict));
     return __result;
 END_RCPP
 }
 // R_hunspell_check
-LogicalVector R_hunspell_check(std::string affix, std::string dict, StringVector words);
+LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVector words);
 RcppExport SEXP hunspell_R_hunspell_check(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type words(wordsSEXP);
     __result = Rcpp::wrap(R_hunspell_check(affix, dict, words));
     return __result;
 END_RCPP
 }
 // R_hunspell_suggest
-List R_hunspell_suggest(std::string affix, std::string dict, StringVector words);
+List R_hunspell_suggest(std::string affix, CharacterVector dict, StringVector words);
 RcppExport SEXP hunspell_R_hunspell_suggest(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type words(wordsSEXP);
     __result = Rcpp::wrap(R_hunspell_suggest(affix, dict, words));
     return __result;
 END_RCPP
 }
 // R_hunspell_analyze
-List R_hunspell_analyze(std::string affix, std::string dict, StringVector words);
+List R_hunspell_analyze(std::string affix, CharacterVector dict, StringVector words);
 RcppExport SEXP hunspell_R_hunspell_analyze(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type words(wordsSEXP);
     __result = Rcpp::wrap(R_hunspell_analyze(affix, dict, words));
     return __result;
 END_RCPP
 }
 // R_hunspell_stem
-List R_hunspell_stem(std::string affix, std::string dict, StringVector words);
+List R_hunspell_stem(std::string affix, CharacterVector dict, StringVector words);
 RcppExport SEXP hunspell_R_hunspell_stem(SEXP affixSEXP, SEXP dictSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type words(wordsSEXP);
     __result = Rcpp::wrap(R_hunspell_stem(affix, dict, words));
     return __result;
 END_RCPP
 }
 // R_hunspell_find
-List R_hunspell_find(std::string affix, std::string dict, StringVector text, std::string format, StringVector ignore);
+List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text, std::string format, StringVector ignore);
 RcppExport SEXP hunspell_R_hunspell_find(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP formatSEXP, SEXP ignoreSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type text(textSEXP);
     Rcpp::traits::input_parameter< std::string >::type format(formatSEXP);
     Rcpp::traits::input_parameter< StringVector >::type ignore(ignoreSEXP);
@@ -85,13 +85,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // R_hunspell_parse
-List R_hunspell_parse(std::string affix, std::string dict, StringVector text, std::string format);
+List R_hunspell_parse(std::string affix, CharacterVector dict, StringVector text, std::string format);
 RcppExport SEXP hunspell_R_hunspell_parse(SEXP affixSEXP, SEXP dictSEXP, SEXP textSEXP, SEXP formatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< std::string >::type affix(affixSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dict(dictSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
     Rcpp::traits::input_parameter< StringVector >::type text(textSEXP);
     Rcpp::traits::input_parameter< std::string >::type format(formatSEXP);
     __result = Rcpp::wrap(R_hunspell_parse(affix, dict, text, format));
