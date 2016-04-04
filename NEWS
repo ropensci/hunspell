@@ -1,3 +1,6 @@
+1.4
+  - Fix tokenizer in hunspell_find and hunspell_parse to work with very large strings
+
 1.2
   - (Breaking) Rename 'hunspell_find' to 'hunspell'
   - Add support for other dictionaries

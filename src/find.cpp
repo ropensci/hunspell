@@ -1,3 +1,11 @@
+/* Note: The hunspell parser crashes for large strings. Therefore we first
+ * split by whitespace before feeding to the parser, which tokenizes further
+ * using characters and punctuation from the dictionary.
+ * See also https://github.com/ropensci/hunspell/issues/5
+ */
+
+#include <cstring> //std::strtok
+
 #include "parsers/textparser.hxx"
 #include "parsers/latexparser.hxx"
 #include "parsers/manparser.hxx"
@@ -49,13 +57,17 @@ public:
     char * token;
     CharacterVector output;
     txt.set_encoding(CE_UTF8);
-    parser->put_line((char*) txt.get_cstring());
-    parser->set_url_checking(1);
-    while ((token=parser->next_token())) {
-      String x(token);
-      x.set_encoding(CE_UTF8);
-      output.push_back(x);
-      free(token);
+    char *word = std::strtok((char*) txt.get_cstring(), " \n\t");
+    while (word != NULL) {
+      parser->put_line(word);
+      parser->set_url_checking(1);
+      while ((token=parser->next_token())) {
+        String x(token);
+        x.set_encoding(CE_UTF8);
+        output.push_back(x);
+        free(token);
+      }
+      word = std::strtok(NULL, " \n\t");
     }
     return output;
   }
@@ -67,12 +79,16 @@ public:
     if(str == NULL){
       Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary. Try using a UTF8 dictionary.", i + 1, mydict->enc());
     } else {
-      parser->put_line(str);
-      parser->set_url_checking(1);
-      while ((token=parser->next_token())) {
-        if(!mydict->spell_char(token))
-          words.push_back(mydict->string_to_r(token));
-        free(token);
+      char *word = std::strtok(str, " \n\t");
+      while (word != NULL) {
+        parser->put_line(word);
+        parser->set_url_checking(1);
+        while ((token=parser->next_token())) {
+          if(!mydict->spell_char(token))
+            words.push_back(mydict->string_to_r(token));
+          free(token);
+        }
+        word = std::strtok(NULL, " \n\t");
       }
       free(str);
     }
