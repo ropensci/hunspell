@@ -57,7 +57,8 @@ public:
     char * token;
     CharacterVector output;
     txt.set_encoding(CE_UTF8);
-    char *word = std::strtok((char*) txt.get_cstring(), " \n\t");
+    char * buf = strdup(txt.get_cstring());
+    char * word = std::strtok(buf, " \n\t");
     while (word != NULL) {
       parser->put_line(word);
       parser->set_url_checking(1);
@@ -69,6 +70,7 @@ public:
       }
       word = std::strtok(NULL, " \n\t");
     }
+    free(buf);
     return output;
   }
 
@@ -79,7 +81,8 @@ public:
     if(str == NULL){
       Rf_warningcall(R_NilValue, "Failed to convert line %d to %s encoding. Cannot spell check with this dictionary. Try using a UTF8 dictionary.", i + 1, mydict->enc());
     } else {
-      char *word = std::strtok(str, " \n\t");
+      char * buf = strdup(txt.get_cstring());
+      char * word = std::strtok(buf, " \n\t");
       while (word != NULL) {
         parser->put_line(word);
         parser->set_url_checking(1);
@@ -90,6 +93,7 @@ public:
         }
         word = std::strtok(NULL, " \n\t");
       }
+      free(buf);
       free(str);
     }
     return words;
