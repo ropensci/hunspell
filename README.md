@@ -19,7 +19,7 @@
 About the R package:
 
  - Blog post: [Hunspell: Spell Checker and Text Parser for R](https://www.opencpu.org/posts/hunspell-release/)
- - Blog Post: [Stemming and Spell Checking in R](https://www.opencpu.org/posts/hunspell-1-2/)
+ - Blog post: [Stemming and Spell Checking in R](https://www.opencpu.org/posts/hunspell-1-2/)
 
 ## Hello World
 
