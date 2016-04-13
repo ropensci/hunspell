@@ -68,3 +68,5 @@ On __OS-X__ use [hunspell](https://github.com/Homebrew/homebrew-core/blob/master
 ```
 brew install libhunspell
 ```
+
+See the `?hunspell` manual page for information on how to install additional dictionaries.
