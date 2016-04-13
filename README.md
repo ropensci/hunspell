@@ -70,3 +70,4 @@ brew install hunspell
 ```
 
 See the R `?hunspell` manual page for information on how to install additional dictionaries.
+
