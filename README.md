@@ -66,7 +66,7 @@ sudo yum install hunspell-devel
 On __OS-X__ use [hunspell](https://github.com/Homebrew/homebrew-core/blob/master/Formula/hunspell.rb) from Homebrew:
 
 ```
-brew install libhunspell
+brew install hunspell
 ```
 
-See the `?hunspell` manual page for information on how to install additional dictionaries.
+See the R `?hunspell` manual page for information on how to install additional dictionaries.
