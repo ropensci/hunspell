@@ -70,3 +70,6 @@ brew install hunspell
 ```
 
 See the R `?hunspell` manual page for information on how to install additional dictionaries.
+
+[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+
