@@ -3,7 +3,7 @@
 ##### *Morphological Analysis and Spell Checker for R*
 
 [![Build Status](https://travis-ci.org/ropensci/hunspell.svg?branch=master)](https://travis-ci.org/ropensci/hunspell)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/hunspell?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/hunspell)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/hunspell?branch=master&svg=true)](https://ci.appveyor.com/project/jeroenooms/hunspell)
 [![Coverage Status](https://codecov.io/github/ropensci/hunspell/coverage.svg?branch=master)](https://codecov.io/github/ropensci/hunspell?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hunspell)](http://cran.r-project.org/package=hunspell)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/hunspell)](http://cran.r-project.org/web/packages/hunspell/index.html)
