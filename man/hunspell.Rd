@@ -75,7 +75,7 @@ Most operating systems already include compatible dictionaries with names such a
 To manually install dictionaries, copy the corresponding \code{.aff} and \code{.dic}
 file to \code{~/Library/Spelling} or a custom directory specified in \code{DICPATH}.
 Alternatively you can pass the entire path to the \code{.dic} file as the \code{dict}
-parameter. Some sources of dictionaries are
+parameter. Some popular sources of dictionaries are
 \href{http://wordlist.aspell.net/dicts/}{SCOWL},
 \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{OpenOffice},
 \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{debian},
