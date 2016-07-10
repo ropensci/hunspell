@@ -142,7 +142,6 @@ public:
   Rcpp::String r_wordchars(){
     if(is_utf8()){
       const std::vector<w_char>& vec_wordchars_utf16 = pMS_->get_wordchars_utf16();
-      const std::string& vec_wordchars = pMS_->get_wordchars();
       int wordchars_utf16_len = vec_wordchars_utf16.size();
       const w_char* wordchars_utf16 = wordchars_utf16_len ? &vec_wordchars_utf16[0] : NULL;
       return string_to_r((char*) wordchars_utf16);

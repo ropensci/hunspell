@@ -58,7 +58,6 @@ public:
     parser->put_line(str);
     parser->set_url_checking(1);
     std::string token;
-    char * line = std::strtok(str, " \n\t");
     while (parser->next_token(token)) {
       String x(token.c_str());
       x.set_encoding(CE_UTF8);
