@@ -11,9 +11,9 @@
 
 class hunspell_dict {
   Hunspell * pMS_;
-  char * enc_;
   iconv_t cd_from_;
   iconv_t cd_to_;
+  std::string enc_;
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
@@ -40,11 +40,9 @@ public:
     for(int i = 1; i < dicts.length(); i++)
       pMS_->add_dic(std::string(dicts[0]).c_str());
 
-    enc_ = pMS_->get_dic_encoding();
-    if(!enc_)
-      throw std::runtime_error("Failed to lookup encoding for dictionary");
-    cd_from_ = new_iconv("UTF-8", enc_);
-    cd_to_ = new_iconv(enc_, "UTF-8");
+    enc_ = pMS_->get_dict_encoding();
+    cd_from_ = new_iconv("UTF-8", enc_.c_str());
+    cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
   }
 
   ~hunspell_dict() {
@@ -56,15 +54,11 @@ public:
   }
 
   unsigned short * get_wordchars_utf16(int *len){
-    return pMS_->get_wordchars_utf16(len);
+    return (unsigned short *) pMS_->get_wordchars_utf16().data();
   }
 
-  char * enc(){
-    return enc_;
-  }
-
-  bool spell_char(char * word){
-    return pMS_->spell(word);
+  bool spell(std::string str){
+    return pMS_->spell(str);
   }
 
   bool spell(Rcpp::String word){
@@ -72,7 +66,7 @@ public:
     // Words that cannot be converted into the required encoding are by definition incorrect
     if(str == NULL)
       return false;
-    bool res = pMS_->spell(str);
+    bool res = pMS_->spell(std::string(str));
     free(str);
     return res;
   }
@@ -85,46 +79,45 @@ public:
     }
   }
 
+  std::string enc(){
+    return enc_;
+  }
+
+  bool is_utf8(){
+    return (
+      !strcmp(enc_.c_str(), "UTF-8") || !strcmp(enc_.c_str(), "utf8") ||
+      !strcmp(enc_.c_str(), "UTF8") ||!strcmp(enc_.c_str(), "utf-8")
+    );
+  }
+
   Rcpp::CharacterVector suggest(Rcpp::String word){
-    Rcpp::CharacterVector res;
-    char ** wlst;
     char * str = string_from_r(word);
-    if(str != NULL){
-      int ns = pMS_->suggest(&wlst, str);
-      free(str);
-      for (int j = 0; j < ns; j++)
-        res.push_back(string_to_r(wlst[j]));
-      pMS_->free_list(&wlst, ns);
+    Rcpp::CharacterVector out;
+    for (const auto& x : pMS_->suggest(str)) {
+      out.push_back(x);
     }
-    return res;
+    free(str);
+    return out;
   }
 
   Rcpp::CharacterVector analyze(Rcpp::String word){
-    Rcpp::CharacterVector res;
-    char ** wlst;
+    Rcpp::CharacterVector out;
     char * str = string_from_r(word);
-    if(str != NULL){
-      int ns = pMS_->analyze(&wlst, str);
-      free(str);
-      for (int j = 0; j < ns; j++)
-        res.push_back(string_to_r(wlst[j]));
-      pMS_->free_list(&wlst, ns);
+    for (const auto& x : pMS_->analyze(str)) {
+      out.push_back(x);
     }
-    return res;
+    free(str);
+    return out;
   }
 
   Rcpp::CharacterVector stem(Rcpp::String word){
-    Rcpp::CharacterVector res;
-    char ** wlst;
+    Rcpp::CharacterVector out;
     char * str = string_from_r(word);
-    if(str != NULL){
-      int ns = pMS_->stem(&wlst, str);
-      free(str);
-      for (int j = 0; j < ns; j++)
-        res.push_back(string_to_r(wlst[j]));
-      pMS_->free_list(&wlst, ns);
+    for (const auto& x : pMS_->stem(str)) {
+      out.push_back(x);
     }
-    return res;
+    free(str);
+    return out;
   }
 
   //adds ignore words to the dictionary
@@ -142,8 +135,24 @@ public:
     return cd_to_;
   }
 
-  char * wc(){
-    return (char *) pMS_->get_wordchars();
+  std::string wc(){
+    return pMS_->get_wordchars();
+  }
+
+  Rcpp::String r_wordchars(){
+    if(is_utf8()){
+      const std::vector<w_char>& vec_wordchars_utf16 = pMS_->get_wordchars_utf16();
+      const std::string& vec_wordchars = pMS_->get_wordchars();
+      int wordchars_utf16_len = vec_wordchars_utf16.size();
+      const w_char* wordchars_utf16 = wordchars_utf16_len ? &vec_wordchars_utf16[0] : NULL;
+      return string_to_r((char*) wordchars_utf16);
+    } else {
+      return string_to_r((char*) pMS_->get_wordchars().c_str());
+    }
+  }
+
+  std::vector<w_char> get_wordchars_utf16(){
+    return pMS_->get_wordchars_utf16();
   }
 
   char * string_from_r(Rcpp::String str){

@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -46,31 +38,34 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#ifndef _HTYPES_HXX_
+#define _HTYPES_HXX_
 
-#include "textparser.hxx"
+#define ROTATE_LEN 5
 
-/*
- * HTML Parser
- *
- */
+#define ROTATE(v, q) \
+  (v) = ((v) << (q)) | (((v) >> (32 - q)) & ((1 << (q)) - 1));
 
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
+// hentry options
+#define H_OPT (1 << 0)
+#define H_OPT_ALIASM (1 << 1)
+#define H_OPT_PHON (1 << 2)
 
- public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
+// see also csutil.hxx
+#define HENTRY_WORD(h) &(h->word[0])
 
-  virtual bool next_token(std::string&);
+// approx. number  of user defined words
+#define USERWORD 1000
 
- private:
-  int look_pattern(int col);
+struct hentry {
+  unsigned char blen;    // word length in bytes
+  unsigned char clen;    // word length in characters (different for UTF-8 enc.)
+  short alen;            // length of affix flag vector
+  unsigned short* astr;  // affix flag vector
+  struct hentry* next;   // next word with same hash code
+  struct hentry* next_homonym;  // next homonym word (with same hash code)
+  char var;      // variable fields (only for special pronounciation yet)
+  char word[1];  // variable-length word (8-bit or UTF-8 encoding)
 };
 
 #endif

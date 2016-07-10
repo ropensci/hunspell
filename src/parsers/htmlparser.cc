@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -46,31 +38,50 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <ctype.h>
 
-#include "textparser.hxx"
+#include "../hunspell/csutil.hxx"
+#include "htmlparser.hxx"
 
-/*
- * HTML Parser
- *
- */
-
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
-
- public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
-
-  virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
-};
-
+#ifndef W32
+using namespace std;
 #endif
+
+static const char* PATTERN[][2] = {{"<script", "</script>"},
+                                   {"<style", "</style>"},
+                                   {"<code", "</code>"},
+                                   {"<samp", "</samp>"},
+                                   {"<kbd", "</kbd>"},
+                                   {"<var", "</var>"},
+                                   {"<listing", "</listing>"},
+                                   {"<address", "</address>"},
+                                   {"<pre", "</pre>"},
+                                   {"<!--", "-->"},
+                                   {"<[cdata[", "]]>"},  // XML comment
+                                   {"<", ">"}};
+
+#define PATTERN_LEN (sizeof(PATTERN) / (sizeof(char*) * 2))
+
+static const char* PATTERN2[][2] = {
+    {"<img", "alt="},  // ALT and TITLE attrib handled spec.
+    {"<img", "title="},
+    {"<a ", "title="}};
+
+#define PATTERN_LEN2 (sizeof(PATTERN2) / (sizeof(char*) * 2))
+
+HTMLParser::HTMLParser(const char* wordchars) {
+  init(wordchars);
+}
+
+HTMLParser::HTMLParser(const w_char* wordchars, int len) {
+  init(wordchars, len);
+}
+
+bool HTMLParser::next_token(std::string& t) {
+  return XMLParser::next_token(PATTERN, PATTERN_LEN, PATTERN2, PATTERN_LEN2, t);
+}
+
+HTMLParser::~HTMLParser() {}

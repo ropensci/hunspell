@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -46,31 +38,53 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+/* hunzip: file decompression for sorted dictionaries with optional encryption,
+ * algorithm: prefix-suffix encoding and 16-bit Huffman encoding */
 
-#include "textparser.hxx"
+#ifndef _HUNZIP_HXX_
+#define _HUNZIP_HXX_
 
-/*
- * HTML Parser
- *
- */
+#include "hunvisapi.h"
 
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
+#include <stdio.h>
+#include <fstream>
+#include <vector>
+
+#define BUFSIZE 65536
+#define HZIP_EXTENSION ".hz"
+
+#define MSG_OPEN "error: %s: cannot open\n"
+#define MSG_FORMAT "error: %s: not in hzip format\n"
+#define MSG_MEMORY "error: %s: missing memory\n"
+#define MSG_KEY "error: %s: missing or bad password\n"
+
+struct bit {
+  unsigned char c[2];
+  int v[2];
+};
+
+class LIBHUNSPELL_DLL_EXPORTED Hunzip {
+ private:
+  Hunzip(const Hunzip&);
+  Hunzip& operator=(const Hunzip&);
+
+ protected:
+  char* filename;
+  std::ifstream fin;
+  int bufsiz, lastbit, inc, inbits, outc;
+  std::vector<bit> dec;     // code table
+  char in[BUFSIZE];         // input buffer
+  char out[BUFSIZE + 1];    // Huffman-decoded buffer
+  char line[BUFSIZE + 50];  // decoded line
+  int getcode(const char* key);
+  int getbuf();
+  int fail(const char* err, const char* par);
 
  public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
-
-  virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
+  Hunzip(const char* filename, const char* key = NULL);
+  ~Hunzip();
+  bool is_open() { return fin.is_open(); }
+  bool getline(std::string& dest);
 };
 
 #endif

@@ -60,11 +60,11 @@ class ManParser : public TextParser {
  protected:
  public:
   ManParser();
-  ManParser(const char* wc);
-  ManParser(unsigned short* wordchars, int len);
+  explicit ManParser(const char* wc);
+  ManParser(const w_char* wordchars, int len);
   virtual ~ManParser();
 
-  virtual char* next_token();
+  virtual bool next_token(std::string&);
 };
 
 #endif

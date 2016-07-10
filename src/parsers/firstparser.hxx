@@ -1,9 +1,9 @@
 /*
- * parser classes for MySpell
+ * parser classes of HunTools
  *
- * implemented: text, HTML, TeX
+ * implemented: text, HTML, TeX, first word
  *
- * Copyright (C) 2002, Laszlo Nemeth
+ * Copyright (C) 2003, Laszlo Nemeth
  *
  */
 /* ***** BEGIN LICENSE BLOCK *****
@@ -46,31 +46,22 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#ifndef _FIRSTPARSER_HXX_
+#define _FIRSTPARSER_HXX_
 
 #include "textparser.hxx"
 
 /*
- * HTML Parser
+ * Check first word of the input line
  *
  */
 
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
-
+class FirstParser : public TextParser {
  public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
+  explicit FirstParser(const char* wc);
+  virtual ~FirstParser();
 
   virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
 };
 
 #endif

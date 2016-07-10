@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -46,31 +38,38 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#ifndef __WCHARHXX__
+#define __WCHARHXX__
 
-#include "textparser.hxx"
+#include <string>
 
-/*
- * HTML Parser
- *
- */
+#ifndef GCC
+struct w_char {
+#else
+struct __attribute__((packed)) w_char {
+#endif
+  unsigned char l;
+  unsigned char h;
 
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
+  friend bool operator<(const w_char a, const w_char b) {
+    unsigned short a_idx = (a.h << 8) + a.l;
+    unsigned short b_idx = (b.h << 8) + b.l;
+    return a_idx < b_idx;
+  }
 
- public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
+  friend bool operator==(const w_char a, const w_char b) {
+    return (((a).l == (b).l) && ((a).h == (b).h));
+  }
 
-  virtual bool next_token(std::string&);
+  friend bool operator!=(const w_char a, const w_char b) {
+    return !(a == b);;
+  }
+};
 
- private:
-  int look_pattern(int col);
+// two character arrays
+struct replentry {
+  std::string pattern;
+  std::string outstrings[4]; // med, ini, fin, isol
 };
 
 #endif

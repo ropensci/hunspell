@@ -1,5 +1,5 @@
 /*
- * parser classes for MySpell
+ * HTML parser class for MySpell
  *
  * implemented: text, HTML, TeX
  *
@@ -46,31 +46,22 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#ifndef _HTMLPARSER_HXX_
+#define _HTMLPARSER_HXX_
 
-#include "textparser.hxx"
+#include "xmlparser.hxx"
 
 /*
  * HTML Parser
  *
  */
 
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
-
+class HTMLParser : public XMLParser {
  public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
-
+  explicit HTMLParser(const char* wc);
+  HTMLParser(const w_char* wordchars, int len);
   virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
+  virtual ~HTMLParser();
 };
 
 #endif

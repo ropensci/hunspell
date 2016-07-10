@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -22,15 +14,15 @@
  * The Original Code is Hunspell, based on MySpell.
  *
  * The Initial Developers of the Original Code are
- * Kevin Hendricks (MySpell) and N√©meth L√°szl√≥ (Hunspell).
+ * Kevin Hendricks (MySpell) and NÈmeth L·szlÛ (Hunspell).
  * Portions created by the Initial Developers are Copyright (C) 2002-2005
  * the Initial Developers. All Rights Reserved.
  *
  * Contributor(s): David Einstein, Davide Prina, Giuseppe Modugno,
- * Gianluca Turconi, Simon Brouwer, Noll J√°nos, B√≠r√≥ √Årp√°d,
- * Goldman Eleon√≥ra, Sarl√≥s Tam√°s, Bencs√°th Boldizs√°r, Hal√°csy P√©ter,
- * Dvornik L√°szl√≥, Gefferth Andr√°s, Nagy Viktor, Varga D√°niel, Chris Halls,
- * Rene Engelhard, Bram Moolenaar, Dafydd Jones, Harri Pitk√§nen
+ * Gianluca Turconi, Simon Brouwer, Noll J·nos, BÌrÛ ¡rp·d,
+ * Goldman EleonÛra, SarlÛs Tam·s, Bencs·th Boldizs·r, Hal·csy PÈter,
+ * Dvornik L·szlÛ, Gefferth Andr·s, Nagy Viktor, Varga D·niel, Chris Halls,
+ * Rene Engelhard, Bram Moolenaar, Dafydd Jones, Harri Pitk‰nen
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -46,31 +38,52 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
 
 #include "textparser.hxx"
+#include "htmlparser.hxx"
+#include "latexparser.hxx"
+#include "xmlparser.hxx"
 
-/*
- * HTML Parser
- *
- */
-
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
-
- public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
-
-  virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
-};
-
+#ifndef W32
+using namespace std;
 #endif
+
+int main(int argc, char** argv) {
+  FILE* f;
+  /* first parse the command line options */
+
+  if (argc < 2) {
+    fprintf(stderr, "correct syntax is:\n");
+    fprintf(stderr, "testparser file\n");
+    fprintf(stderr, "example: testparser /dev/stdin\n");
+    exit(1);
+  }
+
+  /* open the words to check list */
+  f = fopen(argv[1], "r");
+  if (!f) {
+    fprintf(stderr, "Error - could not open file of words to check\n");
+    exit(1);
+  }
+
+  TextParser* p = new TextParser(
+      "qwertzuiopasdfghjklyxcvbnmÈ·˙ı˚Û¸ˆÌQWERTZUIOPASDFGHJKLYXCVBNMÕ…¡’⁄÷‹”€");
+
+  char buf[MAXLNLEN];
+
+  while (fgets(buf, MAXLNLEN, f)) {
+    p->put_line(buf);
+    p->set_url_checking(1);
+    std::string next;
+    while (p->next_token(next)) {
+      fprintf(stdout, "token: %s\n", next.c_str());
+    }
+  }
+
+  delete p;
+  fclose(f);
+  return 0;
+}

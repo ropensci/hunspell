@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^src/Makevars$
 ^windows
 \.a$
 \.dll$

@@ -9,8 +9,8 @@ List R_hunspell_info(std::string affix, CharacterVector dict){
   hunspell_dict mydict(affix, dict);
   return List::create(
     _["dict"] = dict,
-    _["encoding"] = CharacterVector(mydict.enc()),
-    _["wordchars"] = mydict.string_to_r(mydict.wc())
+    _["encoding"] = mydict.enc(),
+    _["wordchars"] = mydict.r_wordchars()
   );
 }
 
@@ -24,8 +24,8 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVe
   LogicalVector out;
   for(int i = 0; i < words.length(); i++)
     out.push_back(mydict.spell(words[i]));
-
   return out;
+
 }
 
 // [[Rcpp::export]]

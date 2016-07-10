@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -46,31 +38,40 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#ifndef _BASEAFF_HXX_
+#define _BASEAFF_HXX_
 
-#include "textparser.hxx"
+#include <string>
 
-/*
- * HTML Parser
- *
- */
-
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
+class AffEntry {
+ private:
+  AffEntry(const AffEntry&);
+  AffEntry& operator=(const AffEntry&);
 
  public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
-
-  virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
+  AffEntry()
+      : numconds(0),
+        opts(0),
+        aflag(0),
+        morphcode(0),
+        contclass(NULL),
+        contclasslen(0) {}
+  virtual ~AffEntry();
+  std::string appnd;
+  std::string strip;
+  unsigned char numconds;
+  char opts;
+  unsigned short aflag;
+  union {
+    char conds[MAXCONDLEN];
+    struct {
+      char conds1[MAXCONDLEN_1];
+      char* conds2;
+    } l;
+  } c;
+  char* morphcode;
+  unsigned short* contclass;
+  short contclasslen;
 };
 
 #endif

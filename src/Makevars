@@ -1,0 +1,21 @@
+PKG_CPPFLAGS=-I. -Ihunspell
+PKG_CXXFLAGS=-DHAVE_CONFIG_H -DBUILDING_LIBHUNSPELL
+PKG_LIBS=-L. -lstathunspell
+CXX_STD=CXX11
+
+LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
+  hunspell/affentry.o hunspell/affixmgr.o hunspell/filemgr.o \
+  hunspell/hashmgr.o hunspell/hunspell.o hunspell/hunzip.o hunspell/phonet.o \
+  hunspell/replist.o hunspell/suggestmgr.o hunspell/csutil.o
+
+## all: clean
+
+$(SHLIB): libstathunspell.a
+
+libstathunspell.a: $(LIBHUNSPELL)
+	$(AR) rcs libstathunspell.a $(LIBHUNSPELL)
+
+clean:
+	rm -f $(SHLIB) $(LIBHUNSPELL) $(OBJECTS) libstathunspell.a
+
+.PHONY: all clean

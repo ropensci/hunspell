@@ -3,10 +3,10 @@
 .RData
 src/*.o
 src/parsers/*.o
+src/hunspell/*.o
 src/*.so
 src/*.dll
 src/*.a
-src/Makevars
 inst/doc
 windows
 *DS_Store

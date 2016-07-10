@@ -1,11 +1,3 @@
-/*
- * parser classes for MySpell
- *
- * implemented: text, HTML, TeX
- *
- * Copyright (C) 2002, Laszlo Nemeth
- *
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -46,31 +38,66 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _LATEXPARSER_HXX_
-#define _LATEXPARSER_HXX_
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <ctype.h>
 
-#include "textparser.hxx"
+#include "../hunspell/csutil.hxx"
+#include "manparser.hxx"
 
-/*
- * HTML Parser
- *
- */
-
-class LaTeXParser : public TextParser {
-  int pattern_num;  // number of comment
-  int depth;        // depth of blocks
-  int arg;          // arguments's number
-  int opt;          // optional argument attrib.
-
- public:
-  explicit LaTeXParser(const char* wc);
-  LaTeXParser(const w_char* wordchars, int len);
-  virtual ~LaTeXParser();
-
-  virtual bool next_token(std::string&);
-
- private:
-  int look_pattern(int col);
-};
-
+#ifndef W32
+using namespace std;
 #endif
+
+ManParser::ManParser() {}
+
+ManParser::ManParser(const char* wordchars) {
+  init(wordchars);
+}
+
+ManParser::ManParser(const w_char* wordchars, int len) {
+  init(wordchars, len);
+}
+
+ManParser::~ManParser() {}
+
+bool ManParser::next_token(std::string& t) {
+  for (;;) {
+    switch (state) {
+      case 1:  // command arguments
+        if (line[actual][head] == ' ')
+          state = 2;
+        break;
+      case 0:  // dot in begin of line
+        if (line[actual][0] == '.') {
+          state = 1;
+          break;
+        } else {
+          state = 2;
+        }
+      // no break
+      case 2:  // non word chars
+        if (is_wordchar(line[actual].c_str() + head)) {
+          state = 3;
+          token = head;
+        } else if ((line[actual][head] == '\\') &&
+                   (line[actual][head + 1] == 'f') &&
+                   (line[actual][head + 2] != '\0')) {
+          head += 2;
+        }
+        break;
+      case 3:  // wordchar
+        if (!is_wordchar(line[actual].c_str() + head)) {
+          state = 2;
+          if (alloc_token(token, &head, t))
+            return true;
+        }
+        break;
+    }
+    if (next_char(line[actual].c_str(), &head)) {
+      state = 0;
+      return false;
+    }
+  }
+}
