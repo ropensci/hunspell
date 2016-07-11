@@ -2,8 +2,8 @@ PKG_CPPFLAGS=-I. -Ihunspell
 PKG_CXXFLAGS=-DHAVE_CONFIG_H -DBUILDING_LIBHUNSPELL
 CXX_STD=CXX11
 
-ifneq ($(WIN),)
-PKG_LIBS=-L. -lstathunspell -Riconv
+ifeq ($(OS),Windows_NT)
+PKG_LIBS=-L. -lstathunspell -lRiconv
 else
 PKG_LIBS=-L. -lstathunspell
 endif
