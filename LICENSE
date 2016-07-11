@@ -1,2 +1,5 @@
 YEAR: 2016
 COPYRIGHT HOLDER: Jeroen Ooms
+
+The C++ library is available under GPL/LGPL/MPL tri-license.
+See libhunspell website: http://hunspell.github.io
