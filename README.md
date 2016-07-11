@@ -43,5 +43,14 @@ hunspell_stem(words)
 hunspell_analyze(words)
 ```
 
+The `devtools` package uses this package to spell R package documentation:
+
+```r
+# Spell check a package
+library(devtools)
+spell_check("~/mypackage")
+```
+
+
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
 
