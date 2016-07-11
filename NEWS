@@ -1,7 +1,6 @@
 1.4
   - Switch to bundled libhunspell because their API keeps breaking
   - Include libhunspell 1.5-pre (b13e62a)
-  - Fix tokenizer in hunspell_find and hunspell_parse to work with very large strings
 
 1.2
   - (Breaking) Rename 'hunspell_find' to 'hunspell'
