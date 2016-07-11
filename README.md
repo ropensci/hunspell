@@ -14,6 +14,16 @@
   encoding. The package can check and analyze individual words as well as
   search for incorrect words within a text, latex or manual document.
 
+## Installation
+
+Since version this package includes a bundled version of libhunspell and no longer
+depends on external system libraries:
+
+```r
+install.packages("hunspell")
+```
+
+
 ## Documentation
 
 About the R package:
