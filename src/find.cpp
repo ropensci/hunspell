@@ -21,8 +21,8 @@ class hunspell_parser {
 public:
   hunspell_parser(hunspell_dict *mydict, std::string format) : mydict(mydict) {
     const std::vector<w_char>& vec_wordchars_utf16 = mydict->get_wordchars_utf16();
-    utf16_wc = &vec_wordchars_utf16[0];
     utf16_len = vec_wordchars_utf16.size();
+    utf16_wc = utf16_len ? &vec_wordchars_utf16[0] : NULL;
     if(mydict->is_utf8()){
       if(!format.compare("text")){
         parser = new TextParser(utf16_wc, utf16_len);
@@ -114,7 +114,7 @@ List R_hunspell_parse(std::string affix, CharacterVector dict, StringVector text
   hunspell_parser p(&mydict, format);
 
   //there is some strange BUG in the parsers if we dont add any words :/
-  mydict.add_word("randomword");
+  //mydict.add_word("randomword");
 
   List out;
   for(int i = 0; i < text.length(); i++)
