@@ -2,8 +2,11 @@ PKG_CPPFLAGS=-I. -Ihunspell
 PKG_CXXFLAGS=-DHAVE_CONFIG_H -DBUILDING_LIBHUNSPELL
 CXX_STD=CXX11
 
-WINRICONV=$(subst 64,-lRiconv,$(subst 32,64,$(WIN)))
-PKG_LIBS=-L. -lstathunspell $(WINRICONV)
+ifneq ($(WIN),)
+PKG_LIBS=-L. -lstathunspell -Riconv
+else
+PKG_LIBS=-L. -lstathunspell
+endif
 
 LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
   hunspell/affentry.o hunspell/affixmgr.o hunspell/filemgr.o \
