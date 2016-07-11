@@ -25,11 +25,11 @@ public:
     utf16_wc = utf16_len ? &vec_wordchars_utf16[0] : NULL;
     if(mydict->is_utf8()){
       if(!format.compare("text")){
-        parser = new TextParser(utf16_wc, utf16_len);
+        parser = new TextParser(NULL, 0);
       } else if(!format.compare("latex")){
-        parser = new LaTeXParser(utf16_wc, utf16_len);
+        parser = new LaTeXParser(NULL, 0);
       } else if(!format.compare("man")){
-        parser = new ManParser(utf16_wc, utf16_len);
+        parser = new ManParser(NULL, 0);
       } else {
         throw std::runtime_error("Unknown parse format");
       }
