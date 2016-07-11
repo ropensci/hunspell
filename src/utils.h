@@ -152,7 +152,7 @@ public:
     }
     Rcpp::RawVector out(rawlen);
     if(rawlen > 0)
-      std::memcpy(out.begin(), charvec, rawlen);
+      memcpy(out.begin(), charvec, rawlen);
     return out;
   }
 
