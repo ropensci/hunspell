@@ -7,6 +7,8 @@
 #include "parsers/textparser.hxx"
 #include "parsers/latexparser.hxx"
 #include "parsers/manparser.hxx"
+#include "parsers/xmlparser.hxx"
+#include "parsers/htmlparser.hxx"
 
 #include "utils.h"
 
@@ -20,9 +22,11 @@ class hunspell_parser {
 
 public:
   hunspell_parser(hunspell_dict *mydict, std::string format) : mydict(mydict) {
+    /* TO DO: should pass utf16_wc to the parser but this doesn't work
     const std::vector<w_char>& vec_wordchars_utf16 = mydict->get_wordchars_utf16();
     utf16_len = vec_wordchars_utf16.size();
     utf16_wc = utf16_len ? &vec_wordchars_utf16[0] : NULL;
+    */
     if(mydict->is_utf8()){
       if(!format.compare("text")){
         parser = new TextParser(NULL, 0);
@@ -30,6 +34,10 @@ public:
         parser = new LaTeXParser(NULL, 0);
       } else if(!format.compare("man")){
         parser = new ManParser(NULL, 0);
+      } else if(!format.compare("xml")){
+        parser = new XMLParser(NULL, 0);
+      } else if(!format.compare("html")){
+        parser = new HTMLParser(NULL, 0);
       } else {
         throw std::runtime_error("Unknown parse format");
       }
@@ -112,9 +120,6 @@ List R_hunspell_parse(std::string affix, CharacterVector dict, StringVector text
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
   hunspell_parser p(&mydict, format);
-
-  //there is some strange BUG in the parsers if we dont add any words :/
-  //mydict.add_word("randomword");
 
   List out;
   for(int i = 0; i < text.length(); i++)

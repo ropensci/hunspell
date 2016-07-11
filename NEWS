@@ -1,6 +1,7 @@
 1.4
   - Switch to bundled libhunspell because their API keeps breaking
   - Include libhunspell 1.5-pre (b13e62a)
+  - Add parsers for HTML/XML formats
 
 1.2
   - (Breaking) Rename 'hunspell_find' to 'hunspell'

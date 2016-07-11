@@ -7,6 +7,7 @@ WINRICONV=$(subst 64,-lRiconv,$(subst 32,64,$(WIN)))
 PKG_LIBS=-L. -lstathunspell $(WINRICONV)
 
 LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
+	parsers/xmlparser.o parsers/htmlparser.o \
   hunspell/affentry.o hunspell/affixmgr.o hunspell/filemgr.o \
   hunspell/hashmgr.o hunspell/hunspell.o hunspell/hunzip.o hunspell/phonet.o \
   hunspell/replist.o hunspell/suggestmgr.o hunspell/csutil.o

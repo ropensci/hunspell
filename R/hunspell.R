@@ -52,7 +52,8 @@
 #' @param words character vector with individual words to spell check
 #' @param text character vector with arbitrary input text
 #' @param ignore character vector with additional approved words added to the dictionary
-#' @param format input format; supported parsers are \code{text}, \code{latex} or \code{man}
+#' @param format input format; supported parsers are \code{text}, \code{latex}, \code{man},
+#' \code{xml} and \code{html}.
 #' @param dict dictionary language, see details
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
@@ -88,7 +89,8 @@
 #' allwords <- hunspell_parse(text, format = "latex")
 #' stems <- unlist(hunspell_stem(unlist(allwords)))
 #' words <- head(sort(table(stems), decreasing = TRUE), 200)
-hunspell <- function(text, format = c("text", "man", "latex"), dict = "en_US", ignore = en_stats){
+hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
+                     dict = "en_US", ignore = en_stats){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
@@ -101,7 +103,7 @@ hunspell_find <- hunspell
 
 #' @rdname hunspell
 #' @export
-hunspell_parse <- function(text, format = c("text", "man", "latex"), dict = "en_US"){
+hunspell_parse <- function(text, format = c("text", "man", "latex", "html", "xml"), dict = "en_US"){
   stopifnot(is.character(text))
   format <- match.arg(format)
   dicpath <- get_dict(dict)

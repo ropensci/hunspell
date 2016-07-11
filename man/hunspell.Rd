@@ -13,10 +13,11 @@
 \alias{hunspell_suggest}
 \title{Hunspell Spell Checking and Morphological Analysis}
 \usage{
-hunspell(text, format = c("text", "man", "latex"), dict = "en_US",
-  ignore = en_stats)
+hunspell(text, format = c("text", "man", "latex", "html", "xml"),
+  dict = "en_US", ignore = en_stats)
 
-hunspell_parse(text, format = c("text", "man", "latex"), dict = "en_US")
+hunspell_parse(text, format = c("text", "man", "latex", "html", "xml"),
+  dict = "en_US")
 
 hunspell_check(words, dict = "en_US")
 
@@ -31,7 +32,8 @@ hunspell_info(dict = "en_US")
 \arguments{
 \item{text}{character vector with arbitrary input text}
 
-\item{format}{input format; supported parsers are \code{text}, \code{latex} or \code{man}}
+\item{format}{input format; supported parsers are \code{text}, \code{latex}, \code{man},
+\code{xml} and \code{html}.}
 
 \item{dict}{dictionary language, see details}
 
