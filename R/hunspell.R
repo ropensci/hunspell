@@ -144,7 +144,16 @@ hunspell_stem <- function(words, dict = "en_US"){
 #' @export
 hunspell_info <- function(dict = "en_US"){
   dicpath <- get_dict(dict)
-  R_hunspell_info(get_affix(dicpath), dicpath)
+  info <- R_hunspell_info(get_affix(dicpath), dicpath)
+  if(length(info$wordchars)){
+    wc_enc <- ifelse(info$encoding == "UTF-8", "UTF-16LE", info$encoding)
+    wc <- iconv(list(info$wordchars), wc_enc, "UTF-8")
+    Encoding(wc) <- "UTF-8"
+    info$wordchars <- wc
+  } else {
+    info$wordchars <- NA_character_
+  }
+  info
 }
 
 get_affix <- function(dicpath){

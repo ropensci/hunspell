@@ -139,15 +139,21 @@ public:
     return pMS_->get_wordchars();
   }
 
-  Rcpp::String r_wordchars(){
+  Rcpp::RawVector r_wordchars(){
+    const char * charvec = NULL;
+    size_t rawlen = 0;
     if(is_utf8()){
       const std::vector<w_char>& vec_wordchars_utf16 = pMS_->get_wordchars_utf16();
-      int wordchars_utf16_len = vec_wordchars_utf16.size();
-      const w_char* wordchars_utf16 = wordchars_utf16_len ? &vec_wordchars_utf16[0] : NULL;
-      return string_to_r((char*) wordchars_utf16);
+      rawlen = vec_wordchars_utf16.size() * 2;
+      charvec = (const char *) &vec_wordchars_utf16[0];
     } else {
-      return string_to_r((char*) pMS_->get_wordchars().c_str());
+      charvec = pMS_->get_wordchars().c_str();
+      rawlen = strlen(charvec);
     }
+    Rcpp::RawVector out(rawlen);
+    if(rawlen > 0)
+      std::memcpy(out.begin(), charvec, rawlen);
+    return out;
   }
 
   std::vector<w_char> get_wordchars_utf16(){
