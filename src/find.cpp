@@ -23,21 +23,25 @@ class hunspell_parser {
 public:
   hunspell_parser(hunspell_dict *mydict, std::string format) : mydict(mydict) {
     /* TO DO: should pass utf16_wc to the parser but this doesn't work
-    const std::vector<w_char>& vec_wordchars_utf16 = mydict->get_wordchars_utf16();
+    const std::vector<w_char> vec_wordchars_utf16 = mydict->get_wordchars_utf16();
     utf16_len = vec_wordchars_utf16.size();
-    utf16_wc = utf16_len ? &vec_wordchars_utf16[0] : NULL;
+    utf16_wc = vec_wordchars_utf16.data();
     */
+
+    // Workaround parses using the standard character set:
+    utf16_len = 0;
+    utf16_wc = NULL;
     if(mydict->is_utf8()){
       if(!format.compare("text")){
-        parser = new TextParser(NULL, 0);
+        parser = new TextParser(utf16_wc, utf16_len);
       } else if(!format.compare("latex")){
-        parser = new LaTeXParser(NULL, 0);
+        parser = new LaTeXParser(utf16_wc, utf16_len);
       } else if(!format.compare("man")){
-        parser = new ManParser(NULL, 0);
+        parser = new ManParser(utf16_wc, utf16_len);
       } else if(!format.compare("xml")){
-        parser = new XMLParser(NULL, 0);
+        parser = new XMLParser(utf16_wc, utf16_len);
       } else if(!format.compare("html")){
-        parser = new HTMLParser(NULL, 0);
+        parser = new HTMLParser(utf16_wc, utf16_len);
       } else {
         throw std::runtime_error("Unknown parse format");
       }
