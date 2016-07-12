@@ -1,13 +1,8 @@
 #include <hunspell.hxx>
 #include <iconv.h>
+#include <R_ext/Riconv.h>
 #include <errno.h>
 #include <Rcpp.h>
-
-#ifdef _WIN32
-#define ICONV_CONST_FIX (const char**)
-#else
-#define ICONV_CONST_FIX
-#endif
 
 class hunspell_dict {
   Hunspell * pMS_;
@@ -17,11 +12,11 @@ class hunspell_dict {
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
-    iconv_t cd = iconv_open(to, from);
+    iconv_t cd = Riconv_open(to, from);
     if(cd == (iconv_t) -1){
       switch(errno){
         case EINVAL: throw std::runtime_error(std::string("Unsupported iconv conversion: ") + from + "to" + to);
-        default: throw std::runtime_error("General error in iconv_open()");
+        default: throw std::runtime_error("General error in Riconv_open()");
       }
     }
     return cd;
@@ -47,8 +42,8 @@ public:
 
   ~hunspell_dict() {
     try {
-      iconv_close(cd_from_);
-      iconv_close(cd_to_);
+      Riconv_close(cd_from_);
+      Riconv_close(cd_to_);
       delete pMS_;
     } catch (...) {}
   }
@@ -162,12 +157,12 @@ public:
 
   char * string_from_r(Rcpp::String str){
     str.set_encoding(CE_UTF8);
-    char * inbuf = (char *) str.get_cstring();
+    const char * inbuf = str.get_cstring();
     size_t inlen = strlen(inbuf);
     size_t outlen = 4 * inlen + 1;
     char * output = (char *) malloc(outlen);
     char * cur = output;
-    size_t success = iconv(cd_from_, ICONV_CONST_FIX &inbuf, &inlen, &cur, &outlen);
+    size_t success = Riconv(cd_from_, &inbuf, &inlen, &cur, &outlen);
     if(success == (size_t) -1){
       free(output);
       return NULL;
@@ -177,14 +172,14 @@ public:
     return output;
   }
 
-  Rcpp::String string_to_r(char * inbuf){
+  Rcpp::String string_to_r(const char * inbuf){
     if(inbuf == NULL)
       return NA_STRING;
     size_t inlen = strlen(inbuf);
     size_t outlen = 4 * inlen + 1;
     char * output = (char *) malloc(outlen);
     char * cur = output;
-    size_t success = iconv(cd_to_, ICONV_CONST_FIX &inbuf, &inlen, &cur, &outlen);
+    size_t success = Riconv(cd_to_, &inbuf, &inlen, &cur, &outlen);
     if(success == (size_t) -1){
       free(output);
       return NA_STRING;
