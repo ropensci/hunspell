@@ -1,3 +1,5 @@
-The C++ library is available under GPL/LGPL/MPL tri-license.
+The libhunspell C++ library is available under GPL/LGPL/MPL tri-license.
 These are the files under ./scr/hunspell and ./scr/parsers.
-See libhunspell website: http://hunspell.github.io
+See also: https://github.com/hunspell/hunspell/blob/master/COPYING
+
+The rest of the package may also be used under MIT license.
