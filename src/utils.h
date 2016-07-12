@@ -12,7 +12,7 @@ class hunspell_dict {
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
-    iconv_t cd = Riconv_open(to, from);
+    iconv_t cd = (iconv_t) Riconv_open(to, from);
     if(cd == (iconv_t) -1){
       switch(errno){
         case EINVAL: throw std::runtime_error(std::string("Unsupported iconv conversion: ") + from + "to" + to);
