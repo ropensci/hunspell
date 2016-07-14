@@ -3,7 +3,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List R_hunspell_info(std::string affix, CharacterVector dict){
+List R_hunspell_info(Rcpp::String affix, CharacterVector dict){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
@@ -15,7 +15,7 @@ List R_hunspell_info(std::string affix, CharacterVector dict){
 }
 
 // [[Rcpp::export]]
-LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVector words){
+LogicalVector R_hunspell_check(Rcpp::String affix, CharacterVector dict, StringVector words){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
@@ -29,7 +29,7 @@ LogicalVector R_hunspell_check(std::string affix, CharacterVector dict, StringVe
 }
 
 // [[Rcpp::export]]
-List R_hunspell_suggest(std::string affix, CharacterVector dict, StringVector words){
+List R_hunspell_suggest(Rcpp::String affix, CharacterVector dict, StringVector words){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
@@ -42,7 +42,7 @@ List R_hunspell_suggest(std::string affix, CharacterVector dict, StringVector wo
 }
 
 // [[Rcpp::export]]
-List R_hunspell_analyze(std::string affix, CharacterVector dict, StringVector words){
+List R_hunspell_analyze(Rcpp::String affix, CharacterVector dict, StringVector words){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);
@@ -55,7 +55,7 @@ List R_hunspell_analyze(std::string affix, CharacterVector dict, StringVector wo
 }
 
 // [[Rcpp::export]]
-List R_hunspell_stem(std::string affix, CharacterVector dict, StringVector words){
+List R_hunspell_stem(Rcpp::String affix, CharacterVector dict, StringVector words){
 
   //init with affix and at least one dict
   hunspell_dict mydict(affix, dict);

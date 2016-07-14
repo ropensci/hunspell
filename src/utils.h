@@ -24,9 +24,9 @@ private:
 
 public:
   // Some strings are regular strings
-  hunspell_dict(std::string affix, Rcpp::CharacterVector dicts){
+  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts){
     std::string dict(dicts[0]);
-    pMS_ = new Hunspell(affix.c_str(), dict.c_str());
+    pMS_ = new Hunspell(affix.get_cstring(), dict.c_str());
     if(!pMS_)
       throw std::runtime_error(std::string("Failed to load file ") + dict);
 
