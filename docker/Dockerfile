@@ -5,6 +5,7 @@ ENV ASAN_OPTIONS malloc_context_size=10:fast_unwind_on_malloc=false
 
 RUN apt-get -qq update \
 	&& apt-get -qq dist-upgrade -y \
+	&& apt-get -qq install git pandoc pandoc-citeproc -y \
 	&& RD -e 'install.packages(c("Rcpp", "testthat"), quiet = TRUE)'
 
 RUN git clone https://github.com/jeroenooms/hunspell \
