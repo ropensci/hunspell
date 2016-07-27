@@ -140,7 +140,7 @@ public:
     if(is_utf8()){
       const std::vector<w_char>& vec_wordchars_utf16 = pMS_->get_wordchars_utf16();
       rawlen = vec_wordchars_utf16.size() * 2;
-      charvec = (const char *) &vec_wordchars_utf16[0];
+      charvec = rawlen ? (const char *) &vec_wordchars_utf16[0] : NULL;
     } else {
       charvec = pMS_->get_wordchars().c_str();
       rawlen = strlen(charvec);

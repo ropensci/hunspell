@@ -1,3 +1,7 @@
+1.4.3
+  - Fix UBSAN bug
+  - Remove unused 'config.h' file (see upstream 2ccf840)
+
 1.4.2
   - Switch to R's iconv wrapper which is more portable (thnx BDR)
 
