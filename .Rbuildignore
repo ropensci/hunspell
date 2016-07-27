@@ -7,3 +7,4 @@
 \.dll$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^docker$
