@@ -44,10 +44,10 @@ hunspell_info(dict = "en_US")
 \description{
 The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
 errors within a text document. It takes a character vector with text (\code{plain},
-\code{latex} or \code{man} format), parses out the words and returns a list with
-incorrect words for each line. It effectively combines of \code{\link{hunspell_parse}}
-with \code{\link{hunspell_check}} in a single step. Other functions in the package
-operate on individual words, see details.
+\code{latex}, \code{man}, \code{html} or \code{xml} format), parses out the words
+and returns a list with incorrect words for each line. It effectively combines
+\code{\link{hunspell_parse}} with \code{\link{hunspell_check}} in a single step.
+Other functions in the package operate on individual words, see details.
 }
 \details{
 Hunspell uses a special dictionary format that defines which stems and affixes are

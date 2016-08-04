@@ -1,13 +1,13 @@
 Package: hunspell
 Type: Package
-Title: Morphological Analysis and Spell Checker for R
-Version: 1.4.3
+Title: High-Performance Stemmer, Tokenizer, and Spell Checker for R
+Version: 1.4.3.9000
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
 Description: A spell checker and morphological analyzer library designed for
     languages with rich morphology and complex word compounding or character
     encoding. The package can check and analyze individual words as well as
-    search for incorrect words within a text, latex or manual document. Use
+    search for incorrect words within a text, latex, html or xml document. Use
     the 'devtools' package to spell check R documentation with 'hunspell'.
 License: GPL-2 | LGPL-2.1 | MPL-1.1
 URL: https://github.com/ropensci/hunspell#readme
