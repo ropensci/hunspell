@@ -7,7 +7,7 @@ matrix:
       dist: precise
       sudo: false
       r: devel
-      env: CXX1X="g++ -std=c++0x -g -O2"
+      env: CXX1X="g++ -std=c++0x -g -O2 -fPIC"
     - os: linux
       dist: precise
       sudo: false
