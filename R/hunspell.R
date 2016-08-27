@@ -77,6 +77,13 @@
 #' hunspell_stem(words)
 #' hunspell_analyze(words)
 #'
+#' # Processing - executes operation with given order
+#' # possible options: "stem","analyze","suggest","orginal"
+#' # BUG: "analyze" is not working when returning more than 1 version
+#'
+#' words <- c("love", "loving", "lovingly", "loved", "lover", "lovely", "love", "oorrggiinnaall")
+#' hunspell_process(words,c("stem","analyze","suggest","orginal"))
+#'
 #' # Check an entire latex document
 #' setwd(tempdir())
 #' download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
@@ -89,13 +96,47 @@
 #' allwords <- hunspell_parse(text, format = "latex")
 #' stems <- unlist(hunspell_stem(unlist(allwords)))
 #' words <- head(sort(table(stems), decreasing = TRUE), 200)
+
+.onLoad <- function(libname, pkgname) {
+  loadModule("hunspell", TRUE)
+}
+
+load_dict <- function(dict = "en_US") {
+  dicpath <- get_dict(dict)
+  affix <- get_affix(dicpath)
+  dictionary <- Hunspell_dict_wrapper$new(affix,dicpath)
+  dicts_map[[dict]] <- dictionary
+
+  dictionary
+}
+
+get_dictionary <- function(dict = "en_US") {
+  dictionary <- dicts_map[[dict]]
+  if(is.null(dictionary)){
+    load_dict(dict)
+  }else{
+    dictionary
+  }
+}
+
+remove_dict <- function(dict = "en_US") {
+  dicts_map[[dict]] <- NULL
+}
+
+#' @rdname hunspell
+#' @export
+hunspell_info <- function(dict = "en_US"){
+  dictionary <- get_dictionary(dict)
+  info <- dictionary$R_hunspell_info()
+}
+
 hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
                      dict = "en_US", ignore = en_stats){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  dicpath <- get_dict(dict)
-  R_hunspell_find(get_affix(dicpath), dicpath, text, format, ignore)
+  dictionary <- get_dictionary(dict)
+  dictionary$R_hunspell_find(text, format, ignore)
 }
 
 #for backward compatiblity
@@ -106,47 +147,82 @@ hunspell_find <- hunspell
 hunspell_parse <- function(text, format = c("text", "man", "latex", "html", "xml"), dict = "en_US"){
   stopifnot(is.character(text))
   format <- match.arg(format)
-  dicpath <- get_dict(dict)
-  R_hunspell_parse(get_affix(dicpath), dicpath, text, format)
+  dictionary <- get_dictionary(dict)
+  dictionary$R_hunspell_parse(text, format)
+}
+
+#' @rdname hunspell
+#' @export
+hunspell_process <- function(words, operations = c("orignal","stem","suggest","analyze", dict = "en_US")){
+  stopifnot(is.character(operations))
+  stopifnot(all(is.element(operations,c("suggest","analyze","stem","orignal"))))
+  if(is.list(words)){
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_process_list(words,operations)
+  }else{
+    stopifnot(is.character(words))
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_process(words,operations)
+  }
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_check <- function(words, dict = "en_US"){
-  stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_check(get_affix(dicpath), dicpath, words)
+  if(is.list(words)){
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_check_list(words)
+  }else{
+    stopifnot(is.character(words))
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_check(words)
+  }
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_suggest <- function(words, dict = "en_US"){
-  stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_suggest(get_affix(dicpath), dicpath, words)
+  if(is.list(words)){
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_suggest_list(words)
+  }else{
+    stopifnot(is.character(words))
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_suggest(words)
+  }
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_analyze <- function(words, dict = "en_US"){
-  stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_analyze(get_affix(dicpath), dicpath, words)
+  if(is.list(words)){
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_analyze_list(words)
+  }else{
+    stopifnot(is.character(words))
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_analyze(words)
+  }
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_stem <- function(words, dict = "en_US"){
-  stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_stem(get_affix(dicpath), dicpath, words)
+  if(is.list(words)){
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_stem(words)
+  }else{
+    stopifnot(is.character(words))
+    dictionary <- get_dictionary(dict)
+    dictionary$R_hunspell_stem(words)
+  }
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_info <- function(dict = "en_US"){
-  dicpath <- get_dict(dict)
-  info <- R_hunspell_info(get_affix(dicpath), dicpath)
+  dictionary <- get_dictionary(dict)
+  info <-  dictionary$R_hunspell_info()
   if(length(info$wordchars)){
     wc_enc <- ifelse(info$encoding == "UTF-8", "UTF-16LE", info$encoding)
     wc <- iconv(list(info$wordchars), wc_enc, "UTF-8")
@@ -169,14 +245,14 @@ get_dict <- function(dict){
 
 dicpath <- function(){
   c(
-   Sys.getenv("DICPATH", getwd()),
-   system.file("dict", package = "hunspell"), # Bundled with the R package
-   normalizePath("~/Library/Spelling", mustWork = FALSE),
-   "/usr/share/hunspell",
-   "/usr/share/myspell",
-   "/usr/share/myspell/dicts",
-   "/Library/Spelling",
-   file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
+    Sys.getenv("DICPATH", getwd()),
+    system.file("dict", package = "hunspell"), # Bundled with the R package
+    normalizePath("~/Library/Spelling", mustWork = FALSE),
+    "/usr/share/hunspell",
+    "/usr/share/myspell",
+    "/usr/share/myspell/dicts",
+    "/Library/Spelling",
+    file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
   )
 }
 
@@ -187,6 +263,8 @@ find_in_dicpath <- function(name){
     return(paths[found][1])
   stop("Dictionary file not found: ", name, call. = FALSE)
 }
+
+dicts_map <- new.env(hash=T, parent=emptyenv())
 
 en_stats <- (function(){
   path <- file.path(R.home("share"), "dictionaries", "en_stats.rds")

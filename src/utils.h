@@ -1,3 +1,6 @@
+#ifndef UTILS_H
+#define UTILS_H
+
 #include <hunspell.hxx>
 #include <iconv.h>
 #include <R_ext/Riconv.h>
@@ -191,3 +194,5 @@ public:
     return res;
   }
 };
+
+#endif // UTILS_H
