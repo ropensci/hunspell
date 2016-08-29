@@ -82,7 +82,7 @@
 #' # BUG: "analyze" is not working when returning more than 1 version
 #'
 #' words <- c("love", "loving", "lovingly", "loved", "lover", "lovely", "love", "oorrggiinnaall")
-#' hunspell_process(words,c("stem","analyze","suggest","orginal"))
+#' hunspell_process(words,c("stem","analyze","suggest","orignal"))
 #'
 #' # Check an entire latex document
 #' setwd(tempdir())

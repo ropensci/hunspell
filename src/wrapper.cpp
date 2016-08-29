@@ -37,7 +37,7 @@ class Hunspell_dict_wrapper {
         }else if(functions[i] == orignal){
           out = word;
         }
-        if(!out.isNULL()){
+        if(out.length() > 0){
           return out;
         }
       }
