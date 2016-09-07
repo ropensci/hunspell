@@ -47,4 +47,12 @@ test_that("UTF8 always works", {
   expect_equal(hunspell_parse(enc2native(paste(str5, "test")))[[1]][1], str5)
   expect_equal(hunspell_parse(enc2utf8(paste(str5, "test")))[[1]][1], str5)
 
+  # Test encoding roundtrip
+  expect_equal(hunspell_stem(str2, dict = "russian-aot")[[1]][1], utf8("сожаление"))
+  expect_equal(hunspell_stem(str2, dict = "ru_RU")[[1]][1],  utf8("сожаление"))
+  expect_match(hunspell_suggest(str2, dict = "russian-aot")[[1]][1],  utf8("сожалени"))
+  expect_match(hunspell_suggest(str2, dict = "ru_RU")[[1]][1],  utf8("сожалени"))
+  expect_match(hunspell_analyze(str2, dict = "russian-aot")[[1]][1],  utf8("сожаление"))
+  expect_match(hunspell_analyze(str2, dict = "ru_RU")[[1]][1],  utf8("сожаление"))
+
 })
