@@ -159,12 +159,7 @@ hunspell_info <- function(dict = dictionary("en_US")){
   info
 }
 
-#' @export
-#' @rdname hunspell
-#' @param lang dictionary file or language, see details
-#' @param affix file path to corresponding affix file. If \code{NULL} it is
-#' is assumed to be the same path as \code{dict} with extension \code{.aff}.
-dictionary <- function(lang = "en_US", affix = NULL){
+dictionary_internal <- function(lang = "en_US", affix = NULL){
   if(inherits(lang, "dictionary"))
     return(lang)
   dicpath <- get_dict(lang)
@@ -173,7 +168,8 @@ dictionary <- function(lang = "en_US", affix = NULL){
   } else {
     get_affix(dicpath)
   }
-  structure(R_hunspell_dict(affix, dicpath), class = "dictionary")
+  dict <- R_hunspell_dict(affix, dicpath)
+  structure(dict, class = "dictionary")
 }
 
 get_affix <- function(dicpath){
@@ -227,3 +223,10 @@ print.dictionary <- function(x, ...){
   cat(" wordchars:", info$wordchars, "\n")
   invisible()
 }
+
+#' @export
+#' @rdname hunspell
+#' @param lang dictionary file or language, see details
+#' @param affix file path to corresponding affix file. If \code{NULL} it is
+#' is assumed to be the same path as \code{dict} with extension \code{.aff}.
+dictionary <- memoise::memoise(dictionary_internal)
