@@ -1,0 +1,33 @@
+---
+title: "The hunspell package: High-Performance Stemmer, Tokenizer, and Spell Checker for R"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_caption: false
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{The hunspell package: High-Performance Stemmer, Tokenizer, and Spell Checker for R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Hunspell is the spell checker of LibreOffice, OpenOffice, Mozilla Firefox, Google Chrome, Mac OS-X, InDesign, memoQ, Opera and SDL Trados. It provides a powerful C++ library for tokenizing, stemming and checking text in almost any language and alphabet. The R package exposes both the high-level spell-checker as well as low-level stemmers and tokenizers which analyze or extract individual words from various formats (text, html, xml, latex).
+
+## How Hunspell works
+
+Hunspell uses a special dictionary format. 
+
+
+## Spell Checking
+
+### Checking Documentation
+
+## Checking Words
+
+## Parsing Text
+
+
