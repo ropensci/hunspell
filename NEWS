@@ -1,5 +1,6 @@
 1.5
   - Make sure UTF-8 return values are marked properly. Fixes #16
+  - Update libhunspell to upstream 5de5239, fixes a segfault
 
 1.4.3
   - Fix UBSAN bug
