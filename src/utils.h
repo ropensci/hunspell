@@ -9,6 +9,8 @@ class hunspell_dict {
   iconv_t cd_from_;
   iconv_t cd_to_;
   std::string enc_;
+  Rcpp::String affix_;
+  Rcpp::CharacterVector dicts_;
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
@@ -24,7 +26,7 @@ private:
 
 public:
   // Some strings are regular strings
-  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts){
+  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts) : affix_(affix), dicts_(dicts) {
     std::string dict(dicts[0]);
     pMS_ = new Hunspell(affix.get_cstring(), dict.c_str());
     if(!pMS_)
@@ -132,6 +134,14 @@ public:
 
   std::string wc(){
     return pMS_->get_wordchars();
+  }
+
+  Rcpp::String affix(){
+    return affix_;
+  }
+
+  Rcpp::CharacterVector dicts(){
+    return dicts_;
   }
 
   Rcpp::RawVector r_wordchars(){

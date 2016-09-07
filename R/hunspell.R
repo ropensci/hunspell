@@ -94,8 +94,8 @@ hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  dicpath <- get_dict(dict)
-  R_hunspell_find(get_affix(dicpath), dicpath, text, format, ignore)
+  dictionary <- hunspell_dictionary(dict)
+  R_hunspell_find(dictionary, text, format, ignore)
 }
 
 #for backward compatiblity
@@ -106,47 +106,47 @@ hunspell_find <- hunspell
 hunspell_parse <- function(text, format = c("text", "man", "latex", "html", "xml"), dict = "en_US"){
   stopifnot(is.character(text))
   format <- match.arg(format)
-  dicpath <- get_dict(dict)
-  R_hunspell_parse(get_affix(dicpath), dicpath, text, format)
+  dictionary <- hunspell_dictionary(dict)
+  R_hunspell_parse(dictionary, text, format)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_check <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_check(get_affix(dicpath), dicpath, words)
+  dictionary <- hunspell_dictionary(dict)
+  R_hunspell_check(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_suggest <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_suggest(get_affix(dicpath), dicpath, words)
+  dictionary <- hunspell_dictionary(dict)
+  R_hunspell_suggest(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_analyze <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_analyze(get_affix(dicpath), dicpath, words)
+  dictionary <- hunspell_dictionary(dict)
+  R_hunspell_analyze(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_stem <- function(words, dict = "en_US"){
   stopifnot(is.character(words))
-  dicpath <- get_dict(dict)
-  R_hunspell_stem(get_affix(dicpath), dicpath, words)
+  dictionary <- hunspell_dictionary(dict)
+  R_hunspell_stem(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
 hunspell_info <- function(dict = "en_US"){
-  dicpath <- get_dict(dict)
-  info <- R_hunspell_info(get_affix(dicpath), dicpath)
+  dictionary <- hunspell_dictionary(dict)
+  info <- R_hunspell_info(dictionary)
   if(length(info$wordchars)){
     wc_enc <- ifelse(info$encoding == "UTF-8", "UTF-16LE", info$encoding)
     wc <- iconv(list(info$wordchars), wc_enc, "UTF-8")
@@ -156,6 +156,13 @@ hunspell_info <- function(dict = "en_US"){
     info$wordchars <- NA_character_
   }
   info
+}
+
+hunspell_dictionary <- function(dict ="en_US", affix = NULL){
+  dicpath <- get_dict(dict)
+  if(!length(affix))
+    affix <- get_affix(dicpath)
+  R_hunspell_dict(affix, dicpath)
 }
 
 get_affix <- function(dicpath){

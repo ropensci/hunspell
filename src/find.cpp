@@ -10,7 +10,7 @@
 #include "parsers/xmlparser.hxx"
 #include "parsers/htmlparser.hxx"
 
-#include "utils.h"
+#include "hunspell_types.h"
 
 using namespace Rcpp;
 
@@ -100,34 +100,28 @@ public:
 };
 
 // [[Rcpp::export]]
-List R_hunspell_find(std::string affix, CharacterVector dict, StringVector text,
-                     std::string format, StringVector ignore){
+List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringVector ignore){
 
   //init with affix and at least one dict
-  hunspell_dict mydict(affix, dict);
-  hunspell_parser p(&mydict, format);
+  hunspell_parser p(ptr.get(), format);
 
   //add ignore words
-  mydict.add_words(ignore);
+  ptr->add_words(ignore);
 
   List out;
   for(int i = 0; i < text.length(); i++)
     out.push_back(p.find(text[i], i));
-
   return out;
 }
 
 // [[Rcpp::export]]
-List R_hunspell_parse(std::string affix, CharacterVector dict, StringVector text,
-                     std::string format){
+List R_hunspell_parse(DictPtr ptr, StringVector text, std::string format){
 
   //init with affix and at least one dict
-  hunspell_dict mydict(affix, dict);
-  hunspell_parser p(&mydict, format);
+  hunspell_parser p(ptr.get(), format);
 
   List out;
   for(int i = 0; i < text.length(); i++)
     out.push_back(p.parse_text(text[i]));
-
   return out;
 }
