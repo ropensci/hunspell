@@ -1,3 +1,6 @@
+1.5
+  - Make sure UTF-8 return values are marked properly. Fixes #16
+
 1.4.3
   - Fix UBSAN bug
   - Remove unused 'config.h' file (see upstream 2ccf840)
