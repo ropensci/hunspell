@@ -1,9 +1,12 @@
 Package: hunspell
+Encoding: UTF-8
 Type: Package
 Title: High-Performance Stemmer, Tokenizer, and Spell Checker for R
 Version: 1.4.3.9000
-Author: Jeroen Ooms
-Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>
+Authors: c(person("Jeroen", "Ooms", role = c("aut","cre"),
+                  email = "jeroen.ooms@stat.ucla.edu"),
+           person("Michał", "Bartecki", role = "ctb",
+                  comment = "Added list functions, dictionary mapping and hunspell wrapper"))
 Description: A spell checker and morphological analyzer library designed for
     languages with rich morphology and complex word compounding or character
     encoding. The package can check and analyze individual words as well as
@@ -16,3 +19,5 @@ Imports: Rcpp
 LinkingTo: Rcpp
 Suggests: testthat
 RoxygenNote: 5.0.1
+Depends: Rcpp
+RcppModules: hunspell
