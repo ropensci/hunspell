@@ -33,7 +33,7 @@ public:
     //add additional dictionaries if more than one
     //assuming the same affix?? This can cause unpredictable behavior
     for(int i = 1; i < dicts.length(); i++)
-      pMS_->add_dic(std::string(dicts[0]).c_str());
+      pMS_->add_dic(std::string(dicts[i]).c_str());
 
     enc_ = pMS_->get_dict_encoding();
     cd_from_ = new_iconv("UTF-8", enc_.c_str());
