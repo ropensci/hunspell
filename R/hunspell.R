@@ -49,12 +49,12 @@
 #' @rdname hunspell
 #' @aliases hunspell hunspell_find en_stats dicpath
 #' @export en_stats dicpath
+#' @param dict a dictionary object or string which can be passed to \code{\link{dictionary}}.
 #' @param words character vector with individual words to spell check
 #' @param text character vector with arbitrary input text
 #' @param ignore character vector with additional approved words added to the dictionary
 #' @param format input format; supported parsers are \code{text}, \code{latex}, \code{man},
 #' \code{xml} and \code{html}.
-#' @param dict dictionary language, see details
 #' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hunspell
@@ -90,11 +90,11 @@
 #' stems <- unlist(hunspell_stem(unlist(allwords)))
 #' words <- head(sort(table(stems), decreasing = TRUE), 200)
 hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
-                     dict = "en_US", ignore = en_stats){
+                     dict = dictionary("en_US"), ignore = en_stats){
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  dictionary <- hunspell_dictionary(dict)
+  dictionary <- dictionary(dict)
   R_hunspell_find(dictionary, text, format, ignore)
 }
 
@@ -103,49 +103,50 @@ hunspell_find <- hunspell
 
 #' @rdname hunspell
 #' @export
-hunspell_parse <- function(text, format = c("text", "man", "latex", "html", "xml"), dict = "en_US"){
+hunspell_parse <- function(text, format = c("text", "man", "latex", "html", "xml"),
+                           dict = dictionary("en_US")){
   stopifnot(is.character(text))
   format <- match.arg(format)
-  dictionary <- hunspell_dictionary(dict)
+  dictionary <- dictionary(dict)
   R_hunspell_parse(dictionary, text, format)
 }
 
 #' @rdname hunspell
 #' @export
-hunspell_check <- function(words, dict = "en_US"){
+hunspell_check <- function(words, dict = dictionary("en_US")){
   stopifnot(is.character(words))
-  dictionary <- hunspell_dictionary(dict)
+  dictionary <- dictionary(dict)
   R_hunspell_check(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
-hunspell_suggest <- function(words, dict = "en_US"){
+hunspell_suggest <- function(words, dict = dictionary("en_US")){
   stopifnot(is.character(words))
-  dictionary <- hunspell_dictionary(dict)
+  dictionary <- dictionary(dict)
   R_hunspell_suggest(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
-hunspell_analyze <- function(words, dict = "en_US"){
+hunspell_analyze <- function(words, dict = dictionary("en_US")){
   stopifnot(is.character(words))
-  dictionary <- hunspell_dictionary(dict)
+  dictionary <- dictionary(dict)
   R_hunspell_analyze(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
-hunspell_stem <- function(words, dict = "en_US"){
+hunspell_stem <- function(words, dict = dictionary("en_US")){
   stopifnot(is.character(words))
-  dictionary <- hunspell_dictionary(dict)
+  dictionary <- dictionary(dict)
   R_hunspell_stem(dictionary, words)
 }
 
 #' @rdname hunspell
 #' @export
-hunspell_info <- function(dict = "en_US"){
-  dictionary <- hunspell_dictionary(dict)
+hunspell_info <- function(dict = dictionary("en_US")){
+  dictionary <- dictionary(dict)
   info <- R_hunspell_info(dictionary)
   if(length(info$wordchars)){
     wc_enc <- ifelse(info$encoding == "UTF-8", "UTF-16LE", info$encoding)
@@ -158,11 +159,21 @@ hunspell_info <- function(dict = "en_US"){
   info
 }
 
-hunspell_dictionary <- function(dict ="en_US", affix = NULL){
-  dicpath <- get_dict(dict)
-  if(!length(affix))
-    affix <- get_affix(dicpath)
-  R_hunspell_dict(affix, dicpath)
+#' @export
+#' @rdname hunspell
+#' @param lang dictionary file or language, see details
+#' @param affix file path to corresponding affix file. If \code{NULL} it is
+#' is assumed to be the same path as \code{dict} with extension \code{.aff}.
+dictionary <- function(lang = "en_US", affix = NULL){
+  if(inherits(lang, "dictionary"))
+    return(lang)
+  dicpath <- get_dict(lang)
+  affix <- if(length(affix)){
+    normalizePath(affix, mustWork = TRUE)
+  } else {
+    get_affix(dicpath)
+  }
+  structure(R_hunspell_dict(affix, dicpath), class = "dictionary")
 }
 
 get_affix <- function(dicpath){
@@ -170,8 +181,10 @@ get_affix <- function(dicpath){
 }
 
 get_dict <- function(dict){
-  dict <- sub("\\.(dic|aff)$", "", dict)
-  normalizePath(find_in_dicpath(paste0(dict, ".dic")), mustWork = TRUE)
+  if(!file.exists(dict)){
+    dict <- find_in_dicpath(paste0(sub("\\.(dic|aff)$", "", dict), ".dic"))
+  }
+  normalizePath(dict, mustWork = TRUE)
 }
 
 dicpath <- function(){
@@ -203,3 +216,14 @@ en_stats <- (function(){
     return(character(0))
   }
 })()
+
+#' @export
+print.dictionary <- function(x, ...){
+  info <- hunspell_info(x)
+  cat("<hunspell dictionary>\n")
+  cat(" affix:", info$affix, "\n")
+  cat(" dictionary:", info$dict, "\n")
+  cat(" encoding:", info$encoding, "\n")
+  cat(" wordchars:", info$wordchars, "\n")
+  invisible()
+}

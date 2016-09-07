@@ -2,6 +2,7 @@
 % Please edit documentation in R/hunspell.R
 \name{hunspell}
 \alias{dicpath}
+\alias{dictionary}
 \alias{en_stats}
 \alias{hunspell}
 \alias{hunspell_analyze}
@@ -14,20 +15,22 @@
 \title{Hunspell Spell Checking and Morphological Analysis}
 \usage{
 hunspell(text, format = c("text", "man", "latex", "html", "xml"),
-  dict = "en_US", ignore = en_stats)
+  dict = dictionary("en_US"), ignore = en_stats)
 
 hunspell_parse(text, format = c("text", "man", "latex", "html", "xml"),
-  dict = "en_US")
+  dict = dictionary("en_US"))
 
-hunspell_check(words, dict = "en_US")
+hunspell_check(words, dict = dictionary("en_US"))
 
-hunspell_suggest(words, dict = "en_US")
+hunspell_suggest(words, dict = dictionary("en_US"))
 
-hunspell_analyze(words, dict = "en_US")
+hunspell_analyze(words, dict = dictionary("en_US"))
 
-hunspell_stem(words, dict = "en_US")
+hunspell_stem(words, dict = dictionary("en_US"))
 
-hunspell_info(dict = "en_US")
+hunspell_info(dict = dictionary("en_US"))
+
+dictionary(lang = "en_US", affix = NULL)
 }
 \arguments{
 \item{text}{character vector with arbitrary input text}
@@ -35,11 +38,16 @@ hunspell_info(dict = "en_US")
 \item{format}{input format; supported parsers are \code{text}, \code{latex}, \code{man},
 \code{xml} and \code{html}.}
 
-\item{dict}{dictionary language, see details}
+\item{dict}{a dictionary object or string which can be passed to \code{\link{dictionary}}.}
 
 \item{ignore}{character vector with additional approved words added to the dictionary}
 
 \item{words}{character vector with individual words to spell check}
+
+\item{lang}{dictionary file or language, see details}
+
+\item{affix}{file path to corresponding affix file. If \code{NULL} it is
+is assumed to be the same path as \code{dict} with extension \code{.aff}.}
 }
 \description{
 The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
