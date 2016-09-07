@@ -1,4 +1,5 @@
 1.5
+  - Dictionaries are now their own class and get cached automatically via memoise
   - Make sure UTF-8 return values are marked properly. Fixes #16
   - Update libhunspell to upstream 5de5239, fixes a segfault
 
