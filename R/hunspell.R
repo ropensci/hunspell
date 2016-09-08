@@ -227,17 +227,20 @@ print.dictionary <- function(x, ...){
 #' @param lang dictionary file or language, see details
 #' @param affix file path to corresponding affix file. If \code{NULL} it is
 #' is assumed to be the same path as \code{dict} with extension \code{.aff}.
-dictionary <- function(lang = "en_US", affix = NULL){
+#' @param cache speed up loading of dicationaries by caching
+dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE){
   if(inherits(lang, "dictionary"))
     return(lang)
+  if(!isTRUE(cache))
+    return(dictionary_internal(lang, affix))
   key <- digest::digest(list(lang, affix))
-  if(!is.null(cache[[key]])){
-    return(cache[[key]])
+  if(!is.null(store[[key]])){
+    return(store[[key]])
   } else {
     val <- dictionary_internal(lang, affix)
-    cache[[key]] = val
+    store[[key]] = val
     return(val)
   }
 }
 
-cache <- new.env()
+store <- new.env()

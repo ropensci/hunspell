@@ -30,7 +30,7 @@ hunspell_stem(words, dict = dictionary("en_US"))
 
 hunspell_info(dict = dictionary("en_US"))
 
-dictionary(lang = "en_US", affix = NULL)
+dictionary(lang = "en_US", affix = NULL, cache = TRUE)
 }
 \arguments{
 \item{text}{character vector with arbitrary input text}
@@ -48,6 +48,8 @@ dictionary(lang = "en_US", affix = NULL)
 
 \item{affix}{file path to corresponding affix file. If \code{NULL} it is
 is assumed to be the same path as \code{dict} with extension \code{.aff}.}
+
+\item{cache}{speed up loading of dicationaries by caching}
 }
 \description{
 The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
