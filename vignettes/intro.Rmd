@@ -64,7 +64,6 @@ hunspell_suggest(bad[[1]])
 The `hunspell` function parses various formats, for example latex:
 
 ```{r}
-setwd(tempdir())
 download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 untar("1406.4806v1.tar.gz")
 text <- readLines("content.tex", warn = FALSE)
@@ -118,7 +117,6 @@ To support spell checking on documents, Hunspell includes parsers for various do
 
 
 ```{r}
-setwd(tempdir())
 download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 untar("1406.4806v1.tar.gz")
 text <- readLines("content.tex", warn = FALSE)
