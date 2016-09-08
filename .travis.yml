@@ -29,6 +29,7 @@ addons:
   apt:
     packages:
       - libhunspell-dev
+      - libpoppler-cpp-dev
 
 r_github_packages:
   - jimhester/covr

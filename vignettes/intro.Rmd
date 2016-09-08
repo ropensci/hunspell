@@ -124,7 +124,7 @@ allwords <- hunspell_parse(text, format = "latex")
 print(allwords[[3]])
 ```
 
-### Tokenizing + Stemming
+### Summarizing Text
 
 In text analysis we often want to summarize text via it's stems. For example we can count words for display in a wordcloud:
 
@@ -140,15 +140,15 @@ Most of these are stop words. Let's filter these out:
 ```{r}
 df <- as.data.frame(words)
 df$stems <- as.character(df$stems)
-stops <- df$stems %in% tidytext::stop_words$word
-wcdata <- head(df[!stops,], 100)
+stopwords <- hunspell_parse(readLines('http://jeroenooms.github.io/files/stopwords.txt'))
+stops <- df$stems %in% unlist(stopwords)
+wcdata <- head(df[!stops,], 150)
 print(wcdata, max = 40)
 ```
 
 ```{r}
 library(wordcloud2)
 names(wcdata) <- c("word", "freq")
-wcdata$freq <- sqrt(wcdata$freq)
 wordcloud2(wcdata)
 ```
 
