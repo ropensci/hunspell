@@ -86,7 +86,7 @@ sort(unique(unlist(bad_words)))
 
 The `devtools` package builds on hunspell and has a wrapper to spell-check package documentation files. It shows mostly false positives with non-english R jargon, but you might also catch a typo or two. Point it to the root of your source package:
 
-```{r, purl=FALSE}
+```{r, eval=FALSE}
 devtools::spell_check("~/workspace/V8")
 ```
 
@@ -176,7 +176,7 @@ dictionary("en_GB")
 
 If the files are not in one of the standard paths you can also specify the full path to either or both the dic and aff file:
 
-```{r, purl=FALSE}
+```{r, eval=FALSE}
 dutch <- dictionary("~/workspace/Dictionaries/Dutch.dic")
 print(dutch)
 ```
