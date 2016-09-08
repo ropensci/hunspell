@@ -21,32 +21,36 @@ List R_hunspell_info(DictPtr ptr){
 // [[Rcpp::export]]
 LogicalVector R_hunspell_check(DictPtr ptr, StringVector words){
   //check all words
-  LogicalVector out;
-  for(int i = 0; i < words.length(); i++)
-    out.push_back(ptr->spell(words[i]));
+  int len = words.length();
+  LogicalVector out(len);
+  for(int i = 0; i < len; i++)
+    out[i] = ptr->spell(words[i]);
   return out;
 }
 
 // [[Rcpp::export]]
 List R_hunspell_suggest(DictPtr ptr, StringVector words){
-  List out;
-  for(int i = 0; i < words.length(); i++)
-    out.push_back(ptr->suggest(words[i]));
+  int len = words.length();
+  List out(len);
+  for(int i = 0; i < len; i++)
+    out[i] = ptr->suggest(words[i]);
   return out;
 }
 
 // [[Rcpp::export]]
 List R_hunspell_analyze(DictPtr ptr, StringVector words){
-  List out;
-  for(int i = 0; i < words.length(); i++)
-    out.push_back(ptr->analyze(words[i]));
+  int len = words.length();
+  List out(len);
+  for(int i = 0; i < len; i++)
+    out[i] = ptr->analyze(words[i]);
   return out;
 }
 
 // [[Rcpp::export]]
 List R_hunspell_stem(DictPtr ptr, StringVector words){
-  List out;
-  for(int i = 0; i < words.length(); i++)
-    out.push_back(ptr->stem(words[i]));
+  int len = words.length();
+  List out(len);
+  for(int i = 0; i < len; i++)
+    out[i] = ptr->stem(words[i]);
   return out;
 }

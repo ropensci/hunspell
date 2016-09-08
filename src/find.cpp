@@ -108,9 +108,10 @@ List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringV
   //add ignore words
   ptr->add_words(ignore);
 
-  List out;
-  for(int i = 0; i < text.length(); i++)
-    out.push_back(p.find(text[i], i));
+  int len = text.length();
+  List out(len);
+  for(int i = 0; i < len; i++)
+    out[i] = p.find(text[i], i);
   return out;
 }
 
@@ -120,8 +121,9 @@ List R_hunspell_parse(DictPtr ptr, StringVector text, std::string format){
   //init with affix and at least one dict
   hunspell_parser p(ptr.get(), format);
 
-  List out;
-  for(int i = 0; i < text.length(); i++)
-    out.push_back(p.parse_text(text[i]));
+  int len = text.length();
+  List out(len);
+  for(int i = 0; i < len; i++)
+    out[i] = p.parse_text(text[i]);
   return out;
 }
