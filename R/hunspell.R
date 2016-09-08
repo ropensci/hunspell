@@ -159,9 +159,7 @@ hunspell_info <- function(dict = dictionary("en_US")){
   info
 }
 
-dictionary_internal <- function(lang = "en_US", affix = NULL){
-  if(inherits(lang, "dictionary"))
-    return(lang)
+dictionary_internal <- function(lang, affix){
   dicpath <- get_dict(lang)
   affix <- if(length(affix)){
     normalizePath(affix, mustWork = TRUE)
@@ -229,4 +227,17 @@ print.dictionary <- function(x, ...){
 #' @param lang dictionary file or language, see details
 #' @param affix file path to corresponding affix file. If \code{NULL} it is
 #' is assumed to be the same path as \code{dict} with extension \code{.aff}.
-dictionary <- memoise::memoise(dictionary_internal)
+dictionary <- function(lang = "en_US", affix = NULL){
+  if(inherits(lang, "dictionary"))
+    return(lang)
+  key <- digest::digest(list(lang, affix))
+  if(!is.null(cache[[key]])){
+    return(cache[[key]])
+  } else {
+    val <- dictionary_internal(lang, affix)
+    cache[[key]] = val
+    return(val)
+  }
+}
+
+cache <- new.env()
