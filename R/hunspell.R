@@ -186,6 +186,9 @@ dicpath <- function(){
    Sys.getenv("DICPATH", getwd()),
    system.file("dict", package = "hunspell"), # Bundled with the R package
    normalizePath("~/Library/Spelling", mustWork = FALSE),
+   "/usr/local/share/hunspell",
+   "/usr/local/share/myspell",
+   "/usr/local/share/myspell/dicts",
    "/usr/share/hunspell",
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
