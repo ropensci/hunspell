@@ -85,8 +85,20 @@ sort(unique(unlist(bad_words)))
 
 The `devtools` package builds on hunspell and has a wrapper to spell-check package documentation files. It shows mostly false positives with non-english R jargon, but you might also catch a typo or two. Point it to the root of your source package:
 
-```{r, purl=FALSE}
+```{r, eval=FALSE}
 devtools::spell_check("~/workspace/V8")
+```
+```
+  WORD          FOUND IN
+ECMA          V8.Rd:16, description:2,4
+ECMAScript    description:2
+emscripten    description:5
+htmlwidgets   JS.Rd:16
+JSON          V8.Rd:33,38,39,57,58,59,120
+jsonlite      V8.Rd:42
+Ooms          V8.Rd:41,120
+Xie           JS.Rd:26
+Yihui         JS.Rd:26
 ```
 
 ## Morphological Analysis
@@ -174,11 +186,17 @@ dictionary("en_GB")
 
 If the files are not in one of the standard paths you can also specify the full path to either or both the dic and aff file:
 
-```{r, purl=FALSE}
+```{r, eval = FALSE}
 dutch <- dictionary("~/workspace/Dictionaries/Dutch.dic")
 print(dutch)
 ```
-
+```
+<hunspell dictionary>
+ affix: /Users/jeroen/workspace/Dictionaries/Dutch.aff 
+ dictionary: /Users/jeroen/workspace/Dictionaries/Dutch.dic 
+ encoding: UTF-8 
+ wordchars: '-./0123456789\ĳ’ 
+```
 ### Setting a Language
 
 The hunspell R package includes dictionaries for `en_US` and `en_GB`. So if you you don't speak `en_US` [(like Bill Venables)](https://plus.google.com/+JeroenOoms/posts/RXkefyLP1VP) you can always switch to the real English:
@@ -190,7 +208,7 @@ hunspell("My favourite colour to visualise is grey", dict = 'en_GB')
 
 If you want to use another language you need to make sure that the dictionary is available from your system. The `dictionary` function is used to read in dictionary. 
 
-```{r, purl=FALSE}
+```{r, eval = FALSE}
 dutch <- dictionary("~/workspace/Dictionaries/Dutch.dic")
 hunspell("Hij heeft de klok wel horen luiden, maar weet niet waar de klepel hangt", dict = dutch)
 ```
