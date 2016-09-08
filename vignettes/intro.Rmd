@@ -15,19 +15,148 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Hunspell is the spell checker of LibreOffice, OpenOffice, Mozilla Firefox, Google Chrome, Mac OS-X, InDesign, memoQ, Opera and SDL Trados. It provides a powerful C++ library for tokenizing, stemming and checking text in almost any language and alphabet. The R package exposes both the high-level spell-checker as well as low-level stemmers and tokenizers which analyze or extract individual words from various formats (text, html, xml, latex).
+Hunspell is the spell checker library used by LibreOffice, OpenOffice, Mozilla Firefox, Google Chrome, Mac OS-X, InDesign, Opera, RStudio and many others. It provides a system for tokenizing, stemming and spelling in almost any language or alphabet. The R package exposes both the high-level spell-checker as well as low-level stemmers and tokenizers which analyze or extract individual words from various formats (text, html, xml, latex).
 
-## How Hunspell works
-
-Hunspell uses a special dictionary format. 
-
+The examples below use the (default) `"en_US"` dictionary. However each function can be used in another language by setting a custom dictionary in the `dict` parameter. See the section on [dictionaries](#dictionaries) below.
 
 ## Spell Checking
 
-### Checking Documentation
+Spell checking rougly consists of the following steps: 
+ 
+ 1. Parse a document by extracting (**tokenizing**) words that we want to spell-check
+ 2. Analyze each word by breaking it down in a stem (**stemming**) and conjugation affix
+ 3. Lookup in a **dictionary** if the word+affix combo if valid in a given language
+ 4. (optional) **suggest** corrections by finding words with a short distance to the incorrect word(s)
+ 
+We can do these steps manually or have Hunspell do them automatically for us.
 
-## Checking Words
+### Check Individual Words
 
-## Parsing Text
+The `hunspell_check` and `hunspell_suggest` functions can test individual words for correctness, and suggest similar (correct) words that look similar to the given (incorrect) word.
+
+```{r}
+library(hunspell)
+
+# Check individual words
+words <- c("beer", "wiskey", "wine")
+correct <- hunspell_check(words)
+print(correct)
+
+# Find suggestions for incorrect words
+hunspell_suggest(words[!correct])
+```
+
+### Check Documents
+
+In practice spell checking is often performed on an entire document. The \code{hunspell} function does the typicall spell checking where it searcher for incorrect words within a document. 
 
 
+```{r}
+bad <- hunspell("spell checkers are not neccessairy for langauge ninjas")
+print(bad[[1]])
+hunspell_suggest(bad[[1]])
+```
+
+The `hunspell` function parses various formats, for example latex:
+
+```{r}
+setwd(tempdir())
+download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
+untar("1406.4806v1.tar.gz")
+text <- readLines("content.tex", warn = FALSE)
+bad_words <- hunspell(text, format = "latex")
+sort(unique(unlist(bad_words)))
+```
+
+### Check PDF files
+
+Use the text-extraction from the `pdftools` package to extract text from PDF files!
+
+```{r}
+text <- pdftools::pdf_text('https://www.gnu.org/licenses/quick-guide-gplv3.pdf')
+bad_words <- hunspell(text)
+sort(unique(unlist(bad_words)))
+```
+
+### Check Manual Pages
+
+The `devtools` package builds on hunspell and has a wrapper to spell-check package documentation files. It shows mostly false positives with non-english R jargon, but you might also catch a typo or two. Point it to the root of your source package:
+
+```{r, purl=FALSE}
+devtools::spell_check("~/workspace/V8")
+```
+
+## Morphological Analysis
+
+In order to lookup a word in a dictionary, hunspell needs to break it down in a stem (**stemming**) and conjugation affix. The `hunspell` function does this automatically but we can also do it manually.
+
+### Stemming Words
+
+The `hunspell_stem` looks up words from the dictionary which match the root of the given word. Note that the function returns a list because some words can have multiple matches.
+
+```{r}
+# Stemming
+words <- c("love", "loving", "lovingly", "loved", "lover", "lovely", "love")
+hunspell_stem(words)
+```
+
+### Analyzing Words
+
+The `hunspell_analyze` function is similar, but it returns both the stem and the affix syntax of the word:
+
+```{r}
+hunspell_analyze(words)
+```
+
+## Tokenizing
+
+To support spell checking on documents, Hunspell includes parsers for various document formats, including  *text*, *html*, *xml*, *man* or *latex*. The Hunspell package also exposes these tokenizers directly so they can be used for other application than spell checking.
+
+
+```{r}
+setwd(tempdir())
+download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
+untar("1406.4806v1.tar.gz")
+text <- readLines("content.tex", warn = FALSE)
+allwords <- hunspell_parse(text, format = "latex")
+
+# Third line (title) only
+print(allwords[[3]])
+```
+
+### Tokenizing + Stemming
+
+In text analysis we often want to summarize text via it's stems. For example we can count words for display in a wordcloud:
+
+```{r}
+allwords <- hunspell_parse(janeaustenr::prideprejudice)
+stems <- unlist(hunspell_stem(unlist(allwords)))
+words <- sort(table(stems), decreasing = TRUE)
+print(head(words, 30))
+```
+
+Most of these are stop words. Let's filter these out:
+
+```{r}
+df <- as.data.frame(words)
+df$stems <- as.character(df$stems)
+stops <- df$stems %in% tidytext::stop_words$word
+wcdata <- head(df[!stops,], 100)
+print(wcdata, max = 40)
+```
+
+```{r}
+library(wordcloud2)
+names(wcdata) <- c("word", "freq")
+wcdata$freq <- sqrt(wcdata$freq)
+wordcloud2(wcdata)
+```
+
+
+
+## Custom Dictionaries
+
+Hunspell uses a special dictionary format that defines which characters, words and conjugations are valid in a given language. Hunspell is based on MySpell and is backward-compatible with MySpell and aspell dictionaries. Chances are your dictionaries in your language are already available on your system! 
+
+
+### Installing Extra Dictionaries
