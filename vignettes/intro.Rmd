@@ -111,7 +111,7 @@ The `hunspell_stem` looks up words from the dictionary which match the root of t
 
 ```{r}
 # Stemming
-words <- c("love", "loving", "lovingly", "loved", "lover", "lovely", "love")
+words <- c("love", "loving", "lovingly", "loved", "lover", "lovely")
 hunspell_stem(words)
 ```
 
