@@ -21,18 +21,18 @@ knitr::opts_chunk$set(comment = "")
 
 Hunspell is the spell checker library used by LibreOffice, OpenOffice, Mozilla Firefox, Google Chrome, Mac OS-X, InDesign, Opera, RStudio and many others. It provides a system for tokenizing, stemming and spelling in almost any language or alphabet. The R package exposes both the high-level spell-checker as well as low-level stemmers and tokenizers which analyze or extract individual words from various formats (text, html, xml, latex).
 
-Hunspell uses a special dictionary format that defines which characters, words and conjugations are valid in a given language. The examples below use the (default) `"en_US"` dictionary. However each function can be used in another language by setting a custom dictionary in the `dict` parameter. See the section on [dictionaries](#dictionaries) below.
+Hunspell uses a special dictionary format that defines which characters, words and conjugations are valid in a given language. The examples below use the (default) `"en_US"` dictionary. However each function can be used in another language by setting a custom dictionary in the `dict` parameter. See the section on [dictionaries](#hunspell_dictionaries) below.
 
 ## Spell Checking
 
-Spell checking rougly consists of the following steps: 
+Spell checking text consists of the following steps: 
  
- 1. Parse a document by extracting (**tokenizing**) words that we want to spell-check
- 2. Analyze each word by breaking it down in a stem (**stemming**) and conjugation affix
- 3. Lookup in a **dictionary** if the word+affix combo if valid in a given language
- 4. (optional) **suggest** corrections by finding words with a short distance to the incorrect word(s)
+ 1. Parse a document by extracting (**tokenizing**) words that we want to check
+ 2. Analyze each word by breaking it down in it's root (**stemming**) and conjugation affix
+ 3. Lookup in a **dictionary** if the word+affix combination if valid for your language
+ 4. (optional) For incorrect words, **suggest** corrections by finding similar (correct) words in the dictionary
  
-We can do these steps manually or have Hunspell do them automatically for us.
+We can do each these steps manually or have Hunspell do them automatically.
 
 ### Check Individual Words
 
@@ -52,7 +52,7 @@ hunspell_suggest(words[!correct])
 
 ### Check Documents
 
-In practice spell checking is often performed on an entire document. The \code{hunspell} function does the typicall spell checking where it searcher for incorrect words within a document. 
+In practice we often want to spell check an entire document at once by searching for incorrect words. This is done using the `hunspell` function:
 
 
 ```{r}
@@ -61,7 +61,7 @@ print(bad[[1]])
 hunspell_suggest(bad[[1]])
 ```
 
-The `hunspell` function parses various formats, for example latex:
+Besides plain text, `hunspell` supports various document formats, such as html or latex:
 
 ```{r}
 download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
@@ -73,7 +73,7 @@ sort(unique(unlist(bad_words)))
 
 ### Check PDF files
 
-Use the text-extraction from the `pdftools` package to extract text from PDF files!
+Use the text-extraction from the `pdftools` package to spell check text from PDF files!
 
 ```{r}
 text <- pdftools::pdf_text('https://www.gnu.org/licenses/quick-guide-gplv3.pdf')
@@ -83,7 +83,7 @@ sort(unique(unlist(bad_words)))
 
 ### Check Manual Pages
 
-The `devtools` package builds on hunspell and has a wrapper to spell-check package documentation files. It shows mostly false positives with non-english R jargon, but you might also catch a typo or two. Point it to the root of your source package:
+The `devtools` package builds on hunspell and has a wrapper to spell-check manual pages from R packages. Results might contain a lot of false positives for technical jargon, but you might also catch a typo or two. Point it to the root of your source package:
 
 ```{r, eval=FALSE}
 devtools::spell_check("~/workspace/V8")
@@ -217,13 +217,13 @@ Note that if the `dict` argument is a string, it will be passed on to the `dicti
 
 ### System Dictionaries
 
-The best way to install dictionaries on Linux is via the system package manager. For example on if you would like to install the Austrian-German dictionary on Debian or Ubuntu you either need the [hunspell-de-at](https://packages.debian.org/testing/hunspell-de-at) or [myspell-de-at](https://packages.debian.org/testing/myspell-de-at) package:
+The best way to install dictionaries on Linux is via the system package manager. For example on if you would like to install the Austrian-German dictionary on **Debian** or **Ubuntu** you either need the [`hunspell-de-at`](https://packages.debian.org/testing/hunspell-de-at) or [`myspell-de-at`](https://packages.debian.org/testing/myspell-de-at) package:
 
 ```sh
 sudo apt-get install hunspell-de-at
 ```
 
-On Fedora and CentOS / RHEL all German dialects are included with the [hunspell-de](https://apps.fedoraproject.org/packages/hunspell-de) package
+On **Fedora** and **CentOS** / **RHEL** all German dialects are included with the [`hunspell-de`](https://apps.fedoraproject.org/packages/hunspell-de) package
 
 ```sh
 sudo yum install hunspell-de
@@ -235,7 +235,7 @@ After installing this you should be able to load the dictionary:
 dict <- dictionary('de_AT')
 ```
 
-If that didn't work, double check that the files were installed in the system directory, usually `/usr/share/myspell` or `/usr/share/hunspell`.
+If that didn't work, verify that the dictionary files were installed in one of the system directories (usually `/usr/share/myspell` or `/usr/share/hunspell`).
 
 
 ### Custom Dictionaries
