@@ -129,8 +129,6 @@ To support spell checking on documents, Hunspell includes parsers for various do
 
 
 ```{r}
-download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
-untar("1406.4806v1.tar.gz")
 text <- readLines("content.tex", warn = FALSE)
 allwords <- hunspell_parse(text, format = "latex")
 
