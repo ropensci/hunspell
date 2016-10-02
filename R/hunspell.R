@@ -79,7 +79,7 @@
 #'
 #' # Check an entire latex document
 #' setwd(tempdir())
-#' download.file("http://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
+#' download.file("https://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
 #' untar("1406.4806v1.tar.gz")
 #' text <- readLines("content.tex", warn = FALSE)
 #' bad_words <- hunspell(text, format = "latex")
