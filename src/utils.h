@@ -90,8 +90,9 @@ public:
   Rcpp::CharacterVector suggest(Rcpp::String word){
     char * str = string_from_r(word);
     Rcpp::CharacterVector out;
-    for (const std::basic_string<char>& x : pMS_->suggest(str)) {
-      out.push_back(string_to_r(x.c_str()));
+    std::vector<std::string> x = pMS_->suggest(str);
+    for (int i = 0; i < x.size(); i++) {
+      out.push_back(string_to_r(x.at(i).c_str()));
     }
     free(str);
     return out;
@@ -100,8 +101,9 @@ public:
   Rcpp::CharacterVector analyze(Rcpp::String word){
     Rcpp::CharacterVector out;
     char * str = string_from_r(word);
-    for (const std::basic_string<char>& x : pMS_->analyze(str)) {
-      out.push_back(string_to_r(x.c_str()));
+    std::vector<std::string> x = pMS_->analyze(str);
+    for (int i = 0; i < x.size(); i++) {
+      out.push_back(string_to_r(x.at(i).c_str()));
     }
     free(str);
     return out;
@@ -110,8 +112,9 @@ public:
   Rcpp::CharacterVector stem(Rcpp::String word){
     Rcpp::CharacterVector out;
     char * str = string_from_r(word);
-    for (const std::basic_string<char>& x : pMS_->stem(str)) {
-      out.push_back(string_to_r(x.c_str()));
+    std::vector<std::string> x = pMS_->stem(str);
+    for (int i = 0; i < x.size(); i++) {
+      out.push_back(string_to_r(x.at(i).c_str()));
     }
     free(str);
     return out;

@@ -1,3 +1,6 @@
+2.2
+  - Tweak code to make it build on old compilers (CentOS6 / gcc 4.4.7)
+
 2.1
   - Update upstream to a6d32ee
   - Rebuild vignettes to fix CMD check timestamp warning
