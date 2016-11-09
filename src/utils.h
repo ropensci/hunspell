@@ -91,7 +91,7 @@ public:
     char * str = string_from_r(word);
     Rcpp::CharacterVector out;
     std::vector<std::string> x = pMS_->suggest(str);
-    for (int i = 0; i < x.size(); i++) {
+    for (size_t i = 0; i < x.size(); i++) {
       out.push_back(string_to_r(x.at(i).c_str()));
     }
     free(str);
@@ -102,7 +102,7 @@ public:
     Rcpp::CharacterVector out;
     char * str = string_from_r(word);
     std::vector<std::string> x = pMS_->analyze(str);
-    for (int i = 0; i < x.size(); i++) {
+    for (size_t i = 0; i < x.size(); i++) {
       out.push_back(string_to_r(x.at(i).c_str()));
     }
     free(str);
@@ -113,7 +113,7 @@ public:
     Rcpp::CharacterVector out;
     char * str = string_from_r(word);
     std::vector<std::string> x = pMS_->stem(str);
-    for (int i = 0; i < x.size(); i++) {
+    for (size_t i = 0; i < x.size(); i++) {
       out.push_back(string_to_r(x.at(i).c_str()));
     }
     free(str);
