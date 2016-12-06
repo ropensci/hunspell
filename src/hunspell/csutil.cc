@@ -98,7 +98,7 @@ struct unicode_info {
 #include <unicode/uchar.h>
 #else
 #ifndef MOZILLA_CLIENT
-#include "utf_info.cc"
+#include "utf_info.cxx"
 #define UTF_LST_LEN (sizeof(utf_lst) / (sizeof(unicode_info)))
 #endif
 #endif

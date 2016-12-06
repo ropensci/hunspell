@@ -155,7 +155,7 @@ public:
       rawlen = vec_wordchars_utf16.size() * 2;
       charvec = rawlen ? (const char *) &vec_wordchars_utf16[0] : NULL;
     } else {
-      charvec = pMS_->get_wordchars().c_str();
+      charvec = pMS_->get_wordchars();
       rawlen = strlen(charvec);
     }
     Rcpp::RawVector out(rawlen);
