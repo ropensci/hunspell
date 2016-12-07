@@ -1,5 +1,6 @@
 2.3
   - Update libhunspell to upstream v1.5.4
+  - Change intro.rmd vignette to clean up downloaded files
 
 2.2
   - Tweak code to make it build on old compilers (CentOS6 / gcc 4.4.7)

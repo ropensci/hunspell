@@ -65,7 +65,7 @@ Besides plain text, `hunspell` supports various document formats, such as html o
 
 ```{r}
 download.file("https://arxiv.org/e-print/1406.4806v1", "1406.4806v1.tar.gz",  mode = "wb")
-untar("1406.4806v1.tar.gz")
+untar("1406.4806v1.tar.gz", "content.tex")
 text <- readLines("content.tex", warn = FALSE)
 bad_words <- hunspell(text, format = "latex")
 sort(unique(unlist(bad_words)))
@@ -253,4 +253,7 @@ Sys.setenv(DICPATH = "/my/custom/hunspell/dir")
 hunspell:::dicpath()
 ```
 
+```{r, echo = FALSE, message = FALSE}
+unlink(c("1406.4806v1.tar.gz", "content.tex"))
+```
 
