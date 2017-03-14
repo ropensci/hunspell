@@ -8,7 +8,7 @@ RUN apt-get -qq update > /dev/null \
 	&& apt-get -qq install git pandoc pandoc-citeproc > /dev/null \
 	&& RDscript -e 'install.packages(c("Rcpp", "testthat"), quiet = TRUE)'
 
-RUN git clone https://github.com/jeroenooms/hunspell \
+RUN git clone https://github.com/jeroen/hunspell \
 	&& RD CMD build hunspell \
 	&& RD CMD INSTALL hunspell_*.tar.gz --install-tests
 
