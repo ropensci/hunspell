@@ -1,6 +1,6 @@
 PKG_CPPFLAGS=-I. -Ihunspell
 PKG_CXXFLAGS=-DBUILDING_LIBHUNSPELL
-CXX_STD=CXX11
+CXX_STD=-CXX11
 
 #Add Windows-only flags (ifeq is a GNU extension...)
 WINRICONV=$(subst 64,-lRiconv,$(subst 32,64,$(WIN)))
