@@ -1,5 +1,7 @@
 2.4
   - Update libhunspell to upstream v1.6.0
+  - Update maintainer info
+  - Add mandatory symbol registration
 
 2.3
   - Update libhunspell to upstream v1.5.4
