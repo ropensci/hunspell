@@ -131,4 +131,3 @@ allwords <- hunspell_parse(text, format = "latex")
 stems <- unlist(hunspell_stem(unlist(allwords)))
 words <- head(sort(table(stems), decreasing = TRUE), 200)
 }
-

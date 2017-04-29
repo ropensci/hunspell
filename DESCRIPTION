@@ -17,4 +17,4 @@ Imports: Rcpp, digest
 LinkingTo: Rcpp
 Suggests: testthat, devtools, pdftools, janeaustenr, wordcloud2, knitr, rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 6.0.1
