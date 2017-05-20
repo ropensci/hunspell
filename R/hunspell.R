@@ -159,14 +159,14 @@ hunspell_info <- function(dict = dictionary("en_US")){
   info
 }
 
-dictionary_internal <- function(lang, affix){
+dictionary_internal <- function(lang, affix, add_words){
   dicpath <- get_dict(lang)
   affix <- if(length(affix)){
     normalizePath(affix, mustWork = TRUE)
   } else {
     get_affix(dicpath)
   }
-  dict <- R_hunspell_dict(affix, dicpath)
+  dict <- R_hunspell_dict(affix, dicpath, as.character(add_words))
   structure(dict, class = "dictionary")
 }
 
@@ -231,16 +231,16 @@ print.dictionary <- function(x, ...){
 #' @param affix file path to corresponding affix file. If \code{NULL} it is
 #' is assumed to be the same path as \code{dict} with extension \code{.aff}.
 #' @param cache speed up loading of dicationaries by caching
-dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE){
+dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL){
   if(inherits(lang, "dictionary"))
     return(lang)
   if(!isTRUE(cache))
-    return(dictionary_internal(lang, affix))
-  key <- digest::digest(list(lang, affix))
+    return(dictionary_internal(lang, affix, add_words))
+  key <- digest::digest(list(lang, affix, add_words))
   if(!is.null(store[[key]])){
     return(store[[key]])
   } else {
-    val <- dictionary_internal(lang, affix)
+    val <- dictionary_internal(lang, affix, add_words)
     store[[key]] = val
     return(val)
   }

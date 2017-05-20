@@ -1,3 +1,6 @@
+2.5
+  - Add parameter 'add_words' to dictionary()
+
 2.4
   - Update libhunspell to upstream v1.6.1
   - Update maintainer info

@@ -7,14 +7,15 @@
 using namespace Rcpp;
 
 // R_hunspell_dict
-DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict);
-RcppExport SEXP hunspell_R_hunspell_dict(SEXP affixSEXP, SEXP dictSEXP) {
+DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector add_words);
+RcppExport SEXP hunspell_R_hunspell_dict(SEXP affixSEXP, SEXP dictSEXP, SEXP add_wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::String >::type affix(affixSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type dict(dictSEXP);
-    rcpp_result_gen = Rcpp::wrap(R_hunspell_dict(affix, dict));
+    Rcpp::traits::input_parameter< StringVector >::type add_words(add_wordsSEXP);
+    rcpp_result_gen = Rcpp::wrap(R_hunspell_dict(affix, dict, add_words));
     return rcpp_result_gen;
 END_RCPP
 }
