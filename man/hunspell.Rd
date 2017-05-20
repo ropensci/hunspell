@@ -50,6 +50,8 @@ dictionary(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL)
 is assumed to be the same path as \code{dict} with extension \code{.aff}.}
 
 \item{cache}{speed up loading of dicationaries by caching}
+
+\item{add_words}{a character vector of additional words to add to the dictionary}
 }
 \description{
 The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
