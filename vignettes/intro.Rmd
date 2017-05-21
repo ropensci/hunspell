@@ -198,7 +198,7 @@ print(dutch)
 ```
 ### Setting a Language
 
-The hunspell R package includes dictionaries for `en_US` and `en_GB`. So if you you don't speak `en_US` [(like Bill Venables)](https://plus.google.com/+JeroenOoms/posts/RXkefyLP1VP) you can always switch to the real English:
+The hunspell R package includes dictionaries for `en_US` and `en_GB`. So if you you don't speak `en_US` you can always switch to the British English:
 
 ```{r}
 hunspell("My favourite colour to visualise is grey")
