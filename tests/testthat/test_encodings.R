@@ -57,3 +57,18 @@ test_that("UTF8 always works", {
   expect_match(hunspell_analyze(str2, dict = "ru_RU")[[1]][1], stemstr)
 
 })
+
+test_that("custom words in dictionary",{
+  word_native <-  enc2native("üx")
+  word_utf <- enc2utf8(word_native)
+  expect_false(hunspell_check(word_native))
+  expect_false(hunspell_check(word_utf))
+  expect_true(hunspell_check(word_native, dictionary(add_words = word_native)))
+  expect_true(hunspell_check(word_utf, dictionary(add_words = word_utf)))
+  expect_true(hunspell_check(word_native, dictionary(add_words = word_utf)))
+  expect_true(hunspell_check(word_utf, dictionary(add_words = word_native)))
+
+  # tests caching
+  expect_false(hunspell_check(word_native))
+  expect_false(hunspell_check(word_utf))
+})
