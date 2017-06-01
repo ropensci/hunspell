@@ -61,6 +61,4 @@ library(devtools)
 spell_check("~/mypackage")
 ```
 
-
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
-
