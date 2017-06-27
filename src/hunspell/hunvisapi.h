@@ -10,7 +10,7 @@
 #    define LIBHUNSPELL_DLL_EXPORTED __declspec(dllimport)
 #  endif
 #elif defined(BUILDING_LIBHUNSPELL) && 1
-#  define LIBHUNSPELL_DLL_EXPORTED __attribute__((__visibility__("default")))
+#  define LIBHUNSPELL_DLL_EXPORTED __attribute__((__visibility__("hidden")))
 #else
 #  define LIBHUNSPELL_DLL_EXPORTED
 #endif

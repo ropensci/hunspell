@@ -14,7 +14,7 @@
 
 using namespace Rcpp;
 
-class hunspell_parser {
+class LIBHUNSPELL_DLL_EXPORTED hunspell_parser {
   TextParser *parser;
   hunspell_dict *mydict;
   const w_char* utf16_wc;

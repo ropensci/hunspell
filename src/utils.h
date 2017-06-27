@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <Rcpp.h>
 
-class hunspell_dict {
+class LIBHUNSPELL_DLL_EXPORTED hunspell_dict {
   Hunspell * pMS_;
   iconv_t cd_from_;
   iconv_t cd_to_;
