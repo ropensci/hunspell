@@ -1,3 +1,7 @@
+2.6
+  - Compile libhunspell with '__attribute__((__visibility__("hidden")))' to solve
+    a symbol conflict in rstudio (which also has libhunspell)
+
 2.5
   - Add parameter 'add_words' to dictionary()
 
