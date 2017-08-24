@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // R_hunspell_dict
 DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector add_words);
-RcppExport SEXP hunspell_R_hunspell_dict(SEXP affixSEXP, SEXP dictSEXP, SEXP add_wordsSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_dict(SEXP affixSEXP, SEXP dictSEXP, SEXP add_wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -21,7 +21,7 @@ END_RCPP
 }
 // R_hunspell_info
 List R_hunspell_info(DictPtr ptr);
-RcppExport SEXP hunspell_R_hunspell_info(SEXP ptrSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_info(SEXP ptrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,7 +32,7 @@ END_RCPP
 }
 // R_hunspell_check
 LogicalVector R_hunspell_check(DictPtr ptr, StringVector words);
-RcppExport SEXP hunspell_R_hunspell_check(SEXP ptrSEXP, SEXP wordsSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_check(SEXP ptrSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,7 +44,7 @@ END_RCPP
 }
 // R_hunspell_suggest
 List R_hunspell_suggest(DictPtr ptr, StringVector words);
-RcppExport SEXP hunspell_R_hunspell_suggest(SEXP ptrSEXP, SEXP wordsSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_suggest(SEXP ptrSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -56,7 +56,7 @@ END_RCPP
 }
 // R_hunspell_analyze
 List R_hunspell_analyze(DictPtr ptr, StringVector words);
-RcppExport SEXP hunspell_R_hunspell_analyze(SEXP ptrSEXP, SEXP wordsSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_analyze(SEXP ptrSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -68,7 +68,7 @@ END_RCPP
 }
 // R_hunspell_stem
 List R_hunspell_stem(DictPtr ptr, StringVector words);
-RcppExport SEXP hunspell_R_hunspell_stem(SEXP ptrSEXP, SEXP wordsSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_stem(SEXP ptrSEXP, SEXP wordsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -80,7 +80,7 @@ END_RCPP
 }
 // R_hunspell_find
 List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringVector ignore);
-RcppExport SEXP hunspell_R_hunspell_find(SEXP ptrSEXP, SEXP textSEXP, SEXP formatSEXP, SEXP ignoreSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_find(SEXP ptrSEXP, SEXP textSEXP, SEXP formatSEXP, SEXP ignoreSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -94,7 +94,7 @@ END_RCPP
 }
 // R_hunspell_parse
 List R_hunspell_parse(DictPtr ptr, StringVector text, std::string format);
-RcppExport SEXP hunspell_R_hunspell_parse(SEXP ptrSEXP, SEXP textSEXP, SEXP formatSEXP) {
+RcppExport SEXP _hunspell_R_hunspell_parse(SEXP ptrSEXP, SEXP textSEXP, SEXP formatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -104,4 +104,21 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(R_hunspell_parse(ptr, text, format));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_hunspell_R_hunspell_dict", (DL_FUNC) &_hunspell_R_hunspell_dict, 3},
+    {"_hunspell_R_hunspell_info", (DL_FUNC) &_hunspell_R_hunspell_info, 1},
+    {"_hunspell_R_hunspell_check", (DL_FUNC) &_hunspell_R_hunspell_check, 2},
+    {"_hunspell_R_hunspell_suggest", (DL_FUNC) &_hunspell_R_hunspell_suggest, 2},
+    {"_hunspell_R_hunspell_analyze", (DL_FUNC) &_hunspell_R_hunspell_analyze, 2},
+    {"_hunspell_R_hunspell_stem", (DL_FUNC) &_hunspell_R_hunspell_stem, 2},
+    {"_hunspell_R_hunspell_find", (DL_FUNC) &_hunspell_R_hunspell_find, 4},
+    {"_hunspell_R_hunspell_parse", (DL_FUNC) &_hunspell_R_hunspell_parse, 3},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_hunspell(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
