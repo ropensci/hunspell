@@ -1,5 +1,5 @@
-PKG_CPPFLAGS=-I. -Ihunspell
-PKG_CXXFLAGS=-DBUILDING_LIBHUNSPELL
+PKG_CPPFLAGS=-I. -Ihunspell -DBUILDING_LIBHUNSPELL
+PKG_CXXFLAGS=$(C_VISIBILITY)
 CXX_STD=CXX11
 
 #Add Windows-only flags (ifeq is a GNU extension...)
@@ -12,7 +12,7 @@ LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
   hunspell/hashmgr.o hunspell/hunspell.o hunspell/hunzip.o hunspell/phonet.o \
   hunspell/replist.o hunspell/suggestmgr.o hunspell/csutil.o
 
-# all: clean
+all: clean
 
 $(SHLIB): libstathunspell.a
 
