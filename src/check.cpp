@@ -26,7 +26,7 @@ LogicalVector R_hunspell_check(DictPtr ptr, StringVector words){
   int len = words.length();
   LogicalVector out(len);
   for(int i = 0; i < len; i++)
-    out[i] = ptr->spell(words[i]);
+    out[i] = StringVector::is_na(words[i]) ? NA_LOGICAL : ptr->spell(words[i]);
   return out;
 }
 
@@ -35,7 +35,8 @@ List R_hunspell_suggest(DictPtr ptr, StringVector words){
   int len = words.length();
   List out(len);
   for(int i = 0; i < len; i++)
-    out[i] = ptr->suggest(words[i]);
+    if(!StringVector::is_na(words[i]))
+      out[i] = ptr->suggest(words[i]);
   return out;
 }
 
@@ -44,7 +45,8 @@ List R_hunspell_analyze(DictPtr ptr, StringVector words){
   int len = words.length();
   List out(len);
   for(int i = 0; i < len; i++)
-    out[i] = ptr->analyze(words[i]);
+    if(!StringVector::is_na(words[i]))
+      out[i] = ptr->analyze(words[i]);
   return out;
 }
 
@@ -53,6 +55,7 @@ List R_hunspell_stem(DictPtr ptr, StringVector words){
   int len = words.length();
   List out(len);
   for(int i = 0; i < len; i++)
-    out[i] = ptr->stem(words[i]);
+    if(!StringVector::is_na(words[i]))
+      out[i] = ptr->stem(words[i]);
   return out;
 }

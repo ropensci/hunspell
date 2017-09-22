@@ -111,7 +111,8 @@ List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringV
   int len = text.length();
   List out(len);
   for(int i = 0; i < len; i++)
-    out[i] = p.find(text[i], i);
+    if(!StringVector::is_na(text[i]))
+      out[i] = p.find(text[i], i);
   return out;
 }
 
@@ -124,6 +125,7 @@ List R_hunspell_parse(DictPtr ptr, StringVector text, std::string format){
   int len = text.length();
   List out(len);
   for(int i = 0; i < len; i++)
-    out[i] = p.parse_text(text[i]);
+    if(!StringVector::is_na(text[i]))
+      out[i] = p.parse_text(text[i]);
   return out;
 }
