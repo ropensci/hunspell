@@ -71,6 +71,7 @@ public:
   void add_word(Rcpp::String word){
     char * str = string_from_r(word);
     if(str != NULL) {
+      pMS_->add_with_affix(str, "a"); //Workaround for https://github.com/ropensci/hunspell/issues/29
       pMS_->add(str);
       free(str);
     }
