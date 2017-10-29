@@ -2,6 +2,7 @@
   - Update bundled en_US dictionary from libreoffice
   - Use Rcpp symbol registration / visibility
   - Properly pass down missing values
+  - Added workaround for issue #29 (case sensitivity in custom wordlist)
 
 2.6
   - Compile libhunspell with '__attribute__((__visibility__("hidden")))' to solve
