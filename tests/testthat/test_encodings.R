@@ -14,7 +14,7 @@ test_that("Dictionaries are found",{
   expect_equal(hunspell_info("en_US")$encoding, "UTF-8")
   expect_equal(hunspell_info("ru_RU")$encoding, "UTF-8")
   expect_equal(hunspell_info("en_US")$wordchars, "0123456789")
-  expect_equal(hunspell_info("en_GB")$wordchars, "0123456789’")
+  expect_equal(hunspell_info("en_GB")$wordchars, "0123456789\u2019")
   expect_equal(hunspell_info("ru_RU")$wordchars, NA_character_)
   expect_equal(hunspell_info("russian-aot")$encoding, "KOI8-R")
   expect_equal(nchar(hunspell_info("russian-aot")$wordchars), 122)
