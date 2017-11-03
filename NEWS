@@ -1,3 +1,6 @@
+2.8
+  - Fix caching bug for 'ignore' argument in hunspell()
+
 2.7
   - Update bundled en_US / en_GB dictionaries from libreoffice extensions
   - Use Rcpp symbol registration / visibility

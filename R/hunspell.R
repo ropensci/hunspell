@@ -94,8 +94,8 @@ hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
   stopifnot(is.character(text))
   stopifnot(is.character(ignore))
   format <- match.arg(format)
-  dictionary <- dictionary(dict)
-  R_hunspell_find(dictionary, text, format, ignore)
+  dictionary <- dictionary(dict, add_words = ignore)
+  R_hunspell_find(dictionary, text, format, character())
 }
 
 #for backward compatiblity
@@ -233,8 +233,11 @@ print.dictionary <- function(x, ...){
 #' @param cache speed up loading of dicationaries by caching
 #' @param add_words a character vector of additional words to add to the dictionary
 dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL){
-  if(inherits(lang, "dictionary"))
-    return(lang)
+  if(inherits(lang, "dictionary")){
+    if(!length(add_words))
+      return(lang)
+    lang <- hunspell_info(lang)$dict
+  }
   if(!isTRUE(cache))
     return(dictionary_internal(lang, affix, add_words))
   key <- digest::digest(list(lang, affix, add_words))
