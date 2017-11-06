@@ -167,7 +167,7 @@ dictionary_internal <- function(lang, affix, add_words){
     get_affix(dicpath)
   }
   dict <- R_hunspell_dict(affix, dicpath, as.character(add_words))
-  structure(dict, class = "dictionary")
+  structure(dict, class = "hunspell_dictionary")
 }
 
 get_affix <- function(dicpath){
@@ -215,7 +215,7 @@ en_stats <- (function(){
 })()
 
 #' @export
-print.dictionary <- function(x, ...){
+print.hunspell_dictionary <- function(x, ...){
   info <- hunspell_info(x)
   cat("<hunspell dictionary>\n")
   cat(" affix:", info$affix, "\n")
@@ -233,7 +233,7 @@ print.dictionary <- function(x, ...){
 #' @param cache speed up loading of dicationaries by caching
 #' @param add_words a character vector of additional words to add to the dictionary
 dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL){
-  if(inherits(lang, "dictionary")){
+  if(inherits(lang, "hunspell_dictionary")){
     if(!length(add_words))
       return(lang)
     lang <- hunspell_info(lang)$dict

@@ -3,6 +3,7 @@ Type: Package
 Title: High-Performance Stemmer, Tokenizer, and Spell Checker for R
 Version: 2.7.9000
 Depends: R (>= 3.0.2)
+Encoding: UTF-8
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Description: A spell checker and morphological analyzer library designed for
@@ -18,4 +19,4 @@ Imports: Rcpp, digest
 LinkingTo: Rcpp (>= 0.12.12)
 Suggests: testthat, devtools, pdftools, janeaustenr, wordcloud2, knitr, rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
