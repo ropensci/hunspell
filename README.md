@@ -9,11 +9,12 @@
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/hunspell)](https://cran.r-project.org/package=hunspell)
 [![Github Stars](https://img.shields.io/github/stars/ropensci/hunspell.svg?style=social&label=Github)](https://github.com/ropensci/hunspell)
 
-> A spell checker and morphological analyzer library designed for
-  languages with rich morphology and complex word compounding or character
-  encoding. The package can check and analyze individual words as well as
-  search for incorrect words within a text, latex, html or xml document. Use
-  the 'devtools' package to spell check R documentation with 'hunspell'.
+> Low level spell checker and morphological analyzer based on the 
+  famous hunspell library <https://hunspell.github.io>. The package can analyze
+  or check individual words as well as tokenize text, latex, html or xml documents.
+  For a more user-friendly interface use the 'spelling' package which builds on
+  this package with utilities to automate checking of files, documentation and 
+  vignettes in all common formats.
 
 ## Installation
 
@@ -53,12 +54,12 @@ hunspell_stem(words)
 hunspell_analyze(words)
 ```
 
-The `devtools` package uses this package to spell R package documentation:
+The `spelling` package uses this package to spell R package documentation:
 
 ```r
 # Spell check a package
-library(devtools)
-spell_check("~/mypackage")
+library(spelling)
+spell_check_package("~/mypackage")
 ```
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
