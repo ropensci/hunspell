@@ -6,7 +6,7 @@ src/parsers/*.o
 src/hunspell/*.o
 src/*.so
 src/*.dll
-src/*.a
+src/hunspell/*.a
 inst/doc/*.html
 windows
 *DS_Store

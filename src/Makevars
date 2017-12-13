@@ -4,7 +4,7 @@ CXX_STD=CXX11
 
 #Add Windows-only flags (ifeq is a GNU extension...)
 WINRICONV=$(subst 64,-lRiconv,$(subst 32,64,$(WIN)))
-PKG_LIBS=-L. -lstathunspell $(WINRICONV)
+PKG_LIBS=-Lhunspell -lstathunspell $(WINRICONV)
 
 LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
 	parsers/xmlparser.o parsers/htmlparser.o \
@@ -14,12 +14,14 @@ LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
 
 all: clean
 
-$(SHLIB): libstathunspell.a
+STATLIB = hunspell/libstathunspell.a
 
-libstathunspell.a: $(LIBHUNSPELL)
-	$(AR) rcs libstathunspell.a $(LIBHUNSPELL)
+$(SHLIB): $(STATLIB)
+
+$(STATLIB): $(LIBHUNSPELL)
+	$(AR) rcs $(STATLIB) $(LIBHUNSPELL)
 
 clean:
-	rm -f $(SHLIB) $(LIBHUNSPELL) $(OBJECTS) libstathunspell.a
+	rm -f $(SHLIB) $(LIBHUNSPELL) $(OBJECTS) $(STATLIB)
 
 .PHONY: all clean
