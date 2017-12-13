@@ -15,3 +15,6 @@ See also <https://github.com/hunspell/hunspell/graphs/contributors>
 
 Hunspell is based on OpenOffice.org's Myspell. MySpell's author:
 * 2001-2002, Kevin Hendricks
+
+Replacement aglorithms for phonetic transformation:
+* 2000 Bjoern Jacke
