@@ -1,6 +1,5 @@
 ## ---- echo = FALSE, message = FALSE--------------------------------------
 knitr::opts_chunk$set(comment = "")
-has_pdftools <- isTRUE(require(pdftools))
 
 ## ------------------------------------------------------------------------
 library(hunspell)
@@ -25,7 +24,7 @@ text <- readLines("content.tex", warn = FALSE)
 bad_words <- hunspell(text, format = "latex")
 sort(unique(unlist(bad_words)))
 
-## ---- eval = has_pdftools------------------------------------------------
+## ---- eval = isTRUE(require(pdftools))-----------------------------------
 text <- pdftools::pdf_text('https://www.gnu.org/licenses/quick-guide-gplv3.pdf')
 bad_words <- hunspell(text)
 sort(unique(unlist(bad_words)))
