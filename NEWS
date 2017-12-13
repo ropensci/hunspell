@@ -1,3 +1,6 @@
+2.8.1
+  - Add 'AUTHORS' file and tweak DESCRIPTION as requested by CRAN.
+
 2.8
   - Fix caching bug for 'ignore' argument in hunspell()
   - Rename class 'dictionary' to 'hunspell_dictionary' to avoid collisions

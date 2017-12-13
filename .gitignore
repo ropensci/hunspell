@@ -7,6 +7,6 @@ src/hunspell/*.o
 src/*.so
 src/*.dll
 src/*.a
-inst/doc
+inst/doc/*.html
 windows
 *DS_Store
