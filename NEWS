@@ -1,5 +1,7 @@
-2.8.1
-  - Add 'AUTHORS' file and tweak DESCRIPTION as requested by CRAN.
+2.9
+  - Breaking: 'en_US' tokenizer now recognizes apostrophe character
+  - Properly use the UTF8 dictionary WORDCHARS for tokenizing text.
+  - Add 'AUTHORS' file and update DESCRIPTION as requested by CRAN.
 
 2.8
   - Fix caching bug for 'ignore' argument in hunspell()
