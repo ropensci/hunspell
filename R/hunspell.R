@@ -230,7 +230,7 @@ print.hunspell_dictionary <- function(x, ...){
 #' @param lang dictionary file or language, see details
 #' @param affix file path to corresponding affix file. If \code{NULL} it is
 #' is assumed to be the same path as \code{dict} with extension \code{.aff}.
-#' @param cache speed up loading of dicationaries by caching
+#' @param cache speed up loading of dictionaries by caching
 #' @param add_words a character vector of additional words to add to the dictionary
 dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL){
   if(inherits(lang, "hunspell_dictionary")){

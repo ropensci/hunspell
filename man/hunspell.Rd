@@ -49,7 +49,7 @@ dictionary(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL)
 \item{affix}{file path to corresponding affix file. If \code{NULL} it is
 is assumed to be the same path as \code{dict} with extension \code{.aff}.}
 
-\item{cache}{speed up loading of dicationaries by caching}
+\item{cache}{speed up loading of dictionaries by caching}
 
 \item{add_words}{a character vector of additional words to add to the dictionary}
 }

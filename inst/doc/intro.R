@@ -24,7 +24,7 @@ text <- readLines("content.tex", warn = FALSE)
 bad_words <- hunspell(text, format = "latex")
 sort(unique(unlist(bad_words)))
 
-## ---- eval = isTRUE(require(pdftools))-----------------------------------
+## ------------------------------------------------------------------------
 text <- pdftools::pdf_text('https://www.gnu.org/licenses/quick-guide-gplv3.pdf')
 bad_words <- hunspell(text)
 sort(unique(unlist(bad_words)))
