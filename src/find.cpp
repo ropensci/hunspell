@@ -17,17 +17,17 @@ using namespace Rcpp;
 class LIBHUNSPELL_DLL_EXPORTED hunspell_parser {
   TextParser *parser;
   hunspell_dict *mydict;
-  w_char utf16_wc[1000];
-  int utf16_len;
+  std::vector<w_char> wordchars;
 
 public:
   hunspell_parser(hunspell_dict *mydict, std::string format) : mydict(mydict) {
-    const std::vector<w_char> vec_wordchars_utf16 = mydict->get_wordchars_utf16();
-    utf16_len = vec_wordchars_utf16.size();
-    for(int i = 0; i < utf16_len; i++)
-      utf16_wc[i] = vec_wordchars_utf16.at(i);
-
     if(mydict->is_utf8()){
+      // copy because wordchars need to stay in scope!
+      wordchars = mydict->get_wordchars_utf16();
+
+      // initiate the tokenizer
+      int utf16_len = wordchars.size();
+      const w_char * utf16_wc = wordchars.data();
       if(!format.compare("text")){
         parser = new TextParser(utf16_wc, utf16_len);
       } else if(!format.compare("latex")){
