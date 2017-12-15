@@ -30,7 +30,7 @@ hunspell_stem(words, dict = dictionary("en_US"))
 
 hunspell_info(dict = dictionary("en_US"))
 
-dictionary(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL)
+dictionary(lang = "en_US", affix = NULL, add_words = NULL, cache = TRUE)
 }
 \arguments{
 \item{text}{character vector with arbitrary input text}
@@ -49,9 +49,9 @@ dictionary(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL)
 \item{affix}{file path to corresponding affix file. If \code{NULL} it is
 is assumed to be the same path as \code{dict} with extension \code{.aff}.}
 
-\item{cache}{speed up loading of dictionaries by caching}
-
 \item{add_words}{a character vector of additional words to add to the dictionary}
+
+\item{cache}{speed up loading of dictionaries by caching}
 }
 \description{
 The \code{\link{hunspell}} function is a high-level wrapper for finding spelling
@@ -99,7 +99,7 @@ parameter. Some popular sources of dictionaries are
 Note that \code{hunspell} uses \code{\link{iconv}} to convert input text to
 the encoding used by the dictionary. This will fail if \code{text} contains characters
 which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
-are preferable over legacy 8bit dictionaries.
+are preferable over legacy 8-bit dictionaries.
 }
 \examples{
 # Check individual words

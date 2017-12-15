@@ -25,8 +25,8 @@ R_hunspell_stem <- function(ptr, words) {
     .Call('_hunspell_R_hunspell_stem', PACKAGE = 'hunspell', ptr, words)
 }
 
-R_hunspell_find <- function(ptr, text, format, ignore) {
-    .Call('_hunspell_R_hunspell_find', PACKAGE = 'hunspell', ptr, text, format, ignore)
+R_hunspell_find <- function(ptr, text, format) {
+    .Call('_hunspell_R_hunspell_find', PACKAGE = 'hunspell', ptr, text, format)
 }
 
 R_hunspell_parse <- function(ptr, text, format) {

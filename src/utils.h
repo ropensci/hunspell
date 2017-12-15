@@ -11,6 +11,7 @@ class LIBHUNSPELL_DLL_EXPORTED hunspell_dict {
   std::string enc_;
   Rcpp::String affix_;
   Rcpp::CharacterVector dicts_;
+  Rcpp::StringVector added_;
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
@@ -26,7 +27,7 @@ private:
 
 public:
   // Some strings are regular strings
-  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts) : affix_(affix), dicts_(dicts) {
+  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts, Rcpp::StringVector words) : affix_(affix), dicts_(dicts), added_(words) {
     std::string dict(dicts[0]);
     pMS_ = new Hunspell(affix.get_cstring(), dict.c_str());
     if(!pMS_)
@@ -37,9 +38,14 @@ public:
     for(int i = 1; i < dicts.length(); i++)
       pMS_->add_dic(std::string(dicts[i]).c_str());
 
+    //setup iconv converters
     enc_ = pMS_->get_dict_encoding();
     cd_from_ = new_iconv("UTF-8", enc_.c_str());
     cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
+
+    //add custom words to dictionary
+    for(size_t i = 0; i < words.length(); i++)
+      add_word(words.at(i));
   }
 
   ~hunspell_dict() {
@@ -121,13 +127,6 @@ public:
     return out;
   }
 
-  //adds ignore words to the dictionary
-  void add_words(Rcpp::StringVector words){
-    for(int i = 0; i < words.length(); i++){
-      add_word(words[i]);
-    }
-  }
-
   iconv_t cd_from(){
     return cd_from_;
   }
@@ -146,6 +145,10 @@ public:
 
   Rcpp::CharacterVector dicts(){
     return dicts_;
+  }
+
+  Rcpp::CharacterVector added(){
+    return added_;
   }
 
   Rcpp::RawVector r_wordchars(){

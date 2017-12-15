@@ -44,7 +44,7 @@
 #' Note that \code{hunspell} uses \code{\link{iconv}} to convert input text to
 #' the encoding used by the dictionary. This will fail if \code{text} contains characters
 #' which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
-#' are preferable over legacy 8bit dictionaries.
+#' are preferable over legacy 8-bit dictionaries.
 #'
 #' @rdname hunspell
 #' @aliases hunspell hunspell_find en_stats dicpath
@@ -92,10 +92,10 @@
 hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
                      dict = dictionary("en_US"), ignore = en_stats){
   stopifnot(is.character(text))
-  stopifnot(is.character(ignore))
+  ignore <- as.character(ignore)
   format <- match.arg(format)
   dictionary <- dictionary(dict, add_words = ignore)
-  R_hunspell_find(dictionary, text, format, character())
+  R_hunspell_find(dictionary, text, format)
 }
 
 #for backward compatiblity
@@ -159,15 +159,25 @@ hunspell_info <- function(dict = dictionary("en_US")){
   info
 }
 
-dictionary_internal <- function(lang, affix, add_words){
-  dicpath <- get_dict(lang)
+dictionary_load <- function(lang, affix, add_words, cache){
+  dict <- get_dict(lang)
   affix <- if(length(affix)){
     normalizePath(affix, mustWork = TRUE)
   } else {
-    get_affix(dicpath)
+    get_affix(dict)
   }
-  dict <- R_hunspell_dict(affix, dicpath, as.character(add_words))
-  structure(dict, class = "hunspell_dictionary")
+  add_words <- as.character(add_words)
+  if(!isTRUE(cache))
+    return(dictionary_new(dict, affix, add_words))
+  key <- digest::digest(list(dict, affix, add_words))
+  if(!exists(key, store, inherits = FALSE))
+    store[[key]] <- dictionary_new(dict, affix, add_words)
+  return(store[[key]])
+}
+
+dictionary_new <- function(dict, affix, add_words){
+  out <- R_hunspell_dict(affix, dict, add_words)
+  structure(out, class = "hunspell_dictionary")
 }
 
 get_affix <- function(dicpath){
@@ -222,6 +232,7 @@ print.hunspell_dictionary <- function(x, ...){
   cat(" dictionary:", info$dict, "\n")
   cat(" encoding:", info$encoding, "\n")
   cat(" wordchars:", info$wordchars, "\n")
+  cat(" added:", length(info$added), "custom words\n")
   invisible()
 }
 
@@ -232,22 +243,15 @@ print.hunspell_dictionary <- function(x, ...){
 #' is assumed to be the same path as \code{dict} with extension \code{.aff}.
 #' @param cache speed up loading of dictionaries by caching
 #' @param add_words a character vector of additional words to add to the dictionary
-dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL){
+dictionary <- function(lang = "en_US", affix = NULL, add_words = NULL, cache = TRUE){
+  add_words <- sort(unique(as.character(add_words)))
   if(inherits(lang, "hunspell_dictionary")){
-    if(!length(add_words))
-      return(lang)
-    lang <- hunspell_info(lang)$dict
+    info <- R_hunspell_info(lang)
+    lang <- info$dict
+    affix <- info$affix
+    add_words <- sort(unique(c(info$added, add_words)))
   }
-  if(!isTRUE(cache))
-    return(dictionary_internal(lang, affix, add_words))
-  key <- digest::digest(list(lang, affix, add_words))
-  if(!is.null(store[[key]])){
-    return(store[[key]])
-  } else {
-    val <- dictionary_internal(lang, affix, add_words)
-    store[[key]] = val
-    return(val)
-  }
+  dictionary_load(lang = lang, affix = affix, add_words = add_words, cache = cache)
 }
 
 store <- new.env()

@@ -79,16 +79,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // R_hunspell_find
-List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringVector ignore);
-RcppExport SEXP _hunspell_R_hunspell_find(SEXP ptrSEXP, SEXP textSEXP, SEXP formatSEXP, SEXP ignoreSEXP) {
+List R_hunspell_find(DictPtr ptr, StringVector text, std::string format);
+RcppExport SEXP _hunspell_R_hunspell_find(SEXP ptrSEXP, SEXP textSEXP, SEXP formatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DictPtr >::type ptr(ptrSEXP);
     Rcpp::traits::input_parameter< StringVector >::type text(textSEXP);
     Rcpp::traits::input_parameter< std::string >::type format(formatSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type ignore(ignoreSEXP);
-    rcpp_result_gen = Rcpp::wrap(R_hunspell_find(ptr, text, format, ignore));
+    rcpp_result_gen = Rcpp::wrap(R_hunspell_find(ptr, text, format));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -113,7 +112,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hunspell_R_hunspell_suggest", (DL_FUNC) &_hunspell_R_hunspell_suggest, 2},
     {"_hunspell_R_hunspell_analyze", (DL_FUNC) &_hunspell_R_hunspell_analyze, 2},
     {"_hunspell_R_hunspell_stem", (DL_FUNC) &_hunspell_R_hunspell_stem, 2},
-    {"_hunspell_R_hunspell_find", (DL_FUNC) &_hunspell_R_hunspell_find, 4},
+    {"_hunspell_R_hunspell_find", (DL_FUNC) &_hunspell_R_hunspell_find, 3},
     {"_hunspell_R_hunspell_parse", (DL_FUNC) &_hunspell_R_hunspell_parse, 3},
     {NULL, NULL, 0}
 };

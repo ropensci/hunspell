@@ -17,14 +17,11 @@ using namespace Rcpp;
 class LIBHUNSPELL_DLL_EXPORTED hunspell_parser {
   TextParser *parser;
   hunspell_dict *mydict;
-  std::vector<w_char> wordchars;
+  std::vector<w_char> wordchars; //should stay in scope!
 
 public:
-  hunspell_parser(hunspell_dict *mydict, std::string format) : mydict(mydict) {
+  hunspell_parser(hunspell_dict *mydict, std::string format) : mydict(mydict), wordchars(mydict->get_wordchars_utf16()){
     if(mydict->is_utf8()){
-      // copy because wordchars need to stay in scope!
-      wordchars = mydict->get_wordchars_utf16();
-
       // initiate the tokenizer
       int utf16_len = wordchars.size();
       const w_char * utf16_wc = wordchars.data();
@@ -96,13 +93,10 @@ public:
 };
 
 // [[Rcpp::export]]
-List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringVector ignore){
+List R_hunspell_find(DictPtr ptr, StringVector text, std::string format){
 
   //init with affix and at least one dict
-  hunspell_parser p(ptr.get(), format);
-
-  //add ignore words
-  ptr->add_words(ignore);
+  hunspell_parser p(ptr.checked_get(), format);
 
   int len = text.length();
   List out(len);
@@ -116,7 +110,7 @@ List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringV
 List R_hunspell_parse(DictPtr ptr, StringVector text, std::string format){
 
   //init with affix and at least one dict
-  hunspell_parser p(ptr.get(), format);
+  hunspell_parser p(ptr.checked_get(), format);
 
   int len = text.length();
   List out(len);
