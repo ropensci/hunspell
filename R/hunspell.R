@@ -95,7 +95,7 @@ hunspell <- function(text, format = c("text", "man", "latex", "html", "xml"),
   ignore <- as.character(ignore)
   format <- match.arg(format)
   dictionary <- dictionary(dict, add_words = ignore)
-  R_hunspell_find(dictionary, text, format, character())
+  R_hunspell_find(dictionary, text, format)
 }
 
 #for backward compatiblity
@@ -177,11 +177,6 @@ dictionary_load <- function(lang, affix, add_words, cache){
 
 dictionary_new <- function(dict, affix, add_words){
   out <- R_hunspell_dict(affix, dict, add_words)
-  structure(out, class = "hunspell_dictionary")
-}
-
-dictionary_copy <- function(dict){
-  out <- R_hunspell_copy(dict)
   structure(out, class = "hunspell_dictionary")
 }
 

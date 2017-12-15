@@ -27,15 +27,25 @@ private:
 
 public:
   // Some strings are regular strings
-  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts) : affix_(affix), dicts_(dicts) {
-    init();
-  }
+  hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts, Rcpp::StringVector words) : affix_(affix), dicts_(dicts), added_(words) {
+    std::string dict(dicts[0]);
+    pMS_ = new Hunspell(affix.get_cstring(), dict.c_str());
+    if(!pMS_)
+      throw std::runtime_error(std::string("Failed to load file ") + dict);
 
-  //copy constructor
-  hunspell_dict(hunspell_dict * mydict) : affix_(mydict->affix_), dicts_(mydict->dicts_) {
-    init();
-    for(int i = 0; i <  mydict->added_.size(); i++)
-      add_word(mydict->added_.at(i));
+    //add additional dictionaries if more than one
+    //assuming the same affix?? This can cause unpredictable behavior
+    for(int i = 1; i < dicts.length(); i++)
+      pMS_->add_dic(std::string(dicts[i]).c_str());
+
+    //setup iconv converters
+    enc_ = pMS_->get_dict_encoding();
+    cd_from_ = new_iconv("UTF-8", enc_.c_str());
+    cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
+
+    //add custom words to dictionary
+    for(size_t i = 0; i < words.length(); i++)
+      add_word(words.at(i));
   }
 
   ~hunspell_dict() {
@@ -44,22 +54,6 @@ public:
       Riconv_close(cd_to_);
       delete pMS_;
     } catch (...) {}
-  }
-
-  void init(){
-    std::string dict(dicts_[0]);
-    pMS_ = new Hunspell(affix_.get_cstring(), dict.c_str());
-    if(!pMS_)
-      throw std::runtime_error(std::string("Failed to load file ") + dict);
-
-    //add additional dictionaries if more than one
-    //assuming the same affix?? This can cause unpredictable behavior
-    for(int i = 1; i < dicts_.length(); i++)
-      pMS_->add_dic(std::string(dicts_[i]).c_str());
-
-    enc_ = pMS_->get_dict_encoding();
-    cd_from_ = new_iconv("UTF-8", enc_.c_str());
-    cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
   }
 
   unsigned short * get_wordchars_utf16(int *len){
@@ -85,7 +79,6 @@ public:
     if(str != NULL) {
       pMS_->add_with_affix(str, "a"); //Workaround for https://github.com/ropensci/hunspell/issues/29
       pMS_->add(str);
-      added_.push_back(word);
       free(str);
     }
   }
@@ -132,13 +125,6 @@ public:
     }
     free(str);
     return out;
-  }
-
-  //adds ignore words to the dictionary
-  void add_words(Rcpp::StringVector words){
-    for(int i = 0; i < words.length(); i++){
-      add_word(words[i]);
-    }
   }
 
   iconv_t cd_from(){

@@ -4,15 +4,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector add_words){
-  hunspell_dict *mydict = new hunspell_dict(affix, dict);
-  if(add_words.length())
-    mydict->add_words(add_words);
-  return DictPtr(mydict);
-}
-
-// [[Rcpp::export]]
-DictPtr R_hunspell_copy(DictPtr ptr){
-  hunspell_dict *mydict = new hunspell_dict(ptr.checked_get());
+  hunspell_dict *mydict = new hunspell_dict(affix, dict, add_words);
   return DictPtr(mydict);
 }
 

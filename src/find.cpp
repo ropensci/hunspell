@@ -93,13 +93,10 @@ public:
 };
 
 // [[Rcpp::export]]
-List R_hunspell_find(DictPtr ptr, StringVector text, std::string format, StringVector ignore){
+List R_hunspell_find(DictPtr ptr, StringVector text, std::string format){
 
   //init with affix and at least one dict
   hunspell_parser p(ptr.checked_get(), format);
-
-  //add ignore words
-  ptr->add_words(ignore);
 
   int len = text.length();
   List out(len);
