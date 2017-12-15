@@ -34,7 +34,7 @@ public:
   //copy constructor
   hunspell_dict(hunspell_dict * mydict) : affix_(mydict->affix_), dicts_(mydict->dicts_) {
     init();
-    for(size_t i = 0; i <  mydict->added_.size(); i++)
+    for(int i = 0; i <  mydict->added_.size(); i++)
       add_word(mydict->added_.at(i));
   }
 
