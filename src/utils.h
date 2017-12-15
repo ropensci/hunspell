@@ -11,6 +11,7 @@ class LIBHUNSPELL_DLL_EXPORTED hunspell_dict {
   std::string enc_;
   Rcpp::String affix_;
   Rcpp::CharacterVector dicts_;
+  std::vector<std::string> added_;
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
@@ -40,6 +41,13 @@ public:
     enc_ = pMS_->get_dict_encoding();
     cd_from_ = new_iconv("UTF-8", enc_.c_str());
     cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
+  }
+
+  //copy constructor
+  hunspell_dict(hunspell_dict *mydict) : hunspell_dict(mydict->affix_, mydict->dicts_){
+    for(size_t i = 0; i <  mydict->added_.size(); i++){
+      add_word(mydict->added_.at(i));
+    }
   }
 
   ~hunspell_dict() {
@@ -73,6 +81,7 @@ public:
     if(str != NULL) {
       pMS_->add_with_affix(str, "a"); //Workaround for https://github.com/ropensci/hunspell/issues/29
       pMS_->add(str);
+      added_.push_back(std::string(str));
       free(str);
     }
   }

@@ -170,6 +170,11 @@ dictionary_internal <- function(lang, affix, add_words){
   structure(dict, class = "hunspell_dictionary")
 }
 
+dictionary_copy <- function(dict){
+  out <- R_hunspell_copy(dict)
+  structure(out, class = "hunspell_dictionary")
+}
+
 get_affix <- function(dicpath){
   normalizePath(sub("\\.dic$", ".aff", dicpath), mustWork = TRUE)
 }

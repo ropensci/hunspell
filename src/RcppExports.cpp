@@ -19,6 +19,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// R_hunspell_copy
+DictPtr R_hunspell_copy(DictPtr ptr);
+RcppExport SEXP _hunspell_R_hunspell_copy(SEXP ptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DictPtr >::type ptr(ptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(R_hunspell_copy(ptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 // R_hunspell_info
 List R_hunspell_info(DictPtr ptr);
 RcppExport SEXP _hunspell_R_hunspell_info(SEXP ptrSEXP) {
@@ -108,6 +119,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_hunspell_R_hunspell_dict", (DL_FUNC) &_hunspell_R_hunspell_dict, 3},
+    {"_hunspell_R_hunspell_copy", (DL_FUNC) &_hunspell_R_hunspell_copy, 1},
     {"_hunspell_R_hunspell_info", (DL_FUNC) &_hunspell_R_hunspell_info, 1},
     {"_hunspell_R_hunspell_check", (DL_FUNC) &_hunspell_R_hunspell_check, 2},
     {"_hunspell_R_hunspell_suggest", (DL_FUNC) &_hunspell_R_hunspell_suggest, 2},

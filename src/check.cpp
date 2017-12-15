@@ -11,6 +11,12 @@ DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector a
 }
 
 // [[Rcpp::export]]
+DictPtr R_hunspell_copy(DictPtr ptr){
+  hunspell_dict *mydict = new hunspell_dict(ptr.checked_get());
+  return DictPtr(mydict);
+}
+
+// [[Rcpp::export]]
 List R_hunspell_info(DictPtr ptr){
   return List::create(
     _["dict"] = ptr->dicts(),
