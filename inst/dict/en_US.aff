@@ -14,7 +14,9 @@ ONLYINCOMPOUND c
 COMPOUNDRULE 2
 COMPOUNDRULE n*1t
 COMPOUNDRULE n*mp
-WORDCHARS 0123456789’
+
+# Jeroen: removed numbers from WORDCHARS for R
+WORDCHARS ’
 
 PFX A Y 1
 PFX A   0     re         .

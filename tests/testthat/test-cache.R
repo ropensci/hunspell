@@ -1,4 +1,4 @@
-context("Cache")
+context("Dictionary Cache")
 
 test_that("Caching works as expected", {
   # Clean cache

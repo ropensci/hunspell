@@ -246,6 +246,8 @@ print.hunspell_dictionary <- function(x, ...){
 dictionary <- function(lang = "en_US", affix = NULL, add_words = NULL, cache = TRUE){
   add_words <- sort(unique(as.character(add_words)))
   if(inherits(lang, "hunspell_dictionary")){
+    if(!length(add_words))
+      return(lang)
     info <- R_hunspell_info(lang)
     lang <- info$dict
     affix <- info$affix

@@ -1,9 +1,10 @@
 2.9
-  - BREAKING: English tokenizers no longer ignore apostrophe and numbers
-  - Properly use the UTF8 dictionary WORDCHARS for tokenizing text.
+  - BREAKING: Bundled en_US / en_GB dictionaries now support apostrophe
+  - Parses now uses the dictionary WORDCHARS for tokenizing text
+  - Removed numbers from en_US / en_GB WORDCHARS to prevent false positives
   - Fix regression inroduced in the caching fix in 2.8
-  - Internal refactoring of dictionary caching
-  - Add 'AUTHORS' file and update DESCRIPTION as requested by CRAN.
+  - Refactored internal dictionary caching
+  - Add 'AUTHORS' file and update DESCRIPTION as requested by CRAN
 
 2.8
   - Fix caching bug for 'ignore' argument in hunspell()
