@@ -28,26 +28,14 @@ private:
 public:
   // Some strings are regular strings
   hunspell_dict(Rcpp::String affix, Rcpp::CharacterVector dicts) : affix_(affix), dicts_(dicts) {
-    std::string dict(dicts[0]);
-    pMS_ = new Hunspell(affix.get_cstring(), dict.c_str());
-    if(!pMS_)
-      throw std::runtime_error(std::string("Failed to load file ") + dict);
-
-    //add additional dictionaries if more than one
-    //assuming the same affix?? This can cause unpredictable behavior
-    for(int i = 1; i < dicts.length(); i++)
-      pMS_->add_dic(std::string(dicts[i]).c_str());
-
-    enc_ = pMS_->get_dict_encoding();
-    cd_from_ = new_iconv("UTF-8", enc_.c_str());
-    cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
+    init();
   }
 
   //copy constructor
-  hunspell_dict(hunspell_dict *mydict) : hunspell_dict(mydict->affix_, mydict->dicts_){
-    for(size_t i = 0; i <  mydict->added_.size(); i++){
+  hunspell_dict(hunspell_dict * mydict) : affix_(mydict->affix_), dicts_(mydict->dicts_) {
+    init();
+    for(size_t i = 0; i <  mydict->added_.size(); i++)
       add_word(mydict->added_.at(i));
-    }
   }
 
   ~hunspell_dict() {
@@ -56,6 +44,22 @@ public:
       Riconv_close(cd_to_);
       delete pMS_;
     } catch (...) {}
+  }
+
+  void init(){
+    std::string dict(dicts_[0]);
+    pMS_ = new Hunspell(affix_.get_cstring(), dict.c_str());
+    if(!pMS_)
+      throw std::runtime_error(std::string("Failed to load file ") + dict);
+
+    //add additional dictionaries if more than one
+    //assuming the same affix?? This can cause unpredictable behavior
+    for(int i = 1; i < dicts_.length(); i++)
+      pMS_->add_dic(std::string(dicts_[i]).c_str());
+
+    enc_ = pMS_->get_dict_encoding();
+    cd_from_ = new_iconv("UTF-8", enc_.c_str());
+    cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
   }
 
   unsigned short * get_wordchars_utf16(int *len){
