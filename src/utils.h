@@ -11,7 +11,7 @@ class LIBHUNSPELL_DLL_EXPORTED hunspell_dict {
   std::string enc_;
   Rcpp::String affix_;
   Rcpp::CharacterVector dicts_;
-  Rcpp::CharacterVector added_;
+  Rcpp::StringVector added_;
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
@@ -85,7 +85,7 @@ public:
     if(str != NULL) {
       pMS_->add_with_affix(str, "a"); //Workaround for https://github.com/ropensci/hunspell/issues/29
       pMS_->add(str);
-      added_.push_back(std::string(str));
+      added_.push_back(word);
       free(str);
     }
   }
