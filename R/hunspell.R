@@ -227,6 +227,7 @@ print.hunspell_dictionary <- function(x, ...){
   cat(" dictionary:", info$dict, "\n")
   cat(" encoding:", info$encoding, "\n")
   cat(" wordchars:", info$wordchars, "\n")
+  cat(" added:", length(info$added), "custom words\n")
   invisible()
 }
 

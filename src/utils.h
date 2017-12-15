@@ -11,7 +11,7 @@ class LIBHUNSPELL_DLL_EXPORTED hunspell_dict {
   std::string enc_;
   Rcpp::String affix_;
   Rcpp::CharacterVector dicts_;
-  std::vector<std::string> added_;
+  Rcpp::CharacterVector added_;
 
 private:
   iconv_t new_iconv(const char * from, const char * to){
@@ -159,6 +159,10 @@ public:
 
   Rcpp::CharacterVector dicts(){
     return dicts_;
+  }
+
+  Rcpp::CharacterVector added(){
+    return added_;
   }
 
   Rcpp::RawVector r_wordchars(){

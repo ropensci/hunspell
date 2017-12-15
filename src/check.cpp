@@ -22,7 +22,8 @@ List R_hunspell_info(DictPtr ptr){
     _["dict"] = ptr->dicts(),
     _["affix"] = ptr->affix(),
     _["encoding"] = ptr->enc(),
-    _["wordchars"] = ptr->r_wordchars()
+    _["wordchars"] = ptr->r_wordchars(),
+    _["added"] = ptr->added()
   );
 }
 
