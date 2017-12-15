@@ -1,7 +1,8 @@
 2.9
   - BREAKING: English tokenizers no longer ignore apostrophe and numbers
   - Properly use the UTF8 dictionary WORDCHARS for tokenizing text.
-  - Fix caching bug introduced in fix for previous caching bug
+  - Fix regression inroduced in the caching fix in 2.8
+  - Internal refactoring of dictionary caching
   - Add 'AUTHORS' file and update DESCRIPTION as requested by CRAN.
 
 2.8
