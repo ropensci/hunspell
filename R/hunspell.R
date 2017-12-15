@@ -44,7 +44,7 @@
 #' Note that \code{hunspell} uses \code{\link{iconv}} to convert input text to
 #' the encoding used by the dictionary. This will fail if \code{text} contains characters
 #' which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
-#' are preferable over legacy 8bit dictionaries.
+#' are preferable over legacy 8-bit dictionaries.
 #'
 #' @rdname hunspell
 #' @aliases hunspell hunspell_find en_stats dicpath
@@ -233,11 +233,8 @@ print.hunspell_dictionary <- function(x, ...){
 #' @param cache speed up loading of dictionaries by caching
 #' @param add_words a character vector of additional words to add to the dictionary
 dictionary <- function(lang = "en_US", affix = NULL, cache = TRUE, add_words = NULL){
-  if(inherits(lang, "hunspell_dictionary")){
-    if(!length(add_words))
-      return(lang)
-    lang <- hunspell_info(lang)$dict
-  }
+  if(inherits(lang, "hunspell_dictionary"))
+    return(lang)
   if(!isTRUE(cache))
     return(dictionary_internal(lang, affix, add_words))
   key <- digest::digest(list(lang, affix, add_words))

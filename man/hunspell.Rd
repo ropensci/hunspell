@@ -99,7 +99,7 @@ parameter. Some popular sources of dictionaries are
 Note that \code{hunspell} uses \code{\link{iconv}} to convert input text to
 the encoding used by the dictionary. This will fail if \code{text} contains characters
 which are unsupported by that particular encoding. For this reason UTF-8 dictionaries
-are preferable over legacy 8bit dictionaries.
+are preferable over legacy 8-bit dictionaries.
 }
 \examples{
 # Check individual words
