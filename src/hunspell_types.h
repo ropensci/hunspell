@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "dictionary.h"
 
 inline void dict_finalizer(hunspell_dict *dict) {
   delete dict;
