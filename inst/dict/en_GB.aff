@@ -17,9 +17,9 @@
 # R 2.54, 2017-11-01
 
 SET UTF-8
-
 TRY esiaénrtolcdugmfphbyvkw-'.zqjxSNRTLCGDMFPHBEAUYOIVKWóöâôZQJXÅçèîêàïüäñ
-
+ICONV 1
+ICONV ’ '
 NOSUGGEST !
 
 # ordinal numbers
