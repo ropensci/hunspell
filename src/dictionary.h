@@ -44,7 +44,7 @@ public:
     cd_to_ = new_iconv(enc_.c_str(), "UTF-8");
 
     //add custom words to dictionary
-    for(size_t i = 0; i < words.length(); i++)
+    for(int i = 0; i < words.length(); i++)
       add_word(words.at(i));
   }
 
