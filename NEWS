@@ -1,3 +1,7 @@
+2.10
+  - Updated en_GB dictionary to v2.56 from:
+    https://extensions.libreoffice.org/extensions/english-dictionaries/2018-01.01
+
 2.9
   - BREAKING: Bundled en_US / en_GB dictionaries now support apostrophe
   - Parses now uses the dictionary WORDCHARS for tokenizing text
