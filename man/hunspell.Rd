@@ -12,6 +12,7 @@
 \alias{hunspell_stem}
 \alias{hunspell_info}
 \alias{dictionary}
+\alias{list_dictionaries}
 \title{Hunspell Spell Checking and Morphological Analysis}
 \usage{
 hunspell(text, format = c("text", "man", "latex", "html", "xml"),
@@ -30,7 +31,10 @@ hunspell_stem(words, dict = dictionary("en_US"))
 
 hunspell_info(dict = dictionary("en_US"))
 
-dictionary(lang = "en_US", affix = NULL, add_words = NULL, cache = TRUE)
+dictionary(lang = "en_US", affix = NULL, add_words = NULL,
+  cache = TRUE)
+
+list_dictionaries()
 }
 \arguments{
 \item{text}{character vector with arbitrary input text}
@@ -79,7 +83,8 @@ such as \code{\link[tools:RdTextFilter]{RdTextFilter}} and
 \code{\link[utils:aspell]{?aspell}}.
 
 The package searches for dictionaries in the working directory as well as in the
-standard system locations. Additional search paths can be specified by setting
+standard system locations. \code{\link{list_dictionaries}} provides a list of all
+dictionaries it can find. Additional search paths can be specified by setting
 the \code{DICPATH} environment variable. A US English dictionary (\code{en_US}) is
 included with the package; other dictionaries need to be installed by the system.
 Most operating systems already include compatible dictionaries with names such as
