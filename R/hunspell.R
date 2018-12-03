@@ -203,7 +203,12 @@ dicpath <- function(){
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
    "/Library/Spelling",
-   file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
+   #RStudio
+   file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries"),
+   normalizePath("~/.rstudio-desktop/dictionaries/languages-system", mustWork = FALSE),
+   normalizePath("~/.rstudio-desktop/dictionaries/languages-user", mustWork = FALSE),
+   normalizePath("%USERPROFILE%/Local Settings/Application Data/RStudio-Desktop/dictionaries/languages-user", mustWork = FALSE),
+   normalizePath("%localappdata%/RStudio-Desktop/dictionaries/languages-user", mustWork = FALSE)
   )
 }
 
