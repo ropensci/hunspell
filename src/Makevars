@@ -12,7 +12,7 @@ LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
   hunspell/hashmgr.o hunspell/hunspell.o hunspell/hunzip.o hunspell/phonet.o \
   hunspell/replist.o hunspell/suggestmgr.o hunspell/csutil.o
 
-all: clean
+#all: clean
 
 STATLIB = hunspell/libstathunspell.a
 

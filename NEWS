@@ -1,6 +1,8 @@
 3.0
   - Update bundled libhunspell to v1.7. This seems like a pretty major update, see
     upstream release notes: https://github.com/hunspell/hunspell/blob/master/NEWS
+  - Add rstudio directory to the search path to use dictionariesinstalled via the
+    RStudio IDE (Global Options -> Spelling -> Main Dictionary Language -> Install)
   - Updated en_GB dictionary to v2.56 from:
     https://extensions.libreoffice.org/extensions/english-dictionaries/2018-01.01
 
