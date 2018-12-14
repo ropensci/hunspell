@@ -3,8 +3,8 @@
     upstream release notes: https://github.com/hunspell/hunspell/blob/master/NEWS
   - Add rstudio directory to the search path to use dictionariesinstalled via the
     RStudio IDE (Global Options -> Spelling -> Main Dictionary Language -> Install)
-  - Updated en_GB dictionary to v2.56 from:
-    https://extensions.libreoffice.org/extensions/english-dictionaries/2018-01.01
+  - Updated bundled en_US and en_GB dictionary to Open Office release 2018-11.01:
+    https://extensions.libreoffice.org/extensions/english-dictionaries/2018-11.01
 
 2.9
   - BREAKING: Bundled en_US / en_GB dictionaries now support apostrophe

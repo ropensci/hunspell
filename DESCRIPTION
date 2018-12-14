@@ -1,7 +1,7 @@
 Package: hunspell
 Type: Package
 Title: High-Performance Stemmer, Tokenizer, and Spell Checker
-Version: 2.9000
+Version: 3.0
 Depends: R (>= 3.0.2)
 Encoding: UTF-8
 Authors@R: c(
@@ -29,3 +29,4 @@ Suggests: spelling,
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
+Language: en-US
