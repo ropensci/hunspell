@@ -152,8 +152,7 @@ Most of these are stop words. Let's filter these out:
 ```{r}
 df <- as.data.frame(words)
 df$stems <- as.character(df$stems)
-stopwords <- hunspell_parse(readLines('https://jeroen.github.io/files/stopwords.txt'))
-stops <- df$stems %in% unlist(stopwords)
+stops <- df$stems %in% stopwords::stopwords(source="stopwords-iso")
 wcdata <- head(df[!stops,], 150)
 print(wcdata, max = 40)
 ```
@@ -161,6 +160,7 @@ print(wcdata, max = 40)
 ```{r}
 library(wordcloud2)
 names(wcdata) <- c("word", "freq")
+wcdata$freq <- (wcdata$freq)^(2/3)
 wordcloud2(wcdata)
 ```
 

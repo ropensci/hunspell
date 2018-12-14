@@ -24,7 +24,8 @@ Suggests: spelling,
     pdftools, 
     janeaustenr, 
     wordcloud2, 
-    knitr, 
+    knitr,
+    stopwords,
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
