@@ -193,6 +193,11 @@ get_dict <- function(dict){
 }
 
 dicpath <- function(){
+  rstudio_userdata <- if(.Platform$OS.type == 'windows'){
+    file.path(Sys.getenv('localappdata'), 'RStudio-Desktop')
+  } else {
+    normalizePath('~/.rstudio-desktop', mustWork = FALSE)
+  }
   c(
    Sys.getenv("DICPATH", getwd()),
    system.file("dict", package = "hunspell"), # Bundled with the R package
@@ -204,7 +209,8 @@ dicpath <- function(){
    "/usr/share/myspell",
    "/usr/share/myspell/dicts",
    "/Library/Spelling",
-   file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries") #Rstudio
+   file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries"), #Rstudio builtin
+   file.path(rstudio_userdata, 'dictionaries', c('languages-system', 'languages-user')) #Rstudio extra
   )
 }
 
