@@ -219,9 +219,15 @@ hunspell("Hij heeft de klok wel horen luiden, maar weet niet waar de klepel hang
 
 Note that if the `dict` argument is a string, it will be passed on to the `dictionary` function.
 
-### System Dictionaries
+### Installing Dictionaries in RStudio
 
-The best way to install dictionaries on Linux is via the system package manager. For example on if you would like to install the Austrian-German dictionary on **Debian** or **Ubuntu** you either need the [`hunspell-de-at`](https://packages.debian.org/testing/hunspell-de-at) or [`myspell-de-at`](https://packages.debian.org/testing/myspell-de-at) package:
+RStudio users can install various dictionaries via the "Global Options" menu of the IDE. Once these dictionaries are installed they become available to the `hunspell` and `spelling` package as well.
+
+<img data-external="1" src="https://jeroen.github.io/images/rs-hunspell.png" alt="rstudio screenshot">
+
+### Dictionaries on Linux
+
+The best way to install dictionaries on __Linux__ is via the system package manager. For example on if you would like to install the Austrian-German dictionary on **Debian** or **Ubuntu** you either need the [`hunspell-de-at`](https://packages.debian.org/testing/hunspell-de-at) or [`myspell-de-at`](https://packages.debian.org/testing/myspell-de-at) package:
 
 ```sh
 sudo apt-get install hunspell-de-at
