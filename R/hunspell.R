@@ -24,7 +24,8 @@
 #' \code{\link[utils:aspell]{?aspell}}.
 #'
 #' The package searches for dictionaries in the working directory as well as in the
-#' standard system locations. Additional search paths can be specified by setting
+#' standard system locations. \code{\link{list_dictionaries}} provides a list of all
+#' dictionaries it can find. Additional search paths can be specified by setting
 #' the \code{DICPATH} environment variable. A US English dictionary (\code{en_US}) is
 #' included with the package; other dictionaries need to be installed by the system.
 #' Most operating systems already include compatible dictionaries with names such as
@@ -257,3 +258,13 @@ dictionary <- function(lang = "en_US", affix = NULL, add_words = NULL, cache = T
 }
 
 store <- new.env()
+
+#' @export
+#' @rdname hunspell
+list_dictionaries <- function() {
+  dic_file <- list.files(dicpath(), pattern = "\\.dic$")
+  aff_file <- list.files(dicpath(), pattern = "\\.aff$")
+  dic_name <- substr(dic_file, 1 , nchar(dic_file) - 4)
+  aff_name <- substr(aff_file, 1 , nchar(aff_file) - 4)
+  return(intersect(dic_name, aff_name))
+}
