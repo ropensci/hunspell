@@ -1,4 +1,5 @@
-2.10
+3.0
+  - Update libhunspell to v1.7
   - Updated en_GB dictionary to v2.56 from:
     https://extensions.libreoffice.org/extensions/english-dictionaries/2018-01.01
 

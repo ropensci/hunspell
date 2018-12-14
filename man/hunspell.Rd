@@ -30,7 +30,8 @@ hunspell_stem(words, dict = dictionary("en_US"))
 
 hunspell_info(dict = dictionary("en_US"))
 
-dictionary(lang = "en_US", affix = NULL, add_words = NULL, cache = TRUE)
+dictionary(lang = "en_US", affix = NULL, add_words = NULL,
+  cache = TRUE)
 }
 \arguments{
 \item{text}{character vector with arbitrary input text}
