@@ -168,7 +168,7 @@ dictionary_load <- function(lang, affix, add_words, cache){
     get_affix(dict)
   }
   # Workaround for https://github.com/hunspell/hunspell/issues/616
-  add_words <- chartr("’", "'", as.character(add_words))
+  add_words <- chartr("\u2019", "'", as.character(add_words))
   if(!isTRUE(cache))
     return(dictionary_new(dict, affix, add_words))
   key <- digest::digest(list(dict, affix, add_words))
