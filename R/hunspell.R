@@ -167,7 +167,8 @@ dictionary_load <- function(lang, affix, add_words, cache){
   } else {
     get_affix(dict)
   }
-  add_words <- as.character(add_words)
+  # Workaround for https://github.com/hunspell/hunspell/issues/616
+  add_words <- chartr("’", "'", as.character(add_words))
   if(!isTRUE(cache))
     return(dictionary_new(dict, affix, add_words))
   key <- digest::digest(list(dict, affix, add_words))
