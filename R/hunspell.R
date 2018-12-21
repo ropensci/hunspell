@@ -187,8 +187,9 @@ get_affix <- function(dicpath){
 }
 
 get_dict <- function(dict){
-  if(!file.exists(dict)){
-    dict <- find_in_dicpath(paste0(sub("\\.(dic|aff)$", "", dict), ".dic"))
+  found <- file.exists(dict)
+  if(!all(found)){
+    dict[!found] <- sapply(paste0(sub("\\.(dic|aff)$", "", dict[!found]), ".dic"), find_in_dicpath)
   }
   normalizePath(dict, mustWork = TRUE)
 }
