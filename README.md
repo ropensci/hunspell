@@ -55,7 +55,7 @@ hunspell_stem(words)
 hunspell_analyze(words)
 ```
 
-The `spelling` package uses this package to spell R package documentation:
+The [`spelling`](https://github.com/ropensci/spelling) package uses this package to spell R package documentation:
 
 ```r
 # Spell check a package
