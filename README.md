@@ -1,21 +1,20 @@
-# hunspell
+# rOpenSci: The *hunspell* package <img src="hexlogo.png" align="right" height="134.5" />
 
-##### *High-Performance Stemmer, Tokenizer, and Spell Checker for R*
+> High-Performance Stemmer, Tokenizer, and Spell Checker for R
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://travis-ci.org/ropensci/hunspell.svg?branch=master)](https://travis-ci.org/ropensci/hunspell)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/hunspell?branch=master&svg=true)](https://ci.appveyor.com/project/jeroen/hunspell)
-[![Coverage Status](https://codecov.io/github/ropensci/hunspell/coverage.svg?branch=master)](https://codecov.io/github/ropensci/hunspell?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hunspell)](https://cran.r-project.org/package=hunspell)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/hunspell)](https://cran.r-project.org/package=hunspell)
 [![Github Stars](https://img.shields.io/github/stars/ropensci/hunspell.svg?style=social&label=Github)](https://github.com/ropensci/hunspell)
 
-> Low level spell checker and morphological analyzer based on the 
-  famous hunspell library <https://hunspell.github.io>. The package can analyze
-  or check individual words as well as tokenize text, latex, html or xml documents.
-  For a more user-friendly interface use the 'spelling' package which builds on
-  this package with utilities to automate checking of files, documentation and 
-  vignettes in all common formats.
+Low level spell checker and morphological analyzer based on the 
+famous hunspell library <https://hunspell.github.io>. The package can analyze
+or check individual words as well as tokenize text, latex, html or xml documents.
+For a more user-friendly interface use the 'spelling' package which builds on
+this package with utilities to automate checking of files, documentation and 
+vignettes in all common formats.
 
 ## Installation
 
