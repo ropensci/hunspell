@@ -18,15 +18,15 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
           - {os: macOS-latest,   r: 'devel'}
-          - {os: windows-latest, r: 'release'}
           - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
           - {os: windows-latest, r: '3.6'}
           - {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
