@@ -10,3 +10,4 @@ src/hunspell/*.a
 inst/doc/*.html
 windows
 *DS_Store
+inst/doc
