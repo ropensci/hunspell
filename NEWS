@@ -1,3 +1,6 @@
+3.1
+  - Add paths to dictionaries of RStudio 1.3 or later (@GegznaV, #42).
+
 3.0
   - Update bundled libhunspell to v1.7. This seems like a pretty major update, see
     upstream release notes: https://github.com/hunspell/hunspell/blob/master/NEWS
