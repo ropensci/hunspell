@@ -4,7 +4,6 @@ on:
       - release
       - master
       - develop
-      - feature/use-gh-actions
 
   pull_request:
     branches:
