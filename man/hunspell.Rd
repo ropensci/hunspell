@@ -15,11 +15,18 @@
 \alias{list_dictionaries}
 \title{Hunspell Spell Checking and Morphological Analysis}
 \usage{
-hunspell(text, format = c("text", "man", "latex", "html", "xml"),
-  dict = dictionary("en_US"), ignore = en_stats)
+hunspell(
+  text,
+  format = c("text", "man", "latex", "html", "xml"),
+  dict = dictionary("en_US"),
+  ignore = en_stats
+)
 
-hunspell_parse(text, format = c("text", "man", "latex", "html", "xml"),
-  dict = dictionary("en_US"))
+hunspell_parse(
+  text,
+  format = c("text", "man", "latex", "html", "xml"),
+  dict = dictionary("en_US")
+)
 
 hunspell_check(words, dict = dictionary("en_US"))
 
@@ -31,8 +38,7 @@ hunspell_stem(words, dict = dictionary("en_US"))
 
 hunspell_info(dict = dictionary("en_US"))
 
-dictionary(lang = "en_US", affix = NULL, add_words = NULL,
-  cache = TRUE)
+dictionary(lang = "en_US", affix = NULL, add_words = NULL, cache = TRUE)
 
 list_dictionaries()
 }
