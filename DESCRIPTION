@@ -26,9 +26,7 @@ Suggests: spelling,
     wordcloud2, 
     knitr,
     stopwords,
-    rmarkdown,
-    pdftools,
-    wordcloud2
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Language: en-US
