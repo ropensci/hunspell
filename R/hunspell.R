@@ -194,24 +194,24 @@ get_dict <- function(dict){
 
 rstudio_dicpaths <- function() {
   paths <- file.path(dirname(Sys.getenv("RMARKDOWN_MATHJAX_PATH")), "dictionaries")
-  subdirs <- c("languages-system", "languages-user")
-  if (.Platform$OS.type == "windows") {
+  subdirs <- c('languages-system', 'languages-user')
+  if (.Platform$OS.type == 'windows') {
     paths_win <- c(
       # For RStudio 1.3 or later
-      file.path(Sys.getenv("appdata"), "RStudio", "dictionaries", subdirs),
+      file.path(Sys.getenv('appdata'), 'RStudio', 'dictionaries', subdirs),
       # For RStudio 1.2 or earlier
-      file.path(Sys.getenv("localappdata"), "RStudio-Desktop", "dictionaries", subdirs)
+      file.path(Sys.getenv('localappdata'), 'RStudio-Desktop', 'dictionaries', subdirs)
     )
     paths <- c(paths, paths_win)
   } else {
-    if (file.exists("~/.config/rstudio/dictionaries")) {
-      paths <- c(paths, file.path("~/.config", "rstudio", "dictionaries", subdirs))
+    if (file.exists('~/.config/rstudio/dictionaries')) {
+      paths <- c(paths, file.path('~/.config', 'rstudio', 'dictionaries', subdirs))
     }
-    if (file.exists("~/.rstudio-desktop")) {
-      paths <- c(paths, file.path("~/.rstudio-desktop", "dictionaries", subdirs))
+    if (file.exists('~/.rstudio-desktop')) {
+      paths <- c(paths, file.path('~/.rstudio-desktop', 'dictionaries', subdirs))
     }
-    if (file.exists("~/.rstudio")) {
-      paths <- c(paths, file.path("~/.rstudio", "dictionaries", subdirs))
+    if (file.exists('~/.rstudio')) {
+      paths <- c(paths, file.path('~/.rstudio', 'dictionaries', subdirs))
     }
   }
   return(paths)
