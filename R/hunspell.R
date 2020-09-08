@@ -207,10 +207,10 @@ rstudio_dicpaths <- function() {
     if (file.exists('~/.config/rstudio/dictionaries')) {
       paths <- c(paths, file.path('~/.config', 'rstudio', 'dictionaries', subdirs))
     }
-    if (file.exists('~/.rstudio-desktop')) {
+    if(file.exists('~/.rstudio-desktop')){
       paths <- c(paths, file.path('~/.rstudio-desktop', 'dictionaries', subdirs))
     }
-    if (file.exists('~/.rstudio')) {
+    if(file.exists('~/.rstudio')){
       paths <- c(paths, file.path('~/.rstudio', 'dictionaries', subdirs))
     }
   }
