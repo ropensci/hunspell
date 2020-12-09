@@ -75,7 +75,7 @@ sort(unique(unlist(bad_words)))
 
 Use the text-extraction from the `pdftools` package to spell check text from PDF files!
 
-```{r}
+```{r, eval = require('pdftools')}
 text <- pdftools::pdf_text('https://www.gnu.org/licenses/quick-guide-gplv3.pdf')
 bad_words <- hunspell(text)
 sort(unique(unlist(bad_words)))
