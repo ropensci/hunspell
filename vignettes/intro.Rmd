@@ -234,7 +234,7 @@ The best way to install dictionaries on __Linux__ is via the system package mana
 sudo apt-get install hunspell-de-at
 ```
 
-On **Fedora** and **CentOS** / **RHEL** all German dialects are included with the [`hunspell-de`](https://apps.fedoraproject.org/packages/hunspell-de) package
+On **Fedora** and **CentOS** / **RHEL** all German dialects are included with the [`hunspell-de`](https://src.fedoraproject.org/rpms/hunspell-de) package
 
 ```sh
 sudo yum install hunspell-de
