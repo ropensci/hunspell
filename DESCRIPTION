@@ -14,7 +14,7 @@ Description: Low level spell checker and morphological analyzer based on the
     this package to automate checking of files, documentation and vignettes in all
     common formats.
 License: GPL-2 | LGPL-2.1 | MPL-1.1
-URL: https://docs.ropensci.org/hunspell,  https://github.com/ropensci/hunspell#readme (devel)
+URL: https://docs.ropensci.org/hunspell/ (docs), https://github.com/ropensci/hunspell#readme (devel)
     https://hunspell.github.io (upstream)
 BugReports: https://github.com/ropensci/hunspell/issues
 Imports: Rcpp, digest
