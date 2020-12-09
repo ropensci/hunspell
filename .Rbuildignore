@@ -9,3 +9,4 @@
 ^appveyor\.yml$
 ^docker$
 ^\.github$
+^README.md$
