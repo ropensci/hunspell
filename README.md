@@ -1,4 +1,4 @@
-# rOpenSci: The *hunspell* package <img src="hexlogo.png" align="right" height="134.5" />
+# rOpenSci: The *hunspell* package
 
 > High-Performance Stemmer, Tokenizer, and Spell Checker for R
 
@@ -54,7 +54,7 @@ hunspell_stem(words)
 hunspell_analyze(words)
 ```
 
-The `spelling` package uses this package to spell R package documentation:
+The [spelling](https://docs.ropensci.org/spelling) package uses this package to spell R package documentation:
 
 ```r
 # Spell check a package

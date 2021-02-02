@@ -1,10 +1,13 @@
-3.1
+3.0.2
   - Add paths to dictionaries of RStudio 1.3 or later (@GegznaV, #42).
+
+3.0.1
+  - Fix for BDR such that vignette can be built without 'pdftools' installed
 
 3.0
   - Update bundled libhunspell to v1.7. This seems like a pretty major update, see
     upstream release notes: https://github.com/hunspell/hunspell/blob/master/NEWS
-  - Add rstudio directory to the search path to use dictionariesinstalled via the
+  - Add rstudio directory to the search path to use dictionaries installed via the
     RStudio IDE (Global Options -> Spelling -> Main Dictionary Language -> Install)
   - Updated bundled en_US and en_GB dictionary to Open Office release 2018-11.01:
     https://extensions.libreoffice.org/extensions/english-dictionaries/2018-11.01

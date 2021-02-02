@@ -8,3 +8,5 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^docker$
+^\.github$
+^README.md$

@@ -1,7 +1,7 @@
 Package: hunspell
 Type: Package
 Title: High-Performance Stemmer, Tokenizer, and Spell Checker
-Version: 3.0.0.9000
+Version: 3.0.1
 Depends: R (>= 3.0.2)
 Encoding: UTF-8
 Authors@R: c(
@@ -14,7 +14,7 @@ Description: Low level spell checker and morphological analyzer based on the
     this package to automate checking of files, documentation and vignettes in all
     common formats.
 License: GPL-2 | LGPL-2.1 | MPL-1.1
-URL: https://docs.ropensci.org/hunspell,  https://github.com/ropensci/hunspell#readme (devel)
+URL: https://docs.ropensci.org/hunspell/ (docs), https://github.com/ropensci/hunspell (devel)
     https://hunspell.github.io (upstream)
 BugReports: https://github.com/ropensci/hunspell/issues
 Imports: Rcpp, digest
@@ -28,5 +28,5 @@ Suggests: spelling,
     stopwords,
     rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 6.1.1
 Language: en-US

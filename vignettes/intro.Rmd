@@ -17,6 +17,7 @@ vignette: >
 
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(comment = "")
+NOT_CRAN = isTRUE(nchar(Sys.getenv('NOT_CRAN')) || (Sys.getenv('USER') == 'jeroen'))
 ```
 
 Hunspell is the spell checker library used by LibreOffice, OpenOffice, Mozilla Firefox, Google Chrome, Mac OS-X, InDesign, Opera, RStudio and many others. It provides a system for tokenizing, stemming and spelling in almost any language or alphabet. The R package exposes both the high-level spell-checker as well as low-level stemmers and tokenizers which analyze or extract individual words from various formats (text, html, xml, latex).
@@ -75,7 +76,7 @@ sort(unique(unlist(bad_words)))
 
 Use the text-extraction from the `pdftools` package to spell check text from PDF files!
 
-```{r}
+```{r, eval = require('pdftools')}
 text <- pdftools::pdf_text('https://www.gnu.org/licenses/quick-guide-gplv3.pdf')
 bad_words <- hunspell(text)
 sort(unique(unlist(bad_words)))
@@ -157,7 +158,7 @@ wcdata <- head(df[!stops,], 150)
 print(wcdata, max = 40)
 ```
 
-```{r}
+```{r, eval = NOT_CRAN}
 library(wordcloud2)
 names(wcdata) <- c("word", "freq")
 wcdata$freq <- (wcdata$freq)^(2/3)
@@ -233,7 +234,7 @@ The best way to install dictionaries on __Linux__ is via the system package mana
 sudo apt-get install hunspell-de-at
 ```
 
-On **Fedora** and **CentOS** / **RHEL** all German dialects are included with the [`hunspell-de`](https://apps.fedoraproject.org/packages/hunspell-de) package
+On **Fedora** and **CentOS** / **RHEL** all German dialects are included with the [`hunspell-de`](https://src.fedoraproject.org/rpms/hunspell-de) package
 
 ```sh
 sudo yum install hunspell-de
