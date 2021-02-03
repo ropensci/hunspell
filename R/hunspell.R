@@ -201,7 +201,7 @@ rstudio_dicpaths <- function(){
   config_dir <- Sys.getenv("XDG_CONFIG_HOME", unset = config_dir) # Scope: user
   config_dir <- Sys.getenv("RSTUDIO_CONFIG_DIR", unset = config_dir) # Scope: system
   config_dir <- Sys.getenv("RSTUDIO_CONFIG_HOME", unset = config_dir) # Scope: user
-  if(config_dir != ""){
+  if(file.exists(config_dir)){
     paths <- c(paths, file.path(config_dir, 'dictionaries', subdirs))
   }
   # Default paths
