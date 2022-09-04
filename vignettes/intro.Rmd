@@ -254,7 +254,7 @@ If that didn't work, verify that the dictionary files were installed in one of t
 If your system does not provide standard dictionaries you need to download them yourself. There are a lot of places that provide quality dictionaries. 
  
  - [SCOWL](http://wordlist.aspell.net/dicts/)
- - [OpenOffice](http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/)
+ - [OpenOffice](http://openoffice.cs.utah.edu/contrib/dictionaries/)
  - [LibreOffice](http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D)
  - [titoBouzout](https://github.com/titoBouzout/Dictionaries)
  - [wooorm](https://github.com/wooorm/dictionaries)
