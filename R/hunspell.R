@@ -37,7 +37,7 @@
 #' Alternatively you can pass the entire path to the \code{.dic} file as the \code{dict}
 #' parameter. Some popular sources of dictionaries are
 #' \href{http://wordlist.aspell.net/dicts/}{SCOWL},
-#' \href{http://ftp.snt.utwente.nl/pub/software/openoffice/contrib/dictionaries/}{OpenOffice},
+#' \href{http://openoffice.cs.utah.edu/contrib/dictionaries/}{OpenOffice},
 #' \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{debian},
 #' \href{https://github.com/titoBouzout/Dictionaries}{github/titoBouzout} or
 #' \href{https://github.com/wooorm/dictionaries}{github/wooorm}.

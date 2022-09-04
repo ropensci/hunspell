@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // R_hunspell_dict
 DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector add_words);
 RcppExport SEXP _hunspell_R_hunspell_dict(SEXP affixSEXP, SEXP dictSEXP, SEXP add_wordsSEXP) {

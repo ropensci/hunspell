@@ -2,12 +2,9 @@
 
 > High-Performance Stemmer, Tokenizer, and Spell Checker for R
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Build Status](https://travis-ci.org/ropensci/hunspell.svg?branch=master)](https://travis-ci.org/ropensci/hunspell)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/hunspell?branch=master&svg=true)](https://ci.appveyor.com/project/jeroen/hunspell)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hunspell)](https://cran.r-project.org/package=hunspell)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/hunspell)](https://cran.r-project.org/package=hunspell)
-[![Github Stars](https://img.shields.io/github/stars/ropensci/hunspell.svg?style=social&label=Github)](https://github.com/ropensci/hunspell)
 
 Low level spell checker and morphological analyzer based on the 
 famous hunspell library <https://hunspell.github.io>. The package can analyze
@@ -54,7 +51,7 @@ hunspell_stem(words)
 hunspell_analyze(words)
 ```
 
-The [spelling](https://docs.ropensci.org/spelling) package uses this package to spell R package documentation:
+The [spelling](https://docs.ropensci.org/spelling/) package uses this package to spell R package documentation:
 
 ```r
 # Spell check a package
@@ -62,4 +59,4 @@ library(spelling)
 spell_check_package("~/mypackage")
 ```
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![](https://ropensci.org//public_images/github_footer.png)](https://ropensci.org/)
