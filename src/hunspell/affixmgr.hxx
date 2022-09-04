@@ -1,7 +1,7 @@
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * Copyright (C) 2002-2017 Németh László
+ * Copyright (C) 2002-2022 Németh László
  *
  * The contents of this file are subject to the Mozilla Public License Version
  * 1.1 (the "License"); you may not use this file except in compliance with
@@ -185,7 +185,7 @@ class AffixMgr {
                               char in_compound,
                               const FLAG needflag = FLAG_NULL);
   inline int isSubset(const char* s1, const char* s2);
-  struct hentry* prefix_check_twosfx(const char* word,
+  struct hentry* prefix_check_twosfx(const std::string& word,
                                      int len,
                                      char in_compound,
                                      const FLAG needflag = FLAG_NULL);
@@ -197,7 +197,7 @@ class AffixMgr {
                               const FLAG cclass = FLAG_NULL,
                               const FLAG needflag = FLAG_NULL,
                               char in_compound = IN_CPD_NOT);
-  struct hentry* suffix_check_twosfx(const char* word,
+  struct hentry* suffix_check_twosfx(const std::string& word,
                                      int len,
                                      int sfxopts,
                                      PfxEntry* ppfx,
@@ -261,7 +261,7 @@ class AffixMgr {
                    hentry** rwords,
                    char all);
   int cpdcase_check(const char* word, int len);
-  inline int candidate_check(const char* word, int len);
+  inline int candidate_check(const std::string& word);
   void setcminmax(int* cmin, int* cmax, const char* word, int len);
   struct hentry* compound_check(const std::string& word,
                                 short wordnum,
@@ -361,7 +361,7 @@ class AffixMgr {
   SfxEntry* process_sfx_in_order(SfxEntry* ptr, SfxEntry* nptr);
   int process_pfx_tree_to_list();
   int process_sfx_tree_to_list();
-  int redundant_condition(char, const char* strip, int stripl, const char* cond, int);
+  int redundant_condition(char, const std::string& strip, const std::string& cond, int);
   void finishFileMgr(FileMgr* afflst);
 };
 
