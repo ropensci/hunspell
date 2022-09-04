@@ -1,7 +1,7 @@
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * Copyright (C) 2002-2022 Németh László
+ * Copyright (C) 2002-2017 Németh László
  *
  * The contents of this file are subject to the Mozilla Public License Version
  * 1.1 (the "License"); you may not use this file except in compliance with
@@ -135,7 +135,7 @@ class SuggestMgr {
   int check_forbidden(const char*, int);
 
   void capchars(std::vector<std::string>&, const char*, int);
-  int replchars(std::vector<std::string>&, const std::string&, int);
+  int replchars(std::vector<std::string>&, const char*, int);
   int doubletwochars(std::vector<std::string>&, const char*, int);
   int forgotchar(std::vector<std::string>&, const char*, int);
   int swapchar(std::vector<std::string>&, const char*, int);
@@ -157,15 +157,14 @@ class SuggestMgr {
   int movechar_utf(std::vector<std::string>&, const w_char*, int, int);
 
   int mapchars(std::vector<std::string>&, const char*, int);
-  int map_related(const std::string&,
+  int map_related(const char*,
                   std::string&,
-                  size_t,
+                  int,
                   std::vector<std::string>& wlst,
                   int,
                   const std::vector<mapentry>&,
                   int*,
-                  clock_t*,
-                  int depth);
+                  clock_t*);
   int ngram(int n, const std::vector<w_char>& su1,
             const std::vector<w_char>& su2, int opt);
   int ngram(int n, const std::string& s1, const std::string& s2, int opt);

@@ -1,7 +1,7 @@
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * Copyright (C) 2002-2022 Németh László
+ * Copyright (C) 2002-2017 Németh László
  *
  * The contents of this file are subject to the Mozilla Public License Version
  * 1.1 (the "License"); you may not use this file except in compliance with
@@ -99,7 +99,7 @@ class PfxEntry : public AffEntry {
                            char in_compound,
                            const FLAG needflag = FLAG_NULL);
 
-  struct hentry* check_twosfx(const std::string& word,
+  struct hentry* check_twosfx(const char* word,
                               int len,
                               char in_compound,
                               const FLAG needflag = FLAG_NULL);
@@ -136,7 +136,7 @@ class PfxEntry : public AffEntry {
   inline void setFlgNxt(PfxEntry* ptr) { flgnxt = ptr; }
 
   inline char* nextchar(char* p);
-  inline int test_condition(const std::string& st);
+  inline int test_condition(const char* st);
 };
 
 /* A Suffix Entry */
@@ -171,7 +171,7 @@ class SfxEntry : public AffEntry {
                            const FLAG needflag,
                            const FLAG badflag);
 
-  struct hentry* check_twosfx(const std::string& word,
+  struct hentry* check_twosfx(const char* word,
                               int len,
                               int optflags,
                               PfxEntry* ppfx,

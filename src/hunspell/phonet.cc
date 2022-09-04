@@ -108,10 +108,9 @@ std::string phonet(const std::string& inword, phonetable& parms) {
           if (myisalpha(word[i + k])  // ...could be implied?
               && strchr(s + 1, word[i + k]) != NULL) {
             k++;
-            while (*s && *s != ')')
+            while (*s != ')')
               s++;
-            if (*s == ')')
-              s++;
+            s++;
           }
         }
         p0 = (int)*s;
