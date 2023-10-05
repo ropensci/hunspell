@@ -259,7 +259,7 @@ If your system does not provide standard dictionaries you need to download them 
  - [titoBouzout](https://github.com/titoBouzout/Dictionaries)
  - [wooorm](https://github.com/wooorm/dictionaries)
 
-On OS-X it is [recommended](https://github.com/Homebrew/homebrew-core/blob/master/Formula/hunspell.rb#L38-L47) to put the files in `~/Library/Spelling/` or `/Library/Spelling/`. However you can also put them in your project working directory, or any of the other standard locations. If you wish to store your dictionaries somewhere else, you can make hunspell find them by setting the `DICPATH` environment variable. The `hunspell:::dicpath()` shows which locations your system searches:
+On OS-X it is [recommended](https://github.com/Homebrew/homebrew-core/blob/master/Formula/h/hunspell.rb#L40-L48) to put the files in `~/Library/Spelling/` or `/Library/Spelling/`. However you can also put them in your project working directory, or any of the other standard locations. If you wish to store your dictionaries somewhere else, you can make hunspell find them by setting the `DICPATH` environment variable. The `hunspell:::dicpath()` shows which locations your system searches:
 
 ```{r}
 Sys.setenv(DICPATH = "/my/custom/hunspell/dir")
