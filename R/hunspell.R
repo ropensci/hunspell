@@ -56,7 +56,6 @@
 #' @param ignore character vector with additional approved words added to the dictionary
 #' @param format input format; supported parsers are \code{text}, \code{latex}, \code{man},
 #' \code{xml} and \code{html}.
-#' @rdname hunspell
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hunspell
 #' @export hunspell hunspell_find
