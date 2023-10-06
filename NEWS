@@ -1,5 +1,6 @@
 3.0.3
   - Skip a test on MacOS because of buggy iconv in Sonoma
+  - Remove CXX11
 
 3.0.2
   - Find paths to dictionaries of RStudio 1.3.x and 1.4.x (@GegznaV, #42)
