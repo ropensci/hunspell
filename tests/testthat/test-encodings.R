@@ -55,8 +55,8 @@ test_that("UTF8 always works", {
   expect_match(hunspell_analyze(str2, dict = "russian-aot")[[1]][1], stemstr)
   expect_match(hunspell_analyze(str2, dict = "ru_RU")[[1]][1], stemstr)
 
-  # iconv on macos 14 seems broken, retuns '?' instead of error
-  skip_on_os('mac')
+  # iconv on macos 14.0 was broken, returns '?' instead of error. Fixed in 14.1
+  #skip_on_os('mac')
   expect_warning(hunspell_find(str3, dict = "russian-aot"), "encoding")
 })
 
