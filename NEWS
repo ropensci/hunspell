@@ -1,3 +1,6 @@
+3.0.4
+  - Disable online examples and vignettes for CRAN policy
+
 3.0.3
   - Skip a test on MacOS because of buggy iconv in Sonoma
   - Remove CXX11

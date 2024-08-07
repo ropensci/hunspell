@@ -21,11 +21,7 @@ Imports: Rcpp, digest
 LinkingTo: Rcpp (>= 0.12.12)
 Suggests: spelling,
     testthat, 
-    pdftools, 
-    janeaustenr, 
-    wordcloud2, 
     knitr,
-    stopwords,
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
