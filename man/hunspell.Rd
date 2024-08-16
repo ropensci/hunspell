@@ -102,7 +102,7 @@ file to \code{~/Library/Spelling} or a custom directory specified in \code{DICPA
 Alternatively you can pass the entire path to the \code{.dic} file as the \code{dict}
 parameter. Some popular sources of dictionaries are
 \href{http://wordlist.aspell.net/dicts/}{SCOWL},
-\href{http://openoffice.cs.utah.edu/contrib/dictionaries/}{OpenOffice},
+\href{https://www.mirrorservice.org/sites/download.openoffice.org/contrib/dictionaries/}{OpenOffice},
 \href{http://archive.ubuntu.com/ubuntu/pool/main/libr/libreoffice-dictionaries/?C=S;O=D}{debian},
 \href{https://github.com/titoBouzout/Dictionaries}{github/titoBouzout} or
 \href{https://github.com/wooorm/dictionaries}{github/wooorm}.
