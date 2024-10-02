@@ -1,7 +1,7 @@
 Package: hunspell
 Type: Package
 Title: High-Performance Stemmer, Tokenizer, and Spell Checker
-Version: 3.0.4
+Version: 3.0.5
 Depends: R (>= 3.0.2)
 Encoding: UTF-8
 Authors@R: c(
