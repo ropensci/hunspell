@@ -1,5 +1,5 @@
 PKG_CPPFLAGS=-I. -Ihunspell -DBUILDING_LIBHUNSPELL
-PKG_CXXFLAGS=$(C_VISIBILITY)
+PKG_CXXFLAGS=$(CXX_VISIBILITY)
 
 #Add Windows-only flags (ifeq is a GNU extension...)
 WINRICONV=$(subst 64,-lRiconv,$(subst 32,64,$(WIN)))
