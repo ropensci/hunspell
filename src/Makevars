@@ -11,7 +11,7 @@ LIBHUNSPELL=parsers/textparser.o parsers/latexparser.o parsers/manparser.o \
   hunspell/hashmgr.o hunspell/hunspell.o hunspell/hunzip.o hunspell/phonet.o \
   hunspell/replist.o hunspell/suggestmgr.o hunspell/csutil.o
 
-#all: clean
+all: $(SHLIB) cleanup
 
 STATLIB = hunspell/libstathunspell.a
 
@@ -20,7 +20,7 @@ $(SHLIB): $(STATLIB)
 $(STATLIB): $(LIBHUNSPELL)
 	$(AR) rcs $(STATLIB) $(LIBHUNSPELL)
 
-clean:
-	rm -f $(SHLIB) $(LIBHUNSPELL) $(OBJECTS) $(STATLIB)
+cleanup: $(SHLIB)
+	@rm -f $(LIBHUNSPELL) $(STATLIB)
 
 .PHONY: all clean
