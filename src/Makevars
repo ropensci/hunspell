@@ -18,9 +18,10 @@ STATLIB = hunspell/libstathunspell.a
 $(SHLIB): $(STATLIB)
 
 $(STATLIB): $(LIBHUNSPELL)
-	$(AR) rcs $(STATLIB) $(LIBHUNSPELL)
 
 cleanup: $(SHLIB)
 	@rm -f $(LIBHUNSPELL) $(STATLIB)
 
-.PHONY: all clean
+# On Windows this rule is masked by Makeconf in base R
+%.a:
+	@$(AR) crs $@ $^ && $(STRIP_STATIC_LIB) $@ || true
