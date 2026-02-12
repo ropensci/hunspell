@@ -9,7 +9,7 @@ DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector a
 }
 
 // [[Rcpp::export]]
-List R_hunspell_info(DictPtr ptr, bool detailed = false){
+List R_hunspell_info(DictPtr ptr, bool detailed){
   List base_info = List::create(
     _["dict"] = ptr->dicts(),
     _["affix"] = ptr->affix(),

@@ -31,8 +31,14 @@ test_that("wordcount is reasonable for en_US dictionary", {
   expect_true(info$wordcount > 1000)
 })
 
-test_that("version field handles missing version gracefully", {
+test_that("version field is present and properly formatted", {
   info <- hunspell_info("en_US", detailed = TRUE)
-  # version may be NA if not defined in .aff file
+  # version field should always be present when detailed=TRUE
+  expect_true("version" %in% names(info))
+  # version is either a character string or NA (if not defined in .aff file)
   expect_true(is.character(info$version) || is.na(info$version))
+  # if version is a string, it should not be empty
+  if(is.character(info$version) && !is.na(info$version)) {
+    expect_true(nchar(info$version) > 0)
+  }
 })
