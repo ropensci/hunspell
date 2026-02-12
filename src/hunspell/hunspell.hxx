@@ -220,6 +220,8 @@ class LIBHUNSPELL_DLL_EXPORTED Hunspell {
   const std::string& get_version_cpp() const;
 
   int get_langnum() const;
+  
+  int get_wordcount() const;
 
   /* need for putdic */
   bool input_conv(const std::string& word, std::string& dest);

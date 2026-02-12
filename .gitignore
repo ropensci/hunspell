@@ -10,3 +10,4 @@ src/hunspell/*.a
 inst/doc/*.html
 windows
 *DS_Store
+_codeql_detected_source_root

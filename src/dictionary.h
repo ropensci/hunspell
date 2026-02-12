@@ -151,6 +151,14 @@ public:
     return added_;
   }
 
+  std::string version(){
+    return pMS_->get_version_cpp();
+  }
+
+  int wordcount(){
+    return pMS_->get_wordcount();
+  }
+
   Rcpp::RawVector r_wordchars(){
     const char * charvec = NULL;
     size_t rawlen = 0;

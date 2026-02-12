@@ -130,6 +130,7 @@ class HashMgr {
   int is_aliasm() const;
   char* get_aliasm(int index) const;
   const std::vector<replentry>& get_reptable() const;
+  int get_tablesize() const;
 
  private:
   int get_clen_and_captype(const std::string& word, int* captype);

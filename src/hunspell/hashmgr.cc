@@ -1387,3 +1387,8 @@ bool HashMgr::parse_reptable(const std::string& line, FileMgr* af) {
 const std::vector<replentry>& HashMgr::get_reptable() const {
   return reptable;
 }
+
+// return tablesize (word count from dictionary)
+int HashMgr::get_tablesize() const {
+  return tablesize;
+}

@@ -108,6 +108,7 @@ public:
   int remove(const std::string& word);
   const std::string& get_version_cpp() const;
   struct cs_info* get_csconv();
+  int get_wordcount() const;
 
   int spell(const char* word, int* info = NULL, char** root = NULL);
   int suggest(char*** slst, const char* word);
@@ -1753,6 +1754,12 @@ int HunspellImpl::get_langnum() const {
   return langnum;
 }
 
+int HunspellImpl::get_wordcount() const {
+  if (!m_HMgrs.empty())
+    return m_HMgrs[0]->get_tablesize();
+  return 0;
+}
+
 bool HunspellImpl::input_conv(const std::string& word, std::string& dest) {
   RepList* rl = pAMgr ? pAMgr->get_iconvtable() : NULL;
   if (rl) {
@@ -2100,6 +2107,10 @@ std::vector<std::string> Hunspell::generate(const std::string& word, const std::
 
 int Hunspell::get_langnum() const {
   return m_Impl->get_langnum();
+}
+
+int Hunspell::get_wordcount() const {
+  return m_Impl->get_wordcount();
 }
 
 bool Hunspell::input_conv(const std::string& word, std::string& dest) {
