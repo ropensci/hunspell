@@ -17,7 +17,7 @@ List R_hunspell_info(DictPtr ptr){
     _["encoding"] = ptr->enc(),
     _["wordchars"] = ptr->r_wordchars(),
     _["added"] = ptr->added(),
-    _["version"] = ver.empty() ? NA_STRING : ver,
+    _["version"] = ver.empty() ? Rcpp::String(NA_STRING) : Rcpp::String(ver),
     _["wordcount"] = ptr->wordcount()
   );
 }
