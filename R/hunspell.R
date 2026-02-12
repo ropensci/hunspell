@@ -146,10 +146,12 @@ hunspell_stem <- function(words, dict = dictionary("en_US")){
 }
 
 #' @rdname hunspell
+#' @param detailed logical: if \code{TRUE}, additional information is returned
+#'   including dictionary version (if available) and word count
 #' @export
-hunspell_info <- function(dict = dictionary("en_US")){
+hunspell_info <- function(dict = dictionary("en_US"), detailed = FALSE){
   dictionary <- dictionary(dict)
-  info <- R_hunspell_info(dictionary)
+  info <- R_hunspell_info(dictionary, detailed = detailed)
   if(length(info$wordchars)){
     wc_enc <- ifelse(info$encoding == "UTF-8", "UTF-16LE", info$encoding)
     wc <- iconv(list(info$wordchars), wc_enc, "UTF-8")

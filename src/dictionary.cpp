@@ -9,14 +9,22 @@ DictPtr R_hunspell_dict(Rcpp::String affix, CharacterVector dict, StringVector a
 }
 
 // [[Rcpp::export]]
-List R_hunspell_info(DictPtr ptr){
-  return List::create(
+List R_hunspell_info(DictPtr ptr, bool detailed = false){
+  List base_info = List::create(
     _["dict"] = ptr->dicts(),
     _["affix"] = ptr->affix(),
     _["encoding"] = ptr->enc(),
     _["wordchars"] = ptr->r_wordchars(),
     _["added"] = ptr->added()
   );
+  
+  if(detailed){
+    std::string ver = ptr->version();
+    base_info["version"] = ver.empty() ? NA_STRING : ver;
+    base_info["wordcount"] = ptr->wordcount();
+  }
+  
+  return base_info;
 }
 
 // [[Rcpp::export]]
