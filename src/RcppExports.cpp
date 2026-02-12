@@ -25,14 +25,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // R_hunspell_info
-List R_hunspell_info(DictPtr ptr, bool detailed);
-RcppExport SEXP _hunspell_R_hunspell_info(SEXP ptrSEXP, SEXP detailedSEXP) {
+List R_hunspell_info(DictPtr ptr);
+RcppExport SEXP _hunspell_R_hunspell_info(SEXP ptrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DictPtr >::type ptr(ptrSEXP);
-    Rcpp::traits::input_parameter< bool >::type detailed(detailedSEXP);
-    rcpp_result_gen = Rcpp::wrap(R_hunspell_info(ptr, detailed));
+    rcpp_result_gen = Rcpp::wrap(R_hunspell_info(ptr));
     return rcpp_result_gen;
 END_RCPP
 }
